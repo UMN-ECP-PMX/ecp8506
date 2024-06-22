@@ -1,4 +1,6 @@
-# ECP8506 Clinical Trial Simulations 
+# ECP8506 Clinical Trial Simulations
+
+## Schedule: Friday 10 am - 12 pm
 
 ## [Logistics](https://docs.google.com/document/d/1Qr9UvMqG_P8JNz02Iz5FyT51RxhYwU7k24D_Id8P6aQ/edit)
 
