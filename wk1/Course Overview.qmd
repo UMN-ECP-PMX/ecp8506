@@ -1,0 +1,145 @@
+---
+title: ECP8506 Course Overview
+format: beamer
+editor: visual
+author: "Shen Cheng"
+date: "09/06/2024"
+---
+
+## Objectives
+
+-   Introduce ourselves
+-   Syllabus
+-   Introduce useful concepts/tools with hands-on setup session
+    -   Minnesota Supercomputing Institute (MSI)
+    -   Version control/Github
+    -   Reproducibility/`renv`
+
+## Myself
+
+Shen Cheng, Ph.D.
+
+-   Assistant Professor at UMN ECP
+    -   B.S. in Biological Sciences, Soochow University
+    -   M.S. in Pharmacology, University of Michigan
+    -   Ph.D. in ECP (major in Pharmacometrics/minor in Biostatistics), University of Minnesota
+    -   Research Scientist, MetrumRG
+-   Contacts: cheng423\@umn.edu
+-   Office: 717 Delaware St. Room 464
+
+## Your turn
+
+-   Your name
+-   Your role in this class (instructor/student/auditor)
+-   Your major/year in the program (if you are a student)
+-   Your job/experience (if you are working)
+-   Anything else that you'd like to share
+
+## Schedule
+
+-   10 am -12 pm weekly on Fridays
+-   Hybrid mode:
+    -   In person: WDH 7-193 (9/27 and 11/22 online only)
+    -   Zoom: <https://umn-private.zoom.us/j/98057731209?pwd=d5zEAolm9ZgIqa2IGG5bZqkLRzLmJl.1>
+
+## Important links
+
+-   [Github](https://github.com/UMN-ECP-PMX/ecp8506)
+-   [Canvas](https://canvas.umn.edu/courses/468032)
+-   Minnesota Supercomputing Institute (MSI) group: `ecp8506`
+-   Communications:
+    -   Emails
+    -   Slack channel: `ecp8506`
+
+## Grading
+
+-   Homework: 50%
+    -   Assignments
+    -   Quizzes
+-   Class participation 50%
+
+## Lots of experiments...
+
+First time
+
+-   Rebuild this course around open-source R package `mrgsolve`.
+-   Work with HPC (MSI) for a graduate-level course.
+-   Large-scale academia/industry collaborations in teaching.
+
+## Objectives
+
+-   Understand the concepts of model-informed decision making using pharmacometric simulations.
+-   Know different simulation methods, and identify a method given scenarios.
+-   Learn relevant tools (`mrgsolve`) to perform pharmacometric simulations.
+-   Learn relevant tools (MSI/HPC, Github, `renv`) to ensure the efficiency, collaborative capability and reproducibility of pharmacometric works.
+
+## What to expect...
+
+-   **NOT** to teach pharmacometric model building/development.
+-   Focusing on what you can do when you have a pharmacometric model already.
+
+## MSI
+
+[Minnesota Supercomputing institute](https://msi.umn.edu/)
+
+-   A core research facility at UMN
+-   Provides high-performance cluster (HPC) for computational works
+    -   Efficient
+    -   Collaborative
+    -   Reproducible
+
+## MSI Access
+
+-   Access to MSI resources is available to Principal Investigators (PIs). Individual can access MSI by
+    -   Participating a PI's research group
+    -   Participating a MSI class account (`ecp8506`, deadline **12/22/2024**)
+
+## VPN
+
+MSI is accessible if you are
+
+-   You are connected to "eduroam" network on campus.
+-   You are off campus but connecting to the University’s Virtual Private Network (VPN).
+    -   do NOT select the channel named **“UMN - Departmental Pools”**.
+
+## Interactive HPC
+
+-   Several ways are available to interact with MSI
+-   In this course, we will use [Open Ondemand](https://ondemand.msi.umn.edu/pun/sys/dashboard/) RStudio Server
+
+## Access MSI Class Account
+
+![](pics/Rstudio%20Server.png) \## Access MSI Class Account
+
+![](pics/Rstudio.png)
+
+## Check primary MSI group
+
+![](pics/Primary%20group.png)
+
+If output shows
+
+-   `ecp8506`, your primary group is `ecp8506`, storage available until 12/22/2024.
+-   Something else, you are involved in multiple groups. It's up to you to
+    -   Keep using the other group storage throughout the course
+    -   Following additional procedure to switch the primary group to `ecp8506`
+
+## The end
+
+Next - `Github` and `renv`
+
+## Switch primary MSI group 1 (optional)
+
+![](pics/R%20console.png)
+
+## Switch primary MSI group 2 (optional)
+
+![](pics/Terminal%201.png)
+
+## Switch primary MSI group 3 (optional)
+
+![](pics/Terminal%202.png)
+
+## Switch primary MSI group 4 (optional)
+
+![](pics/File%20explorer.png)
