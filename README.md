@@ -4,7 +4,7 @@
 
 ## [Logistics](https://docs.google.com/document/d/1Qr9UvMqG_P8JNz02Iz5FyT51RxhYwU7k24D_Id8P6aQ/edit)
 
-## [Syllabus](https://docs.google.com/document/d/1mqBFFJPATMnyA5fWSFQl92fYf5SBAZv5XGrr3NGeW5g/edit#heading=h.hk7idht08u5a)
+## [Syllabus](https://docs.google.com/document/d/10sGRR4JHZd2ejpRFXVuqVYHEfvtkrHXR_mHusi9Xolk/edit#heading=h.hk7idht08u5a)
 
 ## ECP8506 2024 Fall calendar
 
