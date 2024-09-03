@@ -1,0 +1,41 @@
+---
+title: "Homework 1"
+format: 
+  pdf: 
+    number-sections: true
+editor: visual
+---
+
+# Objectives: 
+* Create a new github repository under your github account using [ecp8506-template](https://github.com/UMN-ECP-PMX/ecp8506-template) as a template repository.
+* Perform `git clone` to clone the repository to your local MSI disk. 
+* Create a new file in your local repository, then perform `git add`, `git commit` and `git push` to add the new file to your remote github repository. 
+
+## Create a new github repository
+
+* Navigate your browser to [ecp8506-template](https://github.com/UMN-ECP-PMX/ecp8506-template) github repository. Click **Use this template** on the top right corner. 
+
+![](pics/github1.png)
+
+* Name the repository as `ecp8506-your x500`, make sure the owner is your github account, then click the button to create repository. 
+
+![](pics/github2.png)
+
+## Clone the repository to local
+
+* Start a new Rstudio Server session on MSI. 
+* In terminal, perform `git clone` to clone the repository to local MSI disk. 
+* Open the R project file (`.rproj`) file in the local repository. 
+* Run `renv::restore()` to restore the installation of all the R packages. This step might take quite a few minutes to complete. 
+
+## Create a new file in the local reposiotry and add it to the remote repository
+
+* Create a new R script in the local repository, names it as you like, for example `xxx.R` 
+* In terminal, run `git add xxx.R`. 
+* In terminal, run `git commit -m "add a test R script"`. Here, `-m` means leave a message with the text inside the "" as the message contents. 
+* In terminal, run `git push`. If you see the output looks like this, your have successfully added the new file in your remote github repository.   
+
+![](pics/gitpush.png)
+* Take a screenshot of your remote github repository and uploaded it to Canvas. 
+![](pics/remotegit.png)
+
