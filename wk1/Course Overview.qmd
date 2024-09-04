@@ -19,12 +19,11 @@ date: "09/06/2024"
 
 Shen Cheng, Ph.D.
 
--   Assistant Professor at UMN ECP
-    ![](pics/myself.png)
+-   Assistant Professor at UMN ECP ![](pics/myself.png)
 -   Contacts: cheng423\@umn.edu
 -   Office: 717 Delaware St. Room 464
 
-## Your turn
+## Your Turn
 
 -   Your name
 -   Your role in this class (instructor/student/auditor)
@@ -38,9 +37,9 @@ Shen Cheng, Ph.D.
 -   Hybrid mode:
     -   In person: WDH 7-193 (9/27 and 11/22 online only)
     -   Zoom: <https://umn-private.zoom.us/j/98057731209?pwd=d5zEAolm9ZgIqa2IGG5bZqkLRzLmJl.1>
--   TA: Jason Sriwijaya (sriwi001@umn.edu)
+-   TA: Jason Sriwijaya (sriwi001\@umn.edu)
 
-## Important links
+## Important Links
 
 -   [Github](https://github.com/UMN-ECP-PMX/ecp8506)
 -   [Canvas](https://canvas.umn.edu/courses/468032)
@@ -56,7 +55,7 @@ Shen Cheng, Ph.D.
     -   Quizzes
 -   Class participation 50%
 
-## Lots of experiments...
+## Lots of Experiments...
 
 First time
 
@@ -66,15 +65,18 @@ First time
 
 ## Objectives
 
--   Understand the concepts of model-informed decision making using pharmacometric simulations.
--   Know different simulation methods, and identify a method given scenarios.
--   Learn relevant tools (**`mrgsolve`**) to perform pharmacometric simulations.
--   Learn relevant tools (MSI/HPC, Github, `renv`) to ensure the efficiency, collaborative capability and reproducibility of pharmacometric works.
+* Primary
+  -   Understand the concepts of model-informed decision making using pharmacometric simulations.
+  -   Learn relevant tools (i.e., **`mrgsolve`**) to perform pharmacometric simulations.
+  -   Know different simulation methods, and identify a method given scenarios.  
+  
+* Secondary  
+  -   Learn other tools (e.g., MSI/HPC, Github, `renv`) to ensure the efficiency, collaborative capability and reproducibility of pharmacometric works.
 
-## What to expect...
+## What to Expect...
 
 -   **NOT** to teach pharmacometric model building/development.
--   Focusing on what you can do when you have a pharmacometric model already.
+-   Focusing on what you can do (i.e., simulate) when you have a pharmacometric model already.
 
 ## MSI
 
@@ -85,6 +87,7 @@ First time
     -   Efficient
     -   Collaborative
     -   Reproducible
+-   [MSI X101 - Introduction to the Minnesota Supercomputing Institute (MSI)](https://learning.umn.edu/search/publicCourseSearchDetails.do?method=load&courseId=43305250&courseTitle=introduction-to-the-minnesota-supercomputing-institute-msi)
 
 ## MSI Access
 
@@ -99,19 +102,21 @@ MSI is accessible if you are
 -   You are connected to "eduroam" network on campus.
 -   You are off campus but connecting to the University’s Virtual Private Network (VPN).
     -   do NOT select the channel named **“UMN - Departmental Pools”**.
-    
-![](pics/vpn.png){width=70%}
+
+![](pics/vpn.png){width="70%"}
 
 ## Interactive HPC
 
 -   Several ways are available to interact with MSI
 -   In this course, we will use [Open Ondemand](https://ondemand.msi.umn.edu/pun/sys/dashboard/) RStudio Server
 
-![](pics/openondemand.png){width=90%}
+![](pics/openondemand.png){width="90%"}
 
 ## Access MSI Class Account
 
-<!-- ![](pics/Rstudio%20Server.png) \## Access MSI Class Account -->
+![](pics/Rstudio%20Server.png) \## Access MSI Class Account
+
+## Access MSI Class Account
 
 ![](pics/Rstudio.png)
 
