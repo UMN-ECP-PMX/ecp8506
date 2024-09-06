@@ -24,18 +24,23 @@ editor: visual
 ## Clone the repository to local
 
 * Start a new Rstudio Server session on MSI. 
-* In terminal, perform `git clone` to clone the repository to local MSI disk. 
+* Use RStudio IDE functionality to start a project using Version Control or in terminal, perform `git clone` to clone the repository to local MSI disk. 
 * Open the R project file (`.rproj`) file in the local repository. 
 * Run `renv::restore()` to restore the installation of all the R packages. This step might take quite a few minutes to complete. 
 
 ## Create a new file in the local reposiotry and add it to the remote repository
 
 * Create a new R script in the local repository, names it as you like, for example `xxx.R` 
-* In terminal, run `git add xxx.R`. 
-* In terminal, run `git commit -m "add a test R script"`. Here, `-m` means leave a message with the text inside the "" as the message contents. 
-* In terminal, run `git push`. If you see the output looks like this, your have successfully added the new file in your remote github repository.   
+* Use RStudio IDE functionality to add, commit and push the new file to the remote repository. 
+* If you are using terminal:
+  * In terminal, run `git add xxx.R`. 
+  * In terminal, run `git commit -m "add a test R script"`. Here, `-m` means leave a message with the text inside the "" as the message contents. 
+  * In terminal, run `git push`. If you see the output looks like this, your have successfully added the new file in your remote github repository.   
 
 ![](pics/gitpush.png)
 * Take a screenshot of your remote github repository and uploaded it to Canvas. 
 ![](pics/remotegit.png)
 
+## Bouns 
+
+Create a a scratch repository with and initialize `renv` package to have a reproducible environment with all of your favorite packages.  
