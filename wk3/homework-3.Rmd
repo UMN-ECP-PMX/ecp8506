@@ -1,6 +1,7 @@
 ---
-title: "Student R Homework"
+title: "Homework 3"
 output: pdf_document
+author: first last
 date: "`r format(Sys.time(), '%d %B %Y')`"
 ---
 
