@@ -1,0 +1,29 @@
+---
+title: "Student R Homework"
+output: pdf_document
+date: "`r format(Sys.time(), '%d %B %Y')`"
+---
+
+# Problem 1
+
+```{r}
+
+```
+
+# Problem 2
+
+```{r}
+
+```
+
+# Problem 3
+
+```{r}
+
+```
+
+# Problem 4
+
+```{r}
+
+```
