@@ -6,8 +6,7 @@ format:
   revealjs: 
     smaller: false
     scrollable: true
-Rendering:
-  embed-resources: true
+    embed-resources: true
 editor: visual
 ---
 
@@ -17,9 +16,9 @@ editor: visual
 -   Model specifications
 -   Model validations
 
-## An example model{.smaller}
+## An example model {.smaller}
 
-``` .cpp
+``` cpp
 
 [ prob ]
   ECP8506 mrgsolve model for illustration
@@ -100,7 +99,7 @@ smat(mod)
 see(mod)
 ```
 
-# Model parameters{.smaller}
+# Model parameters {.smaller}
 
 `mrgsolve` maintains a parameter list (`name` / `value` pairs):
 
@@ -163,11 +162,11 @@ see(mod)
 [ capture ] CL V2 IPRED Y WT EGFR ALB AGE
 ```
 
-## Specify model parameters{.smaller}
+## Specify model parameters {.smaller}
 
 ::: columns
 ::: {.column width="50%"}
-``` .cpp
+``` cpp
 [ param ]  
   WT   = 70
   EGFR = 90
@@ -187,7 +186,7 @@ see(mod)
 :::
 
 ::: {.column width="50%"}
-``` .cpp
+``` cpp
 [ param ]  
   WT   = 70
   EGFR = 90
@@ -207,11 +206,11 @@ see(mod)
 :::
 :::
 
-## Specify model parameters{.smaller}
+## Specify model parameters {.smaller}
 
 ::: columns
 ::: {.column width="50%"}
-``` .cpp
+``` cpp
 [ param ]  
   WT   = 70
   EGFR = 90
@@ -231,7 +230,7 @@ see(mod)
 :::
 
 ::: {.column width="50%"}
-``` .cpp
+``` cpp
 [ param ]  
   WT   = 70
   EGFR = 90
@@ -334,7 +333,7 @@ New in `mrgsolve` 1.2.0, you can use the `$INPUT` block.
 
 ::: columns
 ::: {.column width="50%"}
-``` .cpp
+``` cpp
 [ param ]  
   WT   = 70
   EGFR = 90
@@ -352,7 +351,7 @@ New in `mrgsolve` 1.2.0, you can use the `$INPUT` block.
 :::
 
 ::: {.column width="50%"}
-``` .cpp
+``` cpp
 [ input ]  
   WT   = 70
   EGFR = 90
@@ -372,42 +371,42 @@ New in `mrgsolve` 1.2.0, you can use the `$INPUT` block.
 :::
 :::
 
-## Input tags 
+## Input tags
 
-::: columns
-::: {.column width="50%"}
-```{r}
-#| echo: true
-#| warning: true
-mod1 <- mread(model = "106.cpp", 
-             project = here("wk6/mrg-model"))
-param_tags(mod1)
-```
-:::
+<!-- ::: columns -->
+<!-- ::: {.column width="50%"} -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| warning: true -->
+<!-- mod1 <- mread(model = "106.cpp",  -->
+<!--              project = here("wk6/mrg-model")) -->
+<!-- param_tags(mod1) -->
+<!-- ``` -->
+<!-- ::: -->
 
-::: {.column width="50%"}
-```{r}
-#| echo: true
-#| warning: true
-mod2 <- mread(model = "106-2.cpp", 
-             project = here("wk6/mrg-model"))
-param_tags(mod2)
-```
-:::
-:::
+<!-- ::: {.column width="50%"} -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| warning: true -->
+<!-- mod2 <- mread(model = "106-2.cpp",  -->
+<!--              project = here("wk6/mrg-model")) -->
+<!-- param_tags(mod2) -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: -->
 
 ## `check_data_names()`
 
-```{r}
-#| echo: true
-#| warning: true
-check_data_names(data, mod)
-check_data_names(data, mod2)
-data2 <- rename(data, eGFR = EGFR)
-check_data_names(data2, mod2)
-```
+# ```{r}
+# #| echo: true
+# #| warning: true
+# check_data_names(data, mod)
+# check_data_names(data, mod2)
+# data2 <- rename(data, eGFR = EGFR)
+# check_data_names(data2, mod2)
+# ```
 
-# Covariate model{.smaller}
+# Covariate model {.smaller}
 
 ``` {.cpp code-line-numbers="32-45"}
 
@@ -467,7 +466,7 @@ check_data_names(data2, mod2)
 
 ## `C++` functions
 
-```{.cpp}
+``` cpp
 if(a == 2) b = 2;
 if(b <= 2) {
   c=3;
@@ -481,8 +480,7 @@ d = a==2 ? 50 : 100;
 
 ::: columns
 ::: {.column width="50%"}
-
-```{.cpp}
+``` cpp
 double d = pow(base,exponent);
 double e = exp(3);
 double f = fabs(-4);
@@ -492,8 +490,8 @@ double i = log10(7);
 double j = floor(4.2);
 double k = ceil(4.2);
 ```
+:::
 
-::: 
 ::: {.column width="50%"}
 $$
 d = base^{exponent} \\
@@ -505,34 +503,34 @@ i = \log_{10} 7 \\
 j = \lfloor 4.2 \rfloor \\
 k = \lceil 4.2 \rceil
 $$
-::: 
-::: 
+:::
+:::
 
-## General rules{.smaller}
+## General rules {.smaller}
 
-```{.cpp}
+``` cpp
 $PK
 
 double CL = TVCL * pow(WT/70, 0.75) * exp(ETA(1));
 bool cure = false;
 ```
 
-* Any valid `c++` code is allowed. 
-* Declare variable type (e.g., `double` for numeric variable; `bool` for logical variable).
-* Use `;` behind each line of syntax.
-* Case sensitive, use `exp` and `pow`, not `EXP` and `POW`.
-* Lots of help on the web (https://en.cppreference.com/w/cpp). 
+-   Any valid `c++` code is allowed.
+-   Declare variable type (e.g., `double` for numeric variable; `bool` for logical variable).
+-   Use `;` behind each line of syntax.
+-   Case sensitive, use `exp` and `pow`, not `EXP` and `POW`.
+-   Lots of help on the web (https://en.cppreference.com/w/cpp).
 
 ## Caution
 
 Be careful of integer division
 
-```{.cpp}
+``` cpp
 double result = 1/2; # 0
 double result = 1.0/2.0; # 0.5
 ```
 
-# Random effects{.smaller}
+# Random effects {.smaller}
 
 ``` {.cpp code-line-numbers="24-30"}
 
@@ -590,9 +588,9 @@ double result = 1.0/2.0; # 0.5
 [ capture ] CL V2 IPRED Y WT EGFR ALB AGE
 ```
 
-## Block matrix{.smaller}
+## Block matrix {.smaller}
 
-``` .cpp
+``` cpp
 [ omega ] @block 
   0.219
   0.0668 0.0824
@@ -601,13 +599,13 @@ double result = 1.0/2.0; # 0.5
 
 or
 
-``` .cpp
+``` cpp
 [ omega ] @block 
   0.219 0.0668 0.0824 0.121 0.0703 0.114
 ```
 
-* Diagonal elements are variance. 
-* Off-diagonal elements are covariance. 
+-   Diagonal elements are variance.
+-   Off-diagonal elements are covariance.
 
 $$
 \begin{bmatrix}
@@ -633,9 +631,9 @@ $$
 
 <!-- $$ -->
 
-## Diagonal matrix{.smaller}
+## Diagonal matrix {.smaller}
 
-``` .cpp
+``` cpp
 [ omega ] 
   0.219 0.0824 0.114
 ```
@@ -650,18 +648,19 @@ $$
 
 ## `@correlation`
 
-``` .cpp
+``` cpp
 [ omega ] @correlation
   0.219
   0.0668 0.0824
   0.121  0.0703 0.114
 ```
-* Diagonal elements are variance. 
-* Off-diagonal elements are **correlation**, not covariance.
+
+-   Diagonal elements are variance.
+-   Off-diagonal elements are **correlation**, not covariance.
 
 ## `[ omega ]` and `[ sigma ]`{.smaller}
 
-```{.cpp code-line-numbers="|3,12|4,13|5,14|8,18"}
+``` {.cpp code-line-numbers="|3,12|4,13|5,14|8,18"}
 ...
 [ omega ] @block 
   0.219
@@ -684,7 +683,7 @@ $$
 
 ## `@label`{.smaller}
 
-```{.cpp code-line-numbers="|2|3,12|4,13|5,14|8,18"}
+``` {.cpp code-line-numbers="|2|3,12|4,13|5,14|8,18"}
 ...
 [ omega ] @block @labels ETA_KA ETA_V2 ETA_CL 
   0.219
@@ -707,7 +706,7 @@ $$
 
 ## `@annotated`{.smaller}
 
-```{.cpp code-line-numbers="|2|3,12|4,13|5,14|8,18"}
+``` {.cpp code-line-numbers="|2|3,12|4,13|5,14|8,18"}
 ...
 [ omega ] @annotated @block
   0.219 : ETA on KA
@@ -730,7 +729,7 @@ $$
 
 ## Separated `[ omega ]`/`[ sigma ]`{.smaller}
 
-```{.cpp code-line-numbers="|3,16|6,17|9,18|12,22"}
+``` {.cpp code-line-numbers="|3,16|6,17|9,18|12,22"}
 ...
 [ omega ] 
   0.219
@@ -757,7 +756,7 @@ $$
 
 ## `@name`{.smaller}
 
-```{.cpp code-line-numbers="|2|5|8"}
+``` {.cpp code-line-numbers="|2|5|8"}
 ...
 [ omega ] @ name KA
   0.219
@@ -782,22 +781,23 @@ $$
   double Y = IPRED * (1+EPS(1));
 ```
 
-# Import `NONMEM` estimates?{.smaller}
+# Import `NONMEM` estimates? {.smaller}
 
-* Use `[ nmext ]` or `[ nmxml ]`  
-  - `[ nmext ]` reads from the `.ext` file. 
-    + Can be faster. 
-    + Doesn’t retain `[ omega ]` and `[ sigma ]` structure. 
-  - `[ nmxml ]`  reads from the `.xml` file.  
-    + Can be slower. 
-    + Does retain `[ omega ]` and `[ sigma ]` structure.
-    
+-   Use `[ nmext ]` or `[ nmxml ]`
+    -   `[ nmext ]` reads from the `.ext` file.
+        -   Can be faster.
+        -   Doesn’t retain `[ omega ]` and `[ sigma ]` structure.
+    -   `[ nmxml ]` reads from the `.xml` file.
+        -   Can be slower.
+        -   Does retain `[ omega ]` and `[ sigma ]` structure.
+
 ## `[ nmext ]` and `[ nmxml ]`
 
 ::: columns
 ::: {.column width="50%"}
 If you have a `NONMEM` script with two `$OMEGA`
-```{.cpp}
+
+``` cpp
 ...
 $OMEGA BLOCK(2)
 0.1 
@@ -812,17 +812,16 @@ $OMEGA BLOCK(3)
 :::
 
 ::: {.column width="50%"}
-* `[ nmext ]` loads OMEGA matrix as a 5x5 matrix. 
-* `[ nmxml ]` loads OMEGA matrix as a 2x2 matrix and a 3x3 matrix. 
+-   `[ nmext ]` loads OMEGA matrix as a 5x5 matrix.
+-   `[ nmxml ]` loads OMEGA matrix as a 2x2 matrix and a 3x3 matrix.
+:::
+:::
 
-:::
-:::
-    
 ## `[ nmext ]`{.smaller}
 
 ::: columns
 ::: {.column width="40%"}
-``` .cpp
+``` cpp
 [ theta ] @annotated
   0.443   : log(TVKA)
   4.12    : log(TVV2)
@@ -844,22 +843,22 @@ $OMEGA BLOCK(3)
 :::
 
 ::: {.column width="60%"}
-
-``` .cpp
+``` cpp
 [ nmext ]  
 path = "../nm-model/106/106.ext"
 root = "cppfile"
 ```
+
 `root = "cppfile"` look for `.ext` file relative to *where the model source code file is located*
 
-``` .cpp
+``` cpp
 [ nmext ]  
 run = 106
 project = "../nm-model/"
 root = "cppfile"
 ```
-This syntax will let `mrgsolve` model look for `../nm-model/106/106.ext`
 
+This syntax will let `mrgsolve` model look for `../nm-model/106/106.ext`
 :::
 :::
 
@@ -867,7 +866,7 @@ This syntax will let `mrgsolve` model look for `../nm-model/106/106.ext`
 
 ::: columns
 ::: {.column width="40%"}
-``` .cpp
+``` cpp
 [ theta ] @annotated
   0.443   : log(TVKA)
   4.12    : log(TVV2)
@@ -889,45 +888,44 @@ This syntax will let `mrgsolve` model look for `../nm-model/106/106.ext`
 :::
 
 ::: {.column width="60%"}
-
-``` .cpp
+``` cpp
 [ nmxml ]  
 path = "../nm-model/106/106.xml"
 root = "cppfile"
 ```
+
 `root = "cppfile"` look for `.xml` file relative to *where the model source code file is located*
 
-``` .cpp
+``` cpp
 [ nmxml ]  
 run = 106
 project = "../nm-model/"
 root = "cppfile"
 ```
+
 This syntax will let `mrgsolve` model look for `../nm-model/106/106.xml`
-
 :::
 :::
 
-# Models in closed form{.smaller}
+# Models in closed form {.smaller}
 
 Like `NONMEM`, `mrgsolve` also has "short-cut" to solve one- and two-compartment models with first order input in closed form using `[ pkmodel ]`, which usually results in substantial speed up.
 
 ::: columns
 ::: {.column width="50%"}
-![](pics/advan.png){ width=60% }
+![](pics/advan.png){width="60%"}
 :::
 
 ::: {.column width="50%"}
-![](pics/trans.png){ width=70% }
+![](pics/trans.png){width="70%"}
 :::
 :::
-
 
 ## `[ pkmodel ]`
 
 `mrgsolve`
 
-```{.cpp}
+``` cpp
 [ pkmodel ] cmt = "CENT", depot = FALSE     // 1-cmt IV
 [ pkmodel ] cmt = "CENT", depot = TRUE      // 1-cmt oral/SC
 [ pkmodel ] cmt = "GUT,CENT", depot = FALSE // 2-cmt IV
@@ -936,25 +934,24 @@ Like `NONMEM`, `mrgsolve` also has "short-cut" to solve one- and two-compartment
 
 `NONMEM`
 
-```{.cpp}
+``` cpp
 $SUBROUTINE ADVAN1 TRANS2; 1-CMT IV
 $SUBROUTINE ADVAN2 TRANS2; 1-CMT oral/SC
 $SUBROUTINE ADVAN3 TRANS4; 2-CMT IV
 $SUBROUTINE ADVAN4 TRANS4; 2-CMT oral/SC
 ```
 
-
 # `[ plugin ]`
 
-* `autodec`
-* `nm-vars`
-* `Rcpp`
+-   `autodec`
+-   `nm-vars`
+-   `Rcpp`
 
 ## `autodec`{.smaller}
 
 Typical way...
 
-``` .cpp
+``` cpp
 [ pk ] 
   double V2WT   = log(WT/70.0);
   double CLWT   = log(WT/70.0)*0.75;
@@ -975,7 +972,7 @@ Typical way...
 
 With `autodec`
 
-``` .cpp
+``` cpp
 [ plugin ] autodec
 
 ...
@@ -1002,17 +999,17 @@ With `autodec`
 
 When this plugin is invoked, `mrgsolve` will search your model code for assignments and automatically declare them as double precision numbers (`double`). The following blocks are searched
 
-* `$PREAMBLE`
-* `$MAIN` (or `$PK`)
-* `$ODE` (or `$DES`)
-* `$TABLE` (or `$ERROR`)
-* `$PRED`
+-   `$PREAMBLE`
+-   `$MAIN` (or `$PK`)
+-   `$ODE` (or `$DES`)
+-   `$TABLE` (or `$ERROR`)
+-   `$PRED`
 
-## Skip `autodec` a variable{.smaller}
+## Skip `autodec` a variable {.smaller}
 
-* When you are using the `autodec` plugin, you can still declare variables as `double` or `int` or `bool`. `mrgsolve` already finds those variables and will understand to leave those declarations alone. 
+-   When you are using the `autodec` plugin, you can still declare variables as `double` or `int` or `bool`. `mrgsolve` already finds those variables and will understand to leave those declarations alone.
 
-``` .cpp
+``` cpp
 [ plugin ] autodec
 
 ...
@@ -1023,16 +1020,17 @@ When this plugin is invoked, `mrgsolve` will search your model code for assignme
   bool ddi = TRUE; 
 ```
 
-* In case mrgsolve does try to declare (as `double`) a variable that shouldn’t be handled that way, you can note this name in an environment variable inside your model called `MRGSOLVE_AUTODEC_SKIP`. 
+-   In case mrgsolve does try to declare (as `double`) a variable that shouldn’t be handled that way, you can note this name in an environment variable inside your model called `MRGSOLVE_AUTODEC_SKIP`.
 
-``` .cpp
+``` cpp
 [ env ] MRGSOLVE_AUTODEC_SKIP = c("my_variable_1")
 ```
 
 ## `nm-vars`{.smaller}
 
 `NONMEM`
-```{.cpp}
+
+``` cpp
 $PK
 ...
 KA   = EXP(THETA(1)+ETA(1))
@@ -1049,12 +1047,11 @@ DADT(1) = - KA * A(1)
 DADT(2) = KA * A(1) - (CL/V)*A(2) - Q*(A(2)/V2 - A(3)/V3)
 DADT(3) = Q*(A(2)/V2 - A(3)/V3)
 ...
-
 ```
 
 `mrgsolve`
 
-```{.cpp}
+``` cpp
 [ pk ]
 ...
 double KA  = exp(THETA(1) + ETA(1));
@@ -1074,8 +1071,10 @@ dxdt_PERIPH = Q*(CENT/V2 - PERIPH/V3);
 ```
 
 ## `nm-vars`{.smaller}
+
 `NONMEM`
-```{.cpp}
+
+``` cpp
 $PK
 ...
 KA   = EXP(THETA(1)+ETA(1))
@@ -1092,10 +1091,11 @@ DADT(1) = - KA * A(1)
 DADT(2) = KA * A(1) - (CL/V)*A(2) - Q*(A(2)/V2 - A(3)/V3)
 DADT(3) = Q*(A(2)/V2 - A(3)/V3)
 ...
-
 ```
+
 `mrgsolve` with `nm-vars`
-```{.cpp}
+
+``` cpp
 [ plugin ] nm-vars
 
 ...
@@ -1120,30 +1120,30 @@ DADT(3) = Q*(A(2)/V2 - A(3)/V3);
 
 ## `nm-vars`{.smaller}
 
-* `F`, `R`, `D`, `ALAG`  
-  - To set bioavailability for the nth compartment, use `Fn`.  
-  - To set the infusion rate for the nth compartment, use `Rn`.  
-  - To set the infusion duration for the nth compartment, use `Dn`. 
-  - To set the lag time for the nth compartment, use `ALAGn`.
-* `A`, `A_0`, `DADT`. 
-  - To refer to the amount in the nth compartment, use `A(n)`. 
-  - To refer to the initial amount in the nth compartment, use `A_0(n)`. 
-  - To refer to the differential equation for the nth compartment, use `DADT(n)`.
-* Math. 
-  - `EXP(a)` gets mapped to `exp(a)`. 
-  - `LOG(a)` gets mapped to `log(a)`. 
-  - `SQRT(a)` gets mapped to `sqrt(a)`.
-* Use `T` in `$DES` to refer to the current time in the ode solver rather than `SOLVERTIME`
+-   `F`, `R`, `D`, `ALAG`
+    -   To set bioavailability for the nth compartment, use `Fn`.\
+    -   To set the infusion rate for the nth compartment, use `Rn`.\
+    -   To set the infusion duration for the nth compartment, use `Dn`.
+    -   To set the lag time for the nth compartment, use `ALAGn`.
+-   `A`, `A_0`, `DADT`.
+    -   To refer to the amount in the nth compartment, use `A(n)`.
+    -   To refer to the initial amount in the nth compartment, use `A_0(n)`.
+    -   To refer to the differential equation for the nth compartment, use `DADT(n)`.
+-   Math.
+    -   `EXP(a)` gets mapped to `exp(a)`.
+    -   `LOG(a)` gets mapped to `log(a)`.
+    -   `SQRT(a)` gets mapped to `sqrt(a)`.
+-   Use `T` in `$DES` to refer to the current time in the ode solver rather than `SOLVERTIME`
 
 ## `Rcpp`{.smaller}
 
-* This gives you functions and data structures that you’re used to using in `R`, but they work in `c++`.
+-   This gives you functions and data structures that you’re used to using in `R`, but they work in `c++`.
 
-* The main use for this is random number generation. Any `d/q/p/r` function in `R` will be available; arguments are the same, but omit n (you always get just one draw when calling from `c++`.
+-   The main use for this is random number generation. Any `d/q/p/r` function in `R` will be available; arguments are the same, but omit n (you always get just one draw when calling from `c++`.
 
-* Note: this will slightly increase compile time.
+-   Note: this will slightly increase compile time.
 
-```{.cpp}
+``` cpp
 $PLUGIN Rcpp
 
 $ERROR
@@ -1151,44 +1151,50 @@ double u = R::runif(0, 1);
 ```
 
 ## Many other `[ plugin ]`
-* `tad`
-* `evtools`
-* `CXX11`
-* `mrgx`
-* `RcppArmadillo`
-* `BH`
+
+-   `tad`
+-   `evtools`
+-   `CXX11`
+-   `mrgx`
+-   `RcppArmadillo`
+-   `BH`
 
 Resource: https://mrgsolve.org/user-guide/plugins.html
 
 # Other blocks
 
-* `[ setup ]`
-* `[ env ]`
-* `[ pred ]`
-* `[ premable ]`
-* `[ global ]`
+-   `[ setup ]`
+-   `[ env ]`
+-   `[ pred ]`
+-   `[ premable ]`
+-   `[ global ]`
 
 <!-- Use $SETUP to configure the model object on load -->
+
 <!-- For example, set the simulation end time -->
+
 <!-- Use $ENV to define a set of R objects that might be evaluated in other model blocks -->
+
 <!-- Use $PRED for other closed form models -->
+
 <!-- Use $PREAMBLE for code that gets run once at the start of a problem NEWIND==0 -->
+
 <!-- Use $GLOBAL to define variables outside of any other block -->
 
 ## `[ set ]`
 
-* To configure the model object on load. 
+-   To configure the model object on load.
 
-```{.cpp}
+``` cpp
 [ set ] end = 240, delta = 0.5, req = "IPRED"
 ```
 
 ## `[ env ]`{.smaller}
 
-* To define a set of R objects that might be evaluated in other model blocks. 
-* This block is all R code (just as you would code in a stand-alone R script.
+-   To define a set of R objects that might be evaluated in other model blocks.
+-   This block is all R code (just as you would code in a stand-alone R script.
 
-```{.cpp}
+``` cpp
 ...
 $ENV
 
@@ -1206,16 +1212,15 @@ $OMEGA @object Sigma
 ...
 ```
 
-
 ## `[ pred ]`{.smaller}
 
-* Use `$PRED` to write a model *without* differential equations. In this block, write all algebraic expressions for derived parameters, the response, and any other derived output quantities.
+-   Use `$PRED` to write a model *without* differential equations. In this block, write all algebraic expressions for derived parameters, the response, and any other derived output quantities.
 
-* It is an error to include the following blocks when `$PRED` is being used: `$MAIN`, `$TABLE`, `$PKMODEL`, `$ODE`, `$CMT`, `$INIT`.
+-   It is an error to include the following blocks when `$PRED` is being used: `$MAIN`, `$TABLE`, `$PKMODEL`, `$ODE`, `$CMT`, `$INIT`.
 
-* An example `NONMEM` model without differential equation
+-   An example `NONMEM` model without differential equation
 
-```{.cpp}
+``` cpp
 
 $PROBLEM A NONMEM MODEL WITHOUT DES
 $INPUT   ID TIME DV AUC
@@ -1231,13 +1236,11 @@ $THETA   100
 $OMEGA   0.1
 $SIGMA   4
 $ESTIMATION
-
-
 ```
 
-* An example `mrgsolve` model without differential equation
+-   An example `mrgsolve` model without differential equation
 
-```{.cpp}
+``` cpp
 [ PARAM ] TVE0 = 100, AUC50 = 100, IMAX = 40, AUC = 0
 
 [ PRED ]
@@ -1246,12 +1249,11 @@ double E0 = EVE0*exp(ETA(1));
 double RESP = E0 - IMAX*AUC/(AUC50+AUC);
 ```
 
-
 ## `[ premable ]`{.smaller}
 
-* Only called one time during the simulation run (right at the start). The code in this block is typically used to configure or initialize `C++` variables or data structures that were declared in `[ global ]`.
+-   Only called one time during the simulation run (right at the start). The code in this block is typically used to configure or initialize `C++` variables or data structures that were declared in `[ global ]`.
 
-```{.cpp}
+``` cpp
 
 [ PLUGIN ] Rcpp
 
@@ -1267,28 +1269,34 @@ x.push_back(3);
 
 [ MAIN ]
 <some code that uses x vector>
-
 ```
 
 ## `[ global ]`
 
-* To define variables outside of any other block
-* Two more-common uses:  
-  - Write `#define` preprocessor statements.  
-  - Define global variables (e.g., `double`, `bool`, `int`)
+-   To define variables outside of any other block
+-   Two more-common uses:
+    -   Write `#define` preprocessor statements.\
+    -   Define global variables (e.g., `double`, `bool`, `int`)
 
-```{.cpp}
+``` cpp
 [ global ] #define CP (CENT/S2)
 ```
 
-```{.cpp}
+``` cpp
 [ global ] double CP = 0; 
 ...
 [ error ] 
     CP = CENT/S2; 
 ```
 
-
 # Validation
+
+* Once we finished developing a popPK model using `NONMEM`, it is common that we translate a `NONMEM` model into a `mrgsolve` model for simulation. 
+
+* Validation needs to be done to confirm the correctness of the translation by comparing: 
+  - `PRED`: `NONMEM` vs `mrgsolve`. 
+  - `IPRED`: `NONMEM` vs `mrgsolve`. 
+  
+
 
 

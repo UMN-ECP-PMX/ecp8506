@@ -11,14 +11,14 @@
   AGE  = 35
 
 [ theta ] @annotated
-  0.443   : log(TVKA)
-  4.12    : log(TVV2)
-  1.17    : log(TVCL)
-  4.21    : log(TVV3)
-  1.28    : log(TVQ)
-  0.485   : log(CLEGFR)
-  -0.0377 : log(CLAGE)
-  0.419   : log(CLALB)
+  0.4431220   : log(TVKA)
+  4.1190600   : log(TVV2)
+  1.1719900   : log(TVCL)
+  4.2094000   : log(TVV3)
+  1.2845700   : log(TVQ)
+  0.4847790   : log(CLEGFR)
+  -0.0377291  : log(CLAGE)
+  0.4187480   : log(CLALB)
 
 [ omega ] @block 
   0.219
