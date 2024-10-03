@@ -10,13 +10,23 @@ format:
 editor: visual
 ---
 
-# Outline
+# Outline{.smaller}
 
--   Model parameters
--   Model specifications
--   Model validations
+*   Model parameters: `[ param ]` and `[ theta ]`
+*   Model specifications   
+
+    - Covariate model: `[ main ]` (i.e., `[ pk ]`)
+    - Random effects: `[ omega ]` and `[ sigma ]`   
+    - Import `NONMEM` estimates: `[ nmext ]` and `[ nmxml ]`
+    - Models in Closed form: `[ pkmodel ]` 
+    - `[ plugin ]` 
+    - Other blocks
+  
+*   Model validations
 
 ## An example model {.smaller}
+
+`./wk6/mrg-model/106.cpp` which is a translated `mrgsolve` model from the `NONMEM` model `./wk6/nm-model/106.mod`
 
 ``` cpp
 
@@ -33,14 +43,14 @@ editor: visual
   AGE  = 35
 
 [ theta ] @annotated
-  0.443   : log(TVKA)
-  4.12    : log(TVV2)
-  1.17    : log(TVCL)
-  4.21    : log(TVV3)
-  1.28    : log(TVQ)
-  0.485   : log(CLEGFR)
-  -0.0377 : log(CLAGE)
-  0.419   : log(CLALB)
+  0.4431220   : log(TVKA)
+  4.1190600   : log(TVV2)
+  1.1719900   : log(TVCL)
+  4.2094000   : log(TVV3)
+  1.2845700   : log(TVQ)
+  0.4847790   : log(CLEGFR)
+  -0.0377291  : log(CLAGE)
+  0.4187480   : log(CLALB)
 
 [ omega ] @block 
   0.219
@@ -121,14 +131,14 @@ see(mod)
   AGE  = 35
 
 [ theta ] @annotated
-  0.443   : log(TVKA)
-  4.12    : log(TVV2)
-  1.17    : log(TVCL)
-  4.21    : log(TVV3)
-  1.28    : log(TVQ)
-  0.485   : log(CLEGFR)
-  -0.0377 : log(CLAGE)
-  0.419   : log(CLALB)
+  0.4431220   : log(TVKA)
+  4.1190600   : log(TVV2)
+  1.1719900   : log(TVCL)
+  4.2094000   : log(TVV3)
+  1.2845700   : log(TVQ)
+  0.4847790   : log(CLEGFR)
+  -0.0377291  : log(CLAGE)
+  0.4187480   : log(CLALB)
 
 [ omega ] @block 
   0.219
@@ -174,14 +184,14 @@ see(mod)
   AGE  = 35
 
 [ theta ] @annotated
-  0.443   : log(TVKA)
-  4.12    : log(TVV2)
-  1.17    : log(TVCL)
-  4.21    : log(TVV3)
-  1.28    : log(TVQ)
-  0.485   : log(CLEGFR)
-  -0.0377 : log(CLAGE)
-  0.419   : log(CLALB)
+  0.4431220   : log(TVKA)
+  4.1190600   : log(TVV2)
+  1.1719900   : log(TVCL)
+  4.2094000   : log(TVV3)
+  1.2845700   : log(TVQ)
+  0.4847790   : log(CLEGFR)
+  -0.0377291  : log(CLAGE)
+  0.4187480   : log(CLALB)
 ```
 :::
 
@@ -194,14 +204,14 @@ see(mod)
   AGE  = 35
 
 [ theta ] 
-  0.443   
-  4.12    
-  1.17    
-  4.21    
-  1.28    
-  0.485   
-  -0.0377 
-  0.419   
+  0.4431220 
+  4.1190600 
+  1.1719900 
+  4.2094000
+  1.2845700 
+  0.4847790   
+  -0.0377291  
+  0.4187480  
 ```
 :::
 :::
@@ -218,14 +228,14 @@ see(mod)
   AGE  = 35
 
 [ theta ] @annotated
-  0.443   : log(TVKA)
-  4.12    : log(TVV2)
-  1.17    : log(TVCL)
-  4.21    : log(TVV3)
-  1.28    : log(TVQ)
-  0.485   : log(CLEGFR)
-  -0.0377 : log(CLAGE)
-  0.419   : log(CLALB)
+  0.4431220   : log(TVKA)
+  4.1190600   : log(TVV2)
+  1.1719900   : log(TVCL)
+  4.2094000   : log(TVV3)
+  1.2845700   : log(TVQ)
+  0.4847790   : log(CLEGFR)
+  -0.0377291  : log(CLAGE)
+  0.4187480   : log(CLALB)
 ```
 :::
 
@@ -236,14 +246,14 @@ see(mod)
   EGFR = 90
   ALB  = 4.5
   AGE  = 35
-  THETA1 = 0.443   
-  THETA2 = 4.12    
-  THETA3 = 1.17    
-  THETA4 = 4.21    
-  THETA5 = 1.28    
-  THETA6 = 0.485   
-  THETA7 = -0.0377 
-  THETA8 = 0.419   
+  THETA1 = 0.4431220   
+  THETA2 = 4.1190600   
+  THETA3 = 1.1719900    
+  THETA4 = 4.2094000    
+  THETA5 = 1.2845700   
+  THETA6 = 0.4847790   
+  THETA7 = -0.0377291
+  THETA8 = 0.4187480 
 ```
 :::
 :::
@@ -257,39 +267,68 @@ see(mod)
 
 ## `param()`{.smaller}
 
+<!-- ```{.r} -->
+<!-- mod <- param(mod, WT=80) -->
+<!-- ``` -->
+
+
 ```{r}
 #| echo: true
 mod$WT
 mod <- param(mod, WT=80)
 mod$WT
-mrgsim(mod) %>% plot("WT")
 ```
+
+<!-- mrgsim(mod) %>% plot("WT") -->
 
 ## `update()`
 
+<!-- ```{.r} -->
+<!-- mod <- update(mod, param = list(WT = 60)) -->
+<!-- out <- mrgsim_df(mod, param = list(WT = 65)) -->
+<!-- ``` -->
+
+
 ```{r}
 #| echo: true
+mod$WT
 mod <- update(mod, param = list(WT = 60))
 mod$WT
-out <- mrgsim_df(mod, param = list(WT = 65))
-unique(out$WT)
 ```
 
-## Update using a object
+## Update using a `list` object
 
 ```{r}
 #| echo: true
 p <- list(WT = 70.2, FOO = 1) # A list object
-
 mod <- param(mod, p)
+mod <- update(mod, param=p)
+mod$WT
+```
 
+## Update using a `data.frame` object
+
+```{r}
+#| echo: true
+# A data frame object
+data <- data.frame(WT = 80.1, BAR = 2) 
+mod <- param(mod, data)
+# mod <- update(mod, param=data)
 mod$WT
 
-data <- data.frame(WT = c(70, 80.1), BAR = 2) # A data frame object
-
+# A data frame object with multiple records
+data <- data.frame(WT = c(70, 80.5), BAR = 2) 
 mod <- param(mod, data[2,])
-
+# mod <- update(mod, param=data[2,])
 mod$WT
+```
+
+## Update during the simulation
+
+```{r}
+#| echo: true
+out <- mrgsim_df(mod, param = list(WT = 65))
+unique(out$WT)
 ```
 
 ## Update during the simulation
@@ -298,10 +337,11 @@ mod$WT
 #| echo: true
 withr::with_seed(12131, 
                  data <- data.frame(
-                   ID=1:3, TIME=0, AMT=100, CMT=1, EVID=1, 
-                   WT = rnorm(3, 70, 10), EGFR = rnorm(3, 90, 10),
-                   ALB = rnorm(3, 4.5, 2), AGE = 50)
-)
+                 ID=1:3, TIME=0, AMT=100, CMT=1, EVID=1, 
+                 WT = rnorm(3, 70, 10), # Simulate 3 random WT 
+                 EGFR = rnorm(3, 90, 10), # Simulate 3 random EGFR
+                 ALB = rnorm(3, 4.5, 2),  # Simulate 3 random ALB
+                 AGE = 50)) # AGE=50 for everyone
 data
 ```
 
@@ -312,8 +352,8 @@ data
 #| code-line-numbers: "|3"
 out <- 
   mod %>% 
-  data_set(data) %>%
-  zero_re() %>% 
+  data_set(data) %>% # Simulate using `data_set()`
+  zero_re() %>% # Simulate without random effect
   mrgsim(delta = 0.1, end = 24)
 
 plot(out, "WT,EGFR,ALB,AGE,IPRED")
@@ -324,6 +364,7 @@ plot(out, "WT,EGFR,ALB,AGE,IPRED")
 ```{r}
 #| echo: true
 #| warning: true
+param(mod)
 inventory(mod, data)
 ```
 
@@ -339,14 +380,14 @@ New in `mrgsolve` 1.2.0, you can use the `$INPUT` block.
   EGFR = 90
   ALB  = 4.5
   AGE  = 35
-  THETA1 = 0.443   
-  THETA2 = 4.12    
-  THETA3 = 1.17    
-  THETA4 = 4.21    
-  THETA5 = 1.28    
-  THETA6 = 0.485   
-  THETA7 = -0.0377 
-  THETA8 = 0.419   
+  THETA1 = 0.4431220   
+  THETA2 = 4.1190600   
+  THETA3 = 1.1719900    
+  THETA4 = 4.2094000    
+  THETA5 = 1.2845700   
+  THETA6 = 0.4847790   
+  THETA7 = -0.0377291
+  THETA8 = 0.4187480 
 ```
 :::
 
@@ -359,54 +400,28 @@ New in `mrgsolve` 1.2.0, you can use the `$INPUT` block.
   AGE  = 35
 
 [ param ]
-  THETA1 = 0.443   
-  THETA2 = 4.12    
-  THETA3 = 1.17    
-  THETA4 = 4.21    
-  THETA5 = 1.28    
-  THETA6 = 0.485   
-  THETA7 = -0.0377 
-  THETA8 = 0.419   
+  THETA1 = 0.4431220   
+  THETA2 = 4.1190600   
+  THETA3 = 1.1719900    
+  THETA4 = 4.2094000    
+  THETA5 = 1.2845700   
+  THETA6 = 0.4847790   
+  THETA7 = -0.0377291
+  THETA8 = 0.4187480 
 ```
 :::
 :::
 
 ## Input tags
 
-<!-- ::: columns -->
-<!-- ::: {.column width="50%"} -->
-<!-- ```{r} -->
-<!-- #| echo: true -->
-<!-- #| warning: true -->
-<!-- mod1 <- mread(model = "106.cpp",  -->
-<!--              project = here("wk6/mrg-model")) -->
-<!-- param_tags(mod1) -->
-<!-- ``` -->
-<!-- ::: -->
-
-<!-- ::: {.column width="50%"} -->
-<!-- ```{r} -->
-<!-- #| echo: true -->
-<!-- #| warning: true -->
-<!-- mod2 <- mread(model = "106-2.cpp",  -->
-<!--              project = here("wk6/mrg-model")) -->
-<!-- param_tags(mod2) -->
-<!-- ``` -->
-<!-- ::: -->
-<!-- ::: -->
-
-## `check_data_names()`
-
-# ```{r}
-# #| echo: true
-# #| warning: true
-# check_data_names(data, mod)
-# check_data_names(data, mod2)
-# data2 <- rename(data, eGFR = EGFR)
-# check_data_names(data2, mod2)
-# ```
+``` r
+param_tags(mod)
+check_data_names(data, mod)
+```
 
 # Covariate model {.smaller}
+
+Syntax in `[ main ]` and `[ pk ]` are in `C++`. 
 
 ``` {.cpp code-line-numbers="32-45"}
 
@@ -423,14 +438,14 @@ New in `mrgsolve` 1.2.0, you can use the `$INPUT` block.
   AGE  = 35
 
 [ theta ] @annotated
-  0.443   : log(TVKA)
-  4.12    : log(TVV2)
-  1.17    : log(TVCL)
-  4.21    : log(TVV3)
-  1.28    : log(TVQ)
-  0.485   : log(CLEGFR)
-  -0.0377 : log(CLAGE)
-  0.419   : log(CLALB)
+  0.4431220   : log(TVKA)
+  4.1190600   : log(TVV2)
+  1.1719900   : log(TVCL)
+  4.2094000   : log(TVV3)
+  1.2845700   : log(TVQ)
+  0.4847790   : log(CLEGFR)
+  -0.0377291  : log(CLAGE)
+  0.4187480   : log(CLALB)
 
 [ omega ] @block 
   0.219
@@ -464,19 +479,26 @@ New in `mrgsolve` 1.2.0, you can use the `$INPUT` block.
 [ capture ] CL V2 IPRED Y WT EGFR ALB AGE
 ```
 
-## `C++` functions
+## `C++` syntax
 
 ``` cpp
+double a = 0; // `double` is a data-type in C++
+double b = 0; // similar to numeric in R
+double c = 0; // `int` = integer
+double d = 0; // `bool` = boolean
+
 if(a == 2) b = 2;
+
 if(b <= 2) {
   c=3;
 } else {
   c=4;
 }
+
 d = a==2 ? 50 : 100;
 ```
 
-## `C++` functions
+## `C++` syntax
 
 ::: columns
 ::: {.column width="50%"}
@@ -519,7 +541,7 @@ bool cure = false;
 -   Declare variable type (e.g., `double` for numeric variable; `bool` for logical variable).
 -   Use `;` behind each line of syntax.
 -   Case sensitive, use `exp` and `pow`, not `EXP` and `POW`.
--   Lots of help on the web (https://en.cppreference.com/w/cpp).
+-   Lots of help on the web (<https://en.cppreference.com/w/cpp>).
 
 ## Caution
 
@@ -547,14 +569,14 @@ double result = 1.0/2.0; # 0.5
   AGE  = 35
 
 [ theta ] @annotated
-  0.443   : log(TVKA)
-  4.12    : log(TVV2)
-  1.17    : log(TVCL)
-  4.21    : log(TVV3)
-  1.28    : log(TVQ)
-  0.485   : log(CLEGFR)
-  -0.0377 : log(CLAGE)
-  0.419   : log(CLALB)
+  0.4431220   : log(TVKA)
+  4.1190600   : log(TVV2)
+  1.1719900   : log(TVCL)
+  4.2094000   : log(TVV3)
+  1.2845700   : log(TVQ)
+  0.4847790   : log(CLEGFR)
+  -0.0377291  : log(CLAGE)
+  0.4187480   : log(CLALB)
 
 [ omega ] @block 
   0.219
@@ -604,8 +626,8 @@ or
   0.219 0.0668 0.0824 0.121 0.0703 0.114
 ```
 
--   Diagonal elements are variance.
--   Off-diagonal elements are covariance.
+-   Diagonal elements are **variance**.
+-   Off-diagonal elements are **covariance**.
 
 $$
 \begin{bmatrix}
@@ -651,16 +673,20 @@ $$
 ``` cpp
 [ omega ] @correlation
   0.219
-  0.0668 0.0824
-  0.121  0.0703 0.114
+  0.497 0.0824
+  0.766 0.725  0.114
 ```
 
--   Diagonal elements are variance.
+$$
+Cor(X,Y) = \frac{Cov(X,Y)}{\sqrt{Var(X) \times Var(Y)}}
+$$
+
+-   Diagonal elements are still **variance**.
 -   Off-diagonal elements are **correlation**, not covariance.
 
 ## `[ omega ]` and `[ sigma ]`{.smaller}
 
-``` {.cpp code-line-numbers="|3,12|4,13|5,14|8,18"}
+``` {.cpp code-line-numbers="|3-5,12-14|8,18"}
 ...
 [ omega ] @block 
   0.219
@@ -683,7 +709,7 @@ $$
 
 ## `@label`{.smaller}
 
-``` {.cpp code-line-numbers="|2|3,12|4,13|5,14|8,18"}
+``` {.cpp code-line-numbers="|2|3-5,12-14"}
 ...
 [ omega ] @block @labels ETA_KA ETA_V2 ETA_CL 
   0.219
@@ -706,7 +732,7 @@ $$
 
 ## `@annotated`{.smaller}
 
-``` {.cpp code-line-numbers="|2|3,12|4,13|5,14|8,18"}
+``` {.cpp code-line-numbers="|2|3-5"}
 ...
 [ omega ] @annotated @block
   0.219 : ETA on KA
@@ -729,16 +755,18 @@ $$
 
 ## Separated `[ omega ]`/`[ sigma ]`{.smaller}
 
+Once separated, the `[ omega ]` matrix will behave as a diagonal matrix.
+
 ``` {.cpp code-line-numbers="|3,16|6,17|9,18|12,22"}
 ...
-[ omega ] 
-  0.219
+[ omega ] @annotated
+  0.219 : ETA on KA
 
-[ omega ]
-  0.0824
+[ omega ] @annotated
+  0.0824 : ETA on V2
   
-[ omega ]
-  0.114
+[ omega ] @annotated
+  0.114 : ETA on CL
 
 [ sigma ] @block
   0.0399
@@ -758,13 +786,13 @@ $$
 
 ``` {.cpp code-line-numbers="|2|5|8"}
 ...
-[ omega ] @ name KA
+[ omega ] @name KA
   0.219
 
-[ omega ] @ name V2
+[ omega ] @name V2
   0.0824
   
-[ omega ] @ name CL
+[ omega ] @name CL
   0.114
 
 [ sigma ] @block
@@ -781,7 +809,7 @@ $$
   double Y = IPRED * (1+EPS(1));
 ```
 
-# Import `NONMEM` estimates? {.smaller}
+# Import `NONMEM` estimates {.smaller}
 
 -   Use `[ nmext ]` or `[ nmxml ]`
     -   `[ nmext ]` reads from the `.ext` file.
@@ -823,14 +851,14 @@ $OMEGA BLOCK(3)
 ::: {.column width="40%"}
 ``` cpp
 [ theta ] @annotated
-  0.443   : log(TVKA)
-  4.12    : log(TVV2)
-  1.17    : log(TVCL)
-  4.21    : log(TVV3)
-  1.28    : log(TVQ)
-  0.485   : log(CLEGFR)
-  -0.0377 : log(CLAGE)
-  0.419   : log(CLALB)
+  0.4431220   : log(TVKA)
+  4.1190600   : log(TVV2)
+  1.1719900   : log(TVCL)
+  4.2094000   : log(TVV3)
+  1.2845700   : log(TVQ)
+  0.4847790   : log(CLEGFR)
+  -0.0377291  : log(CLAGE)
+  0.4187480   : log(CLALB)
 
 [ omega ] @block 
   0.219
@@ -868,14 +896,14 @@ This syntax will let `mrgsolve` model look for `../nm-model/106/106.ext`
 ::: {.column width="40%"}
 ``` cpp
 [ theta ] @annotated
-  0.443   : log(TVKA)
-  4.12    : log(TVV2)
-  1.17    : log(TVCL)
-  4.21    : log(TVV3)
-  1.28    : log(TVQ)
-  0.485   : log(CLEGFR)
-  -0.0377 : log(CLAGE)
-  0.419   : log(CLALB)
+  0.4431220   : log(TVKA)
+  4.1190600   : log(TVV2)
+  1.1719900   : log(TVCL)
+  4.2094000   : log(TVV3)
+  1.2845700   : log(TVQ)
+  0.4847790   : log(CLEGFR)
+  -0.0377291  : log(CLAGE)
+  0.4187480   : log(CLALB)
 
 [ omega ] @block 
   0.219
@@ -911,30 +939,31 @@ This syntax will let `mrgsolve` model look for `../nm-model/106/106.xml`
 
 Like `NONMEM`, `mrgsolve` also has "short-cut" to solve one- and two-compartment models with first order input in closed form using `[ pkmodel ]`, which usually results in substantial speed up.
 
-::: columns
-::: {.column width="50%"}
-![](pics/advan.png){width="60%"}
-:::
+<!-- * `NONMEM $SUBROUTINE` -->
 
-::: {.column width="50%"}
-![](pics/trans.png){width="70%"}
-:::
-:::
+<!-- <div style="overflow-y: scroll; height: 400px;" class="scroll-container"> -->
+<!-- ![](pics/advan.png){.nostretch width="90%"} -->
+<!-- </div> -->
 
+## `NONMEM $SUBROUTINE` {.smaller}
+
+<div style="overflow-y: scroll; height: 600px;" class="scroll-container">
+![](pics/trans.png){width="90%"}
+</div>
 ## `[ pkmodel ]`
 
 `mrgsolve`
 
-``` cpp
-[ pkmodel ] cmt = "CENT", depot = FALSE     // 1-cmt IV
-[ pkmodel ] cmt = "CENT", depot = TRUE      // 1-cmt oral/SC
-[ pkmodel ] cmt = "GUT,CENT", depot = FALSE // 2-cmt IV
-[ pkmodel ] cmt = "GUT,CENT", depot = TRUE  // 2-cmt oral/SC
+```{.cpp code-line-numbers="|4"} 
+[ pkmodel ] cmt = "CENT"           , depot = FALSE // 1-cmt IV
+[ pkmodel ] cmt = "GUT CENT"       , depot = TRUE  // 1-cmt oral/SC
+[ pkmodel ] cmt = "CENT PHRIPH"    , depot = FALSE // 2-cmt IV
+[ pkmodel ] cmt = "GUT CENT PHRIPH", depot = TRUE  // 2-cmt oral/SC
 ```
 
 `NONMEM`
 
-``` cpp
+```{.cpp code-line-numbers="|4"}
 $SUBROUTINE ADVAN1 TRANS2; 1-CMT IV
 $SUBROUTINE ADVAN2 TRANS2; 1-CMT oral/SC
 $SUBROUTINE ADVAN3 TRANS4; 2-CMT IV
@@ -1026,8 +1055,10 @@ When this plugin is invoked, `mrgsolve` will search your model code for assignme
 [ env ] MRGSOLVE_AUTODEC_SKIP = c("my_variable_1")
 ```
 
-## `nm-vars`{.smaller}
+## `NONMEM` versus `mrgsolve` without `nm-vars`{.smaller}
 
+::: columns
+::: {.column width="50%"}
 `NONMEM`
 
 ``` cpp
@@ -1048,10 +1079,11 @@ DADT(2) = KA * A(1) - (CL/V)*A(2) - Q*(A(2)/V2 - A(3)/V3)
 DADT(3) = Q*(A(2)/V2 - A(3)/V3)
 ...
 ```
-
+:::
+::: {.column width="50%"}
 `mrgsolve`
 
-``` cpp
+```{.cpp code-line-numbers="|3,9-10,13-15"}
 [ pk ]
 ...
 double KA  = exp(THETA(1) + ETA(1));
@@ -1069,12 +1101,16 @@ dxdt_CENT = KA * DEPOT - (CL/V)*CENT - Q*(CENT/V2 - PERIPH/V3);
 dxdt_PERIPH = Q*(CENT/V2 - PERIPH/V3);
 ...
 ```
+:::
+:::
 
-## `nm-vars`{.smaller}
+## `NONMEM` versus `mrgsolve` with `nm-vars`{.smaller}
 
+::: columns
+::: {.column width="50%"}
 `NONMEM`
 
-``` cpp
+```{.cpp}
 $PK
 ...
 KA   = EXP(THETA(1)+ETA(1))
@@ -1092,10 +1128,11 @@ DADT(2) = KA * A(1) - (CL/V)*A(2) - Q*(A(2)/V2 - A(3)/V3)
 DADT(3) = Q*(A(2)/V2 - A(3)/V3)
 ...
 ```
-
+:::
+::: {.column width="50%"}
 `mrgsolve` with `nm-vars`
 
-``` cpp
+```{.cpp code-line-numbers="|7,13-14,17-19"}
 [ plugin ] nm-vars
 
 ...
@@ -1117,8 +1154,10 @@ DADT(2) = KA * A(1) - (CL/V)*A(2) - Q*(A(2)/V2 - A(3)/V3);
 DADT(3) = Q*(A(2)/V2 - A(3)/V3);
 ...
 ```
+:::
+:::
 
-## `nm-vars`{.smaller}
+## `[ plugin ] nm-vars`{.smaller}
 
 -   `F`, `R`, `D`, `ALAG`
     -   To set bioavailability for the nth compartment, use `Fn`.\
@@ -1137,9 +1176,9 @@ DADT(3) = Q*(A(2)/V2 - A(3)/V3);
 
 ## `Rcpp`{.smaller}
 
--   This gives you functions and data structures that you’re used to using in `R`, but they work in `c++`.
+-   This gives you functions and data structures that you’re used to using in `R`, but they work in `C++`.
 
--   The main use for this is random number generation. Any `d/q/p/r` function in `R` will be available; arguments are the same, but omit n (you always get just one draw when calling from `c++`.
+-   The main use for this is random number generation. Any `d/q/p/r` function in `R` will be available; arguments are the same, but omit n (you always get just one draw when calling from `C++`.
 
 -   Note: this will slightly increase compile time.
 
@@ -1191,8 +1230,8 @@ Resource: https://mrgsolve.org/user-guide/plugins.html
 
 ## `[ env ]`{.smaller}
 
--   To define a set of R objects that might be evaluated in other model blocks.
--   This block is all R code (just as you would code in a stand-alone R script.
+-   To define a set of `R` objects that might be evaluated in other model blocks.
+-   This block is all `R` code (just as you would code in a stand-alone R script.
 
 ``` cpp
 ...
@@ -1214,47 +1253,57 @@ $OMEGA @object Sigma
 
 ## `[ pred ]`{.smaller}
 
--   Use `$PRED` to write a model *without* differential equations. In this block, write all algebraic expressions for derived parameters, the response, and any other derived output quantities.
+-   Use `$PRED` to write a model **without** differential equations. 
+
+-   In this block, write all algebraic expressions for derived parameters, the response, and any other derived output quantities.
 
 -   It is an error to include the following blocks when `$PRED` is being used: `$MAIN`, `$TABLE`, `$PKMODEL`, `$ODE`, `$CMT`, `$INIT`.
 
--   An example `NONMEM` model without differential equation
+## An example model using `$PRED`
 
-``` cpp
-
-$PROBLEM A NONMEM MODEL WITHOUT DES
-$INPUT   ID TIME DV AUC
-$DATA    SOMEDATA
+:::columns
+:::{.column width=50%}
+`NONMEM`
+```{.cpp .code-overflow-wrap}
+$PROBLEM A MODEL WITH $PRED
+$INPUT ID TIME DV AUC
+$DATA SOMEDATA
 $PRED
  EVE0=THETA(1)
  E0=EVE0*EXP(ETA(1))
  IMAX=40
  AUC50=100
- RESP=E0-IMAX*AUC/(AUC50+AUC)
- Y=RESP+ERR(1)
+ R=E0-IMAX*AUC/(AUC50+AUC)
+ Y=R+EPS(1)
 $THETA   100
 $OMEGA   0.1
 $SIGMA   4
 $ESTIMATION
 ```
-
--   An example `mrgsolve` model without differential equation
-
-``` cpp
-[ PARAM ] TVE0 = 100, AUC50 = 100, IMAX = 40, AUC = 0
-
+:::
+:::{.column width=50%}
+`mrgsolve`
+```{.cpp .code-overflow-wrap}
+[ PARAM ] 
+TVE0 = 100 
+AUC50 = 100
+IMAX = 40
+AUC = 0
+[ OMEGA ] 0.1
+[ SIGMA ] 4
 [ PRED ]
-double E0 = EVE0*exp(ETA(1));
-
-double RESP = E0 - IMAX*AUC/(AUC50+AUC);
+double E0=EVE0*exp(ETA(1));
+double R=E0-IMAX*AUC/(AUC50+AUC);
+double Y=R+EPS(1); 
 ```
+:::
+:::
 
 ## `[ premable ]`{.smaller}
 
 -   Only called one time during the simulation run (right at the start). The code in this block is typically used to configure or initialize `C++` variables or data structures that were declared in `[ global ]`.
 
 ``` cpp
-
 [ PLUGIN ] Rcpp
 
 [ GLOBAL ]
@@ -1263,12 +1312,14 @@ namespace{
 }
 
 [ PREAMBLE ]
-x.push_back(1);
-x.push_back(2);
-x.push_back(3);
+x.push_back(5.0); // add the 1st element in vector x
+x.push_back(6.0); // add the 2nd element in vector x
+x.push_back(7.0); // add the 3rd element in vector x
 
 [ MAIN ]
-<some code that uses x vector>
+double CL=x[0]; // 1st value of x
+double V =x[1]; // 2nd value of x
+double KA=x[2]; // 3rd value of x
 ```
 
 ## `[ global ]`
@@ -1289,14 +1340,20 @@ x.push_back(3);
     CP = CENT/S2; 
 ```
 
+# Variables and macros
+
+<https://mrgsolve.org/user-guide/specification.html#sec-variables-macros>
+
+```{.r}
+double mt1 = self.mtime(1.23 + ETA(1));
+self.mevent(1.23 + ETA(1), 33);
+```
+
 # Validation
 
-* Once we finished developing a popPK model using `NONMEM`, it is common that we translate a `NONMEM` model into a `mrgsolve` model for simulation. 
+-   Once we finished developing a popPK model using `NONMEM`, it is common that we translate a `NONMEM` model into a `mrgsolve` model for simulation.
 
-* Validation needs to be done to confirm the correctness of the translation by comparing: 
-  - `PRED`: `NONMEM` vs `mrgsolve`. 
-  - `IPRED`: `NONMEM` vs `mrgsolve`. 
-  
+-   Validation needs to be done to confirm the correctness of the translation by comparing:
 
-
-
+    -   `PRED`: `NONMEM` vs `mrgsolve`.
+    -   `IPRED`: `NONMEM` vs `mrgsolve`.

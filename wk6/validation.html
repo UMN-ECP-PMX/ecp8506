@@ -3128,7 +3128,7 @@ vertical-align: -.125em;
 <section id="load-your-mrgsolve-model" class="level2">
 <h2 class="anchored" data-anchor-id="load-your-mrgsolve-model">Load your <code>mrgsolve</code> model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>runno <span class="ot">&lt;-</span> <span class="dv">106</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>runno <span class="ot">&lt;-</span> <span class="st">&quot;106&quot;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">mread</span>(<span class="fu">here</span>(<span class="st">&quot;wk6/mrg-model&quot;</span>, <span class="fu">paste0</span>(runno, <span class="st">&quot;.cpp&quot;</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Building 106_cpp ... done.</code></pre>
@@ -3333,10 +3333,10 @@ cols(
 <section id="numerical-check-pred-by-nonmem-versus-mrgsolve" class="level2">
 <h2 class="anchored" data-anchor-id="numerical-check-pred-by-nonmem-versus-mrgsolve">Numerical check <code>PRED</code> by <code>NONMEM</code> versus <code>mrgsolve</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(out<span class="sc">$</span>NMPRED <span class="sc">-</span> out<span class="sc">$</span>MRGPRED)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="dv">100</span><span class="sc">*</span>(out<span class="sc">$</span>NMPRED <span class="sc">-</span> out<span class="sc">$</span>MRGPRED)<span class="sc">/</span>out<span class="sc">$</span>NMPRED)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
--0.100000  0.000000  0.000000  0.001298  0.000000  0.100000 </code></pre>
+<pre><code>      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-0.0087843  0.0000000  0.0000000  0.0002597  0.0000000  0.0097656 </code></pre>
 </div>
 </div>
 </section>
