@@ -5,7 +5,7 @@ project:
 book:
   title: "Intro to mrgsolve"
   author: ["Kyle Baron"]
-  date: "03/27/2024"
+  date: "10/03/2024"
   chapters:
     - index.Rmd
     - intro.Rmd
@@ -28,6 +28,3 @@ format:
     toc-title: Contents
     code-overflow: wrap
     fig-height: 4
-
-#  pdf:
-#    documentclass: scrreprt
