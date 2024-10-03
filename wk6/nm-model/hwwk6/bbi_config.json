@@ -1,0 +1,37 @@
+{
+    "bbi_version": "v3.3.1",
+    "model_name": "hwwk6.mod",
+    "original_model": "hwwk6.mod",
+    "model_path": "/users/1/cheng423/ecp8506/wk6/nm-model/hwwk6.mod",
+    "data_path": "../../data/nmdat1.csv",
+    "data_md5": "c1468abc93d886c47d43bb7dbf26a607",
+    "model_md5": "b017334ca1d74217a0c77e3c522bf71f",
+    "model_filename": "hwwk6",
+    "model_extension": "mod",
+    "original_path": "/users/1/cheng423/ecp8506/wk6/nm-model",
+    "output_dir": "/users/1/cheng423/ecp8506/wk6/nm-model/hwwk6",
+    "configuration": {
+        "clean_lvl": 1,
+        "git": true,
+        "save_config": true,
+        "output_dir": "{{ .Name }}",
+        "threads": 4,
+        "local": {
+            "create_child_dirs": true
+        },
+        "nonmem": {
+            "750": {
+                "home": "/common/software/install/manual/nonmem/750",
+                "executable": "nmfe75",
+                "default": true
+            }
+        },
+        "parallel": true,
+        "nmfe_options": {
+            "maxlim": 2
+        },
+        "mpi_exec_path": "/common/software/install/migrated/oneapi/2022.1/mpi/2021.5.1/bin/mpiexec",
+        "parallel_timeout": 2147483647
+    },
+    "error": null
+}
