@@ -1,0 +1,307 @@
+
+# Replicate simulation {#sec-replicate}
+
+```{r}
+#| include: false
+source(here::here("src/global.R"))
+
+
+library(mrgsolve)
+library(dplyr)
+library(here)
+library(readr)
+library(tidyr)
+```
+
+This chapter shows patterns for simulating in replicate. After a basic 
+replicate simulation, we'll simulate with uncertainty and then give some 
+tips on how to parallelize. 
+
+
+## Basic replicate simulation
+
+### Load the model 
+
+First, load a model and data set from which to simulate
+
+```{r}
+#| message: false
+mod <- mread("106.mrgsolve", project = here("model/pk"))
+
+mod <- update(mod, outvars = "CL,IPRED,Y")
+
+param_tags(mod)
+```
+
+### Data skeleton
+
+Now create a template data set; we'll resample from the input data from this 
+model run.
+
+```{r, message = FALSE}
+dat <- read_csv(here("data/derived/analysis3.csv"), na = '.')
+
+id <- distinct(dat, ID, WT, ALB, AGE, EGFR)
+
+covariates <- slice_sample(id, n = 1000, replace = TRUE)
+
+covariates <- mutate(covariates, ID = row_number())
+```
+
+Look at the 10 and 25 mg doses at steady state
+
+```{r}
+data <- crossing(
+  covariates, 
+  AMT = c(10,25), 
+  CMT = 1, 
+  TIME = 0, 
+  EVID = 1, 
+  II = 24, 
+  SS = 1
+)
+
+data <- mutate(data, DOSE = AMT, ID = row_number())
+```
+
+
+__Remember to check the names in your data set__
+
+```{r}
+check_data_names(data, mod)
+```
+
+
+### Set up simulation
+
+I prefer to create a function that executes a single simulation replicate. 
+
+```{r}
+sim <- function(i, model, data) {
+  mrgsim(
+    model,
+    data = data, 
+    recover = "WT,DOSE",
+    output = "df", 
+    obsonly = TRUE, 
+    end = 24, 
+    add = seq(0, 2, 0.1),
+    recsort = 3
+  ) %>% mutate(irep = i)
+}
+```
+
+Note in this function
+
+- The first argument is the current simulation replicate
+- We also pass in the data and the model object
+- We bring `WT` and `DOSE` into the simulated output
+- Output is data.frame; we don't get any benefit from the `mrgsims` object
+- We `mutate()` the simulated output so we can track it later
+
+
+Then try your function
+
+```{r}
+sim(2, mod, data) %>% filter(TIME %in% c(0,24)) %>% head()
+```
+
+
+Now, call `lapply()` a simulate the desired number of replicates, setting the 
+seed first to ensure reproducibility
+
+```{r}
+nsim <- 10
+
+set.seed(98765)
+out <- lapply(1:nsim, sim, mod, data) %>% bind_rows()
+```
+
+Now we have 10 replicates of our data skeleton
+
+```{r}
+count(out, irep, DOSE)
+```
+
+The median pre-dose concentration at steady state is
+
+```{r}
+summ <- 
+  out %>% 
+  filter(TIME==24) %>% 
+  group_by(irep,DOSE) %>% 
+  summarise(Median = median(IPRED), .groups = "drop")
+
+head(summ)
+```
+
+
+## Simulate with uncertainty
+
+### Load uncertainty estimates
+
+We have bootstrap parameter estimates for this model here
+
+```{r}
+#| message: false
+boot <- read_csv(here("data/boot-106.csv"))
+boot
+```
+
+We have 1000 bootstrap replicates for `THETA`, `OMEGA` and `SIGMA`.
+
+
+Let's separate things. Just select columns for `THETA`
+
+```{r}
+thetas <- select(boot, contains("THETA"))
+```
+
+For `OMEGA` and `SIGMA`, we have to turn these data into matrices. We do 
+this with `as_bmat()`. 
+
+The second argument is a regular expression for selecting columns from which 
+to make the matrix.
+
+```{r}
+omegas <- as_bmat(boot, "OMEGA")
+sigmas <- as_bmat(boot, "SIGMA")
+```
+
+
+Now, `omegas` is a list with length equal to the number of rows in `boot`
+
+```{r}
+class(omegas)
+length(omegas)
+```
+
+Each position in `omegas` is another `OMEGA` matrix
+
+```{r}
+omegas[[10]]
+```
+
+Similar for `sigmas`
+
+```{r}
+sigmas[[100]]
+```
+
+### Simulation function to use with bootstrap estimates
+
+Now, we do three update steps to update the model object with the ith set of 
+bootstrap estimates. 
+
+- `param()` to update `THETA`s
+- `omat()` to update `OMEGA`
+- `smat()` to update `SIGMA`
+
+```{r}
+simu <- function(i, model, data, thetas, omegas, sigmas) {
+  
+  model <- param(model, slice(thetas, i))
+  model <- omat(model, omegas[[i]])
+  model <- smat(model, sigmas[[i]])
+  
+  mrgsim(
+    model,
+    data = data, 
+    recover = "WT,DOSE",
+    output = "df", 
+    obsonly = TRUE, 
+    end = 24, 
+    add = seq(0, 2, 0.1),
+    recsort = 3
+  ) %>% mutate(irep = i)
+}
+```
+
+
+Again, it's a good idea to test this out
+
+```{r}
+simu(23, mod, data, thetas, omegas, sigmas) %>% as_tibble()
+```
+
+Just like before, we can simulate with lapply
+
+```{r}
+nsim <- 10
+
+set.seed(98765)
+outu <- lapply(1:nsim, simu, mod, data, thetas, omegas, sigmas) %>% bind_rows()
+```
+
+Now we have 10 replicates of our data skeleton
+
+```{r}
+count(outu, irep, DOSE)
+```
+
+## Parallelization
+
+Replicate simulations might start to take a long time to complete. If so, you 
+can easily parallelize these simulations. 
+
+We recommend using the `future.apply` package, which is built on top of 
+`future`.
+
+
+```{r}
+library(future.apply)
+```
+
+This package will give us a function (`future_lapply`) that works just like 
+`lapply`, but it will send each replicate to different cores on your computer, 
+running multiple replicates at a time rather than sequentially. 
+
+You have to tell `future` what evaluation strategy you want to use. 
+
+If you are running on a `unix-alike` system, I recommend the `multicore` plan. 
+This creates workers from a _fork_  of your current R session. The performance
+tends to be a little better than `multisession`. 
+
+If you are running on a `Windows` system, you must use `multisession` 
+parallelization. This strategy starts new R processes for running the jobs. 
+
+
+We tell future that we want 3 workers for this simulation.
+
+```{r}
+options(future.fork.enable = TRUE)
+plan(multicore, workers = 3L)
+```
+
+Now, we can call `simu()` in parallel
+
+```{r}
+out <- future_lapply(
+  1:10, 
+  simu, mod, data, thetas, omegas, sigmas, 
+  future.seed = TRUE
+) %>% bind_rows()
+```
+
+You will not see any benefit from parallelization with this few replicates. We
+can try to increase the size of the problem to see if we can see a difference.
+
+To simulate with `multisession`
+
+```{r}
+plan(multisession, workers = 3L)
+
+out <- future_lapply(
+  1:10, 
+  simu, mod, data, thetas, omegas, sigmas, 
+  future.seed = TRUE
+) %>% bind_rows()
+```
+
+You will experience a small lag when calling `plan(multisession)`; this lag is 
+from the time required to start up the new R processes. 
+
+I also like the `future.callr` package when simulations get large and overhead
+isn't that big of a deal 
+<https://cran.r-project.org/web/packages/future.callr/index.html>
+

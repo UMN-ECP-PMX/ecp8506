@@ -1,0 +1,139 @@
+---
+title: "Weight- based dosing"
+---
+
+```{r setup, include=FALSE}
+source(here::here("src/global.R"))
+
+library(mrgsolve)
+library(dplyr)
+library(here)
+library(ggplot2)
+theme_set(theme_bw() + theme(legend.position = "top"))
+```
+
+
+# Model
+
+
+- Read in the pembrolizumab PK model
+
+1: Elassaiss-Schaap J, Rossenu S, Lindauer A, Kang SP, de Greef R, Sachs JR, de
+Alwis DP. Using Model-Based "Learn and Confirm" to Reveal the
+Pharmacokinetics-Pharmacodynamics Relationship of Pembrolizumab in the
+KEYNOTE-001 Trial. CPT Pharmacometrics Syst Pharmacol. 2017 Jan;6(1):21-28. 
+doi: 10.1002/psp4.12132. Epub 2016 Nov 8. 
+PubMed PMID: 27863143; PubMed Central PMCID: PMC5270295.
+
+
+```{r}
+mod <- mread(here("model/pembro-pk.mod"))
+```
+
+
+Check the parameters of the model
+
+```{r}
+param(mod)
+```
+
+Weight (`WT`) is an _input_ parameter
+
+```{r}
+param_tags(mod)
+```
+
+Let's do a quick simulation to check out the model
+
+```{r}
+dose <- expand.ev(amt = c(1,3,10)*78, tinf = 0.5/24)
+
+dose
+```
+
+Simulate 
+
+```{r}
+out <- 
+  mod %>% 
+  zero_re() %>% 
+  mrgsim_df(dose, delta = 0.1, end = 28)
+```
+
+And plot
+
+```{r}
+ggplot(out, aes(time, CP, color = factor(ID))) + 
+  geom_line() + 
+  scale_y_log10(limits = c(1,1000)) + 
+  scale_x_continuous(breaks = seq(0,28,4))
+```
+
+Let's ramp this up to simulate a population with simulated weight
+
+```{r}
+data <- expand.ev(
+  dose = c(1,3,10), 
+  ID = 1:1000
+) %>% uctran()
+```
+
+
+Simulate weights
+
+- Weight is log-normal 
+  - mean log(80)
+  - sd 0.1
+
+```{r}
+set.seed(112233)
+
+data <- mutate(
+  data, 
+  WT = exp(rnorm(n(), log(80), sqrt(0.1)))
+)
+
+ggplot(data, aes(x = WT)) + geom_histogram(color = "white")
+```
+
+Calculate dose amount and infusion duration
+
+```{r}
+data <- mutate(
+  data, 
+  AMT = dose * WT, 
+  RATE = AMT / (0.5 / 24)
+)
+```
+
+
+```{r}
+check_data_names(data, mod)
+```
+
+
+```{r}
+out <- mrgsim(
+  mod, 
+  data = data, 
+  recover = "dose,WT", 
+  end = 28, delta = 0.1, start = 0.1,
+  output = "df"
+)
+```
+
+
+```{r}
+ggplot(out, aes(TIME, CP, group = ID)) + 
+  facet_wrap(~dose) + geom_line() + 
+  scale_y_log10() 
+```
+
+
+```{r}
+trough <- filter(out, TIME==28)
+
+ggplot(data = trough) + 
+  geom_point(aes(WT, CP, color = factor(dose))) + 
+  geom_smooth(se = FALSE, aes(WT, CP, group = dose), color = "black") 
+```

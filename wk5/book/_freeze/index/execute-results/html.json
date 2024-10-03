@@ -1,0 +1,15 @@
+{
+  "hash": "40d5c2bb16879d02aec2ec72c4e0b594",
+  "result": {
+    "engine": "knitr",
+    "markdown": "\n# Tools and Methods for Clinical Simulation\n\n<img align=\"right\" src = \"images/hex.png\" width=\"135px\">\n\n1. Introduction  - about mrgsolve\n1. Three (or 4) simulation workflows\n\n    - Single profile / `events`\n    - Population / `data_set`\n    - Batch / `idata_set`\n    - Replicate\n  \n1. Model syntax I\n1. Working with simulated output\n1. Customizing outputs\n1. Model syntax II\n1. Validation\n1. Replicate simulation\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

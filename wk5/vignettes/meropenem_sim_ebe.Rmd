@@ -1,0 +1,85 @@
+---
+title: "Simulate from EBE"
+author: "Metrum Research Group"
+---
+
+
+```{r, message = FALSE, warning = FALSE}
+source("../src/global.R")
+library(tidyverse)
+library(mrgsolve)
+```
+
+
+```{r}
+patab <- read_table("../data/meropenem/patab", skip = 1)
+```
+
+
+```{r}
+patab <- distinct(patab, .keep_all = TRUE)
+head(patab)
+```
+
+```{r}
+mod <- modlib("pk2")
+```
+
+
+```{r}
+inventory(mod, patab)
+```
+
+
+```{r}
+patab <- rename(patab, V3 = V2, V2 = V1)
+inventory(mod,patab)
+```
+
+```{r}
+data <- read_csv("../data/Simulated_DatasetMeropenem.csv", na = '.')
+head(data)
+```
+
+```{r}
+data <- filter(data, EVID==1) %>% mutate(DUR = round(AMT/RATE,1), DOSE = AMT)
+```
+
+
+```{r}
+data <- mutate(data, II = 8, ADDL = 11, CMT = "CENT")
+```
+
+
+```{r}
+count(data,CMT,AMT,RATE,DUR)
+```
+
+
+```{r}
+dosing <- left_join(data, patab, by = "ID")
+```
+
+```{r}
+tg <- tgrid(0,24,0.25) + 3*24
+```
+
+
+```{r}
+out <- 
+  mod %>% 
+  data_set(dosing) %>%
+  carry_out(DOSE,DUR) %>%
+  mrgsim(tgrid = tg, obsonly = TRUE, output="df") 
+```
+
+```{r}
+head(out)
+```
+
+
+```{r}
+ggplot(out, aes(TIME,CP, group = ID)) + 
+  facet_grid(DUR~DOSE) + geom_line()
+```
+

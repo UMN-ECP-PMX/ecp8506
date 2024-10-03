@@ -1,0 +1,752 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Intro to mrgsolve",
+    "section": "",
+    "text": "1 Tools and Methods for Clinical Simulation\n\n\nIntroduction - about mrgsolve\nThree (or 4) simulation workflows\n\nSingle profile / events\nPopulation / data_set\nBatch / idata_set\nReplicate\n\nModel syntax I\nWorking with simulated output\nCustomizing outputs\nModel syntax II\nValidation\nReplicate simulation",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tools and Methods for Clinical Simulation</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "2  Introduction",
+    "section": "",
+    "text": "2.1 Pharmacokinetics",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#pharmacokinetics",
+    "href": "intro.html#pharmacokinetics",
+    "title": "2  Introduction",
+    "section": "",
+    "text": "Compartmental models\nModels with analytical solutions",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#dosing-regimens",
+    "href": "intro.html#dosing-regimens",
+    "title": "2  Introduction",
+    "section": "2.2 Dosing regimens",
+    "text": "2.2 Dosing regimens",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#dosing-regimens-1",
+    "href": "intro.html#dosing-regimens-1",
+    "title": "2  Introduction",
+    "section": "2.3 Dosing regimens",
+    "text": "2.3 Dosing regimens",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#population-simulation",
+    "href": "intro.html#population-simulation",
+    "title": "2  Introduction",
+    "section": "2.4 Population simulation",
+    "text": "2.4 Population simulation",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#pkpd",
+    "href": "intro.html#pkpd",
+    "title": "2  Introduction",
+    "section": "2.5 PKPD",
+    "text": "2.5 PKPD",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#sensitivity-analysis",
+    "href": "intro.html#sensitivity-analysis",
+    "title": "2  Introduction",
+    "section": "2.6 Sensitivity analysis",
+    "text": "2.6 Sensitivity analysis",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#mechanistic-models",
+    "href": "intro.html#mechanistic-models",
+    "title": "2  Introduction",
+    "section": "2.7 Mechanistic models",
+    "text": "2.7 Mechanistic models",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#pbpk",
+    "href": "intro.html#pbpk",
+    "title": "2  Introduction",
+    "section": "2.8 PBPK",
+    "text": "2.8 PBPK\nYoshikado T et al. Quantitative Analyses of Hepatic OATP-Mediated Interactions Between Statins and Inhibitors Using PBPK Modeling With a Parameter Optimization Method. Clin Pharmacol Ther. 2016 Nov;100(5):513-523. PubMed PMID: 27170342.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#what-else",
+    "href": "intro.html#what-else",
+    "title": "2  Introduction",
+    "section": "2.9 What else?",
+    "text": "2.9 What else?\n\nParameter estimation (not hierarchical models)\nOptimal design\nSensitivity analysis (local and global)\nShiny apps\nAdaptive dosing\nUnusual computation",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#about-mrgsolve",
+    "href": "intro.html#about-mrgsolve",
+    "title": "2  Introduction",
+    "section": "2.10 About mrgsolve",
+    "text": "2.10 About mrgsolve\n\nR package for simulation from ODE-based models\n\nFree, OpenSource, GitHub, CRAN\n\nLanguage\n\nModels written in C++ inside model specification format\nGeneral purpose solver: ODEPACK / DLSODA (FORTRAN)\n\nAutomatically detect and switch between non-stiff (Adams) and stiff (BDF) methods for solving the differential equations\n\nSimulation workflow in R\n\nHierarchical (population) simulation\n\nID, \\(\\eta\\), \\(\\varepsilon\\)\n\nIntegrated PK functionality\n\nBolus, infusion, F, ALAG, SS etc, handled under the hood\n1- and 2-cmt PK models in closed-form\n\nExtensible using R, C++, Rcpp, boost, RcppArmadillo\nR is it’s natural habitat\n\n\nmrgsolve started as QSP modeling tool\n\nMotivation: large bone/mineral homeostasis model (CaBone)\nHistory using\n\nBerkeley Madonna\nWinBUGS\nNONMEM (attempted)\n\n2010: write R front end to deSolve\n2012: write C++ interface to DLSODA\nDevelop dosing / event capability\nMore recently, expose functionality provided by\n\nRcpp - vectors, matrices, functions, environments, random numbers\nboost - numerical tools in C++\nusers’ own C++ code (functions, data structures, classes)\n\nTranslator from SBML to mrgsolve using R bindings to libSBML",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#like-nonmem-but-not-exactly",
+    "href": "intro.html#like-nonmem-but-not-exactly",
+    "title": "2  Introduction",
+    "section": "2.11 Like NONMEM but not exactly",
+    "text": "2.11 Like NONMEM but not exactly\nThere are several features in mrgsolve that have been patterned after NONMEM.\nBut mrgsolve is not a clone of NONMEM.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#resources",
+    "href": "intro.html#resources",
+    "title": "2  Introduction",
+    "section": "2.12 Resources",
+    "text": "2.12 Resources\n\nhttps://CRAN.R-project.org/package=mrgsolve\nGitHub site: https://github.com/metrumresearchgroup/mrgsolve\nDiscussion: https://github.com/metrumresearchgroup/mrgsolve/discussions\nBug reports: https://github.com/metrumresearchgroup/mrgsolve/issues\nmrgsolve website: https://mrgsolve.org\nUser Guide: https://mrgsolve.github.io/user_guide\nBlog: https://mrgsolve.org/blog\nVignettes: https://mrgsolve.org/vignettes",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#additional-packages-of-interest",
+    "href": "intro.html#additional-packages-of-interest",
+    "title": "2  Introduction",
+    "section": "2.13 Additional packages of interest",
+    "text": "2.13 Additional packages of interest\n\nSensitivity analysis: https://github.com/kylebaron/mrgsim.sa\nManage large outputs: https://github.com/metrumresearchgroup/paquet",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "big-picture.html",
+    "href": "big-picture.html",
+    "title": "3  Big picture",
+    "section": "",
+    "text": "3.1 You need a model\nFor every workflow, you need a model. This is coded in a separate file and read in by mread()\nmod &lt;- mread_cache(\"azithro-fixed.mod\", project = here(\"model\"))\nWe’ll code up a model right after this overview.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Big picture</span>"
+    ]
+  },
+  {
+    "objectID": "big-picture.html#single-profile",
+    "href": "big-picture.html#single-profile",
+    "title": "3  Big picture",
+    "section": "3.2 Single profile",
+    "text": "3.2 Single profile\nTo get a single profile, use and event object\n\nmod %&gt;% \n  ev(amt = 250, ii = 24, addl = 4) %&gt;% \n  mrgsim(end = 144, delta = 0.1) %&gt;% \n  plot(\"CP\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Big picture</span>"
+    ]
+  },
+  {
+    "objectID": "big-picture.html#population",
+    "href": "big-picture.html#population",
+    "title": "3  Big picture",
+    "section": "3.3 Population",
+    "text": "3.3 Population\nTo simulate a population, you’ll need what we call a data set\n\nmod &lt;- mread_cache(\"azithro.mod\", project = here(\"model\"))\ndata &lt;- expand.ev(amt = 250, WT = runif(30, 50, 100))\n\n\nset.seed(9876)\n\nmod %&gt;% \n  data_set(data) %&gt;% \n  mrgsim(end = 24) %&gt;% \n  plot(\"CP\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Big picture</span>"
+    ]
+  },
+  {
+    "objectID": "big-picture.html#batch",
+    "href": "big-picture.html#batch",
+    "title": "3  Big picture",
+    "section": "3.4 Batch",
+    "text": "3.4 Batch\nYou can also simulate a population (or a batch of subjects) with a data set of parameters and an event object\n\nmod &lt;- mread_cache(\"azithro-fixed.mod\", project = here(\"model\"))\n\ndata &lt;- data.frame(WT = runif(30, 50, 100))\n\nmod %&gt;% \n  ev(amt = 250, ii = 24, addl = 4) %&gt;% \n  idata_set(data) %&gt;% \n  mrgsim(end = 144) %&gt;% \n  plot(\"CP\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Big picture</span>"
+    ]
+  },
+  {
+    "objectID": "big-picture.html#replicate",
+    "href": "big-picture.html#replicate",
+    "title": "3  Big picture",
+    "section": "3.5 Replicate",
+    "text": "3.5 Replicate\nThe other pattern is just like data set, but we do that in a loop to generate replicate simulations.\nThis simulation might look something like this\n\nsim &lt;- function(i, model, data) {\n  mod %&gt;% \n    data_set(data) %&gt;%\n    mrgsim() %&gt;% \n    mutate(irep = i)\n}\n\nout &lt;- lapply(1:1000, sim, model = mod, data = data) %&gt;% bind_rows()\n\nSee Chapter 12 for full examples on replicate simulation.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Big picture</span>"
+    ]
+  },
+  {
+    "objectID": "big-picture.html#the-overall-pattern",
+    "href": "big-picture.html#the-overall-pattern",
+    "title": "3  Big picture",
+    "section": "3.6 The overall pattern",
+    "text": "3.6 The overall pattern\n\nCode a model\nLoad it with mread()\nSet up your intervention and population\nSimulate with mrgsim()\nPlot or process your output",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Big picture</span>"
+    ]
+  },
+  {
+    "objectID": "specification-1.html",
+    "href": "specification-1.html",
+    "title": "4  Model specification 1",
+    "section": "",
+    "text": "4.1 Where to save your code?",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Model specification 1</span>"
+    ]
+  },
+  {
+    "objectID": "specification-1.html#where-to-save-your-code",
+    "href": "specification-1.html#where-to-save-your-code",
+    "title": "4  Model specification 1",
+    "section": "",
+    "text": "You can use any file name with any extension\nThe extension you use may influence how your editor highlights and indents your code\nI use .mod",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Model specification 1</span>"
+    ]
+  },
+  {
+    "objectID": "specification-1.html#model-specification-blocks",
+    "href": "specification-1.html#model-specification-blocks",
+    "title": "4  Model specification 1",
+    "section": "4.2 Model specification blocks",
+    "text": "4.2 Model specification blocks\nModel components are coded into blocks, which are delineated by a specific block syntax. You have a couple of options\nNONMEM style\nThese start with $ and then the block name ($PK)\nBracket style\nPut the block name in brackets ([ ERROR ])\nUpper or lower case\nYou can use either:\n\n$error\n[ pk ]\netc … they all work\n\n\n4.2.1 Syntax\nThe “type” of code you write will vary from block to block. Sometimes it is an R-like syntax and sometimes it is c++ code.\nDon’t worry if you don’t know c++! We have taken a lot of the complexity out and with a handful of exceptions, the code should be pretty natural and similar to what you write in R.\nWe will show you more c++ in chapters to come.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Model specification 1</span>"
+    ]
+  },
+  {
+    "objectID": "specification-1.html#base-model-blocks",
+    "href": "specification-1.html#base-model-blocks",
+    "title": "4  Model specification 1",
+    "section": "4.3 Base model blocks",
+    "text": "4.3 Base model blocks\n\n4.3.1 Parameters\nUse the $PARAM block header.\n\n$PARAM \nCL = 1, V = 20, KA = 1.1\n\nParameters have a name and a value, separated by =.\nParameter names can be upper or lower case. If you want punctuation, use underscore _.\nParameter values must evaluate to numeric.\nParameters can’t be functions of other parameters when writing the $PARAM block. But there is a place where you can do this … we’ll see this later on.\nMultiple parameters can go on one line, but separate by comma.\n\n\n4.3.2 Read it in with mread()\nPoint mread() at your model file to\n\nread in the model\nsee if it compiles\n\n\nmod &lt;- mread(here(\"model/simple.mod\"))\n\nBuilding simple_mod ... done.\n\n\nWe’ll learn much more about mread() later on, but for now we need a way to check if our model coding is correct.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Model specification 1</span>"
+    ]
+  },
+  {
+    "objectID": "specification-1.html#compartments",
+    "href": "specification-1.html#compartments",
+    "title": "4  Model specification 1",
+    "section": "4.4 Compartments",
+    "text": "4.4 Compartments\n\n$PARAM \nCL = 1, V = 20, KA = 1.1\n\n$CMT DEPOT CENT\n\nCompartments are named\n\nUpper or lower case\nPunctuation use _\n\nOrder doesn’t matter, except\n\nWhen putting dosing records into the data set\nYou want to use the NONMEM-style coding",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Model specification 1</span>"
+    ]
+  },
+  {
+    "objectID": "specification-1.html#differential-equations",
+    "href": "specification-1.html#differential-equations",
+    "title": "4  Model specification 1",
+    "section": "4.5 Differential equations",
+    "text": "4.5 Differential equations\nNow, we’ll write ODE using $DES (or $ODE) block.\n\n$PARAM \nCL = 1, V = 20, KA = 1.1\n\n$CMT DEPOT CENT\n\n$DES\ndxdt_DEPOT = -KA * DEPOT;\ndxdt_CENT  =  KA * DEPOT - (CL/V)*CENT;\n\nLeft hand side is dxdt_&lt;compartment name&gt;.\nRight hand side can reference\n\nCompartments\nParameters\nOther quantities derived in $DES or $PK\nOther internal variables\n\nUnlike $PARAM and $CMT, this is c++ code\n\nAny valid c++ code is allowed\nEach line (statement) should end in semi-colon ;",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Model specification 1</span>"
+    ]
+  },
+  {
+    "objectID": "specification-1.html#derived-outputs",
+    "href": "specification-1.html#derived-outputs",
+    "title": "4  Model specification 1",
+    "section": "4.6 Derived outputs",
+    "text": "4.6 Derived outputs\nLike NONMEM, derived can be calculated in the $ERROR block.\n\n$PARAM \nCL = 1, V = 20, KA = 1.1\n\n$CMT DEPOT CENT\n\n$DES\ndxdt_DEPOT = -KA * DEPOT;\ndxdt_CENT  =  KA * DEPOT - (CL/V)*CENT;\n\n$ERROR\ndouble CP = CENT/V;\n\nLike $DES, this block must be valid c++ code.\nHere we have created a new variable called CP, which is the amount in the central compartment divided by the central volume of distribution.\nWhen we create a new variable, we must declare its type. Use double for a floating point number.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Model specification 1</span>"
+    ]
+  },
+  {
+    "objectID": "specification-1.html#capture-outputs-into-the-simulated-data",
+    "href": "specification-1.html#capture-outputs-into-the-simulated-data",
+    "title": "4  Model specification 1",
+    "section": "4.7 Capture outputs into the simulated data",
+    "text": "4.7 Capture outputs into the simulated data\nmrgsolve has a $CAPTURE block that works like NONMEM’s $TABLE. Just list the names you want copied into the output.\n\n$PARAM \nCL = 1, V = 20, KA = 1.1\n\n$CMT DEPOT CENT\n\n$DES\ndxdt_DEPOT = -KA * DEPOT;\ndxdt_CENT  =  KA * DEPOT - (CL/V)*CENT;\n\n$ERROR\ndouble CP = CENT/V;\n\n$CAPTURE CP\n\nRather than putting stuff in $CAPTURE, try declaring with type capture\n\n$ERROR\ncapture CP = CENT/V;\n\ncapture is identical to type double, but tells mrgsolve to include this item in the simulated output.\nA little-use feature is renaming items in $CAPTURE\n\n$ERROR \ndouble DV = CENT/V;\n\n$CAPTURE CP = DV",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Model specification 1</span>"
+    ]
+  },
+  {
+    "objectID": "model-object.html",
+    "href": "model-object.html",
+    "title": "5  The model object",
+    "section": "",
+    "text": "5.1 mread()\nLoad a model from a model specification file using mread().",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The model object</span>"
+    ]
+  },
+  {
+    "objectID": "model-object.html#mread",
+    "href": "model-object.html#mread",
+    "title": "5  The model object",
+    "section": "",
+    "text": "Don’t worry for now what is in that file; we’ll show you how to create it\nYour model can have any extension\n\n\n5.1.1 Syntax to load a model\nProvide the complete path to the file\n\nmod &lt;- mread(\"book-model/test.mod\")\n\nProvide the directory as an argument\n\nAssumes you are keeping all simulation code in the models directory\n\n\nmod &lt;- mread(\"test.mod\", project = \"book-model\")\n\nSet project as an option\n\nAll my models are in this directory for this project\n\n\noptions(mrgsolve.project = \"book-model\")\n\nmod &lt;- mread(\"test.mod\")\n\nUpdate on load\n\nSet the simulation end time to 240\nSet (increase) ODE solver relative tolerance to 1e-5\n\n\nmod &lt;- mread(\"book-model/test.mod\", end = 240, rtol = 1e-5)\n\n\n\n5.1.2 Read and cache\nUse mread_cache() to build and cache the model.\nLoad it once\n\nmod &lt;- mread_cache(\"book-model/test.mod\")\n\nBuilding test_mod ... done.\n\n\nLoad it again\n\nmod &lt;- mread_cache(\"book-model/test.mod\")\n\nLoading model from cache.\n\n\nLook at the soloc argument; this will let you place the cached model in a stable location.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The model object</span>"
+    ]
+  },
+  {
+    "objectID": "model-object.html#modlib",
+    "href": "model-object.html#modlib",
+    "title": "5  The model object",
+    "section": "5.2 modlib()",
+    "text": "5.2 modlib()\nUse the modlib() function to load a model from an internal model library.\n\nPre-coded models\nSourced from inside the mrgsolve installation directory\nGreat way to get models to experiment with\n\nBut I rarely use these for production work\n\n\nThis code will load a 1-compartment PK model.\n\nmod &lt;- modlib(\"pk1\")\n\nList out the location of he model library\n\nmodlib()\n\n[1] \"/Users/kyleb/renv/renv/library/R-4.4/aarch64-apple-darwin20/mrgsolve/models\"\n\n\nSo the modlib() function is equivalent to\n\nmod &lt;- mread(\"pk1\", project = modlib())\n\nFind out what models are in the library\n\n?modlib",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The model object</span>"
+    ]
+  },
+  {
+    "objectID": "model-object.html#overview",
+    "href": "model-object.html#overview",
+    "title": "5  The model object",
+    "section": "5.3 Overview",
+    "text": "5.3 Overview\nYou can print mod to the R console and see what’s going on\n\nmod\n\n\n\n-----------------  source: test.mod  -----------------\n\n  project: /Users/kyleb/git...ok/book-model\n  shared object: test_mod-so-3fd93c203d08 \n\n  time:          start: 0 end: 24 delta: 1\n                 add: &lt;none&gt;\n\n  compartments:  GUT CENT [2]\n  parameters:    CL V TVKA [3]\n  captures:      CP [1]\n  omega:         2x2 \n  sigma:         0x0 \n\n  solver:        atol: 1e-08 rtol: 1e-08 maxsteps: 20k\n------------------------------------------------------\n\n\nor summarize\n\nsummary(mod)\n\nModel: test_mod\n- Parameters: [3]\n  CL, V, TVKA\n- Compartments: [2]\n  GUT, CENT\n- Captured: [1]\n  CP\n- Outputs: [3]\n  GUT, CENT, CP\n\n\nor see the model code\n\nsee(mod)\n\n\nModel file:  test.mod \n$PARAM CL = 1, V = 20, TVKA = 1.2\n\n$OMEGA 0.1 0.2\n\n$PKMODEL cmt = \"GUT CENT\", depot = TRUE\n\n$MAIN\ndouble KA = TVKA + ETA(1);\n\n$TABLE\ncapture CP = CENT/V;",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The model object</span>"
+    ]
+  },
+  {
+    "objectID": "model-object.html#parameters",
+    "href": "model-object.html#parameters",
+    "title": "5  The model object",
+    "section": "5.4 Parameters",
+    "text": "5.4 Parameters\nQuery the parameter list with param()\n\nparam(mod)\n\n\n Model parameters (N=3):\n name value . name value\n CL   1     | V    20   \n TVKA 1.2   | .    .    \n\n\nThis output shows you there are 3 parameters in the model\n\nCL, with nominal value 1\nV, with nominal value 20\nKA, with nominal value 1\n\nNote that each parameter has\n\nA name(e.g. CL)\nA value (must be numeric)",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The model object</span>"
+    ]
+  },
+  {
+    "objectID": "model-object.html#compartments",
+    "href": "model-object.html#compartments",
+    "title": "5  The model object",
+    "section": "5.5 Compartments",
+    "text": "5.5 Compartments\nWe’ll keep working with the model object we loaded in the previous section.\nModels also have compartments. Like parameters, compartments have\n\nA name\nA value\n\nCompartments also have a number\nQuery the compartment list with init()\n\ninit(mod)\n\n\n Model initial conditions (N=2):\n name       value . name      value\n CENT (2)   0     | GUT (1)   0    \n\n\nNotice that each compartment has a number associated with it. This is mainly used for dosing. But there is a model syntax that allows you to write a model in terms of named compartments (e.g. A(2) or F1).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The model object</span>"
+    ]
+  },
+  {
+    "objectID": "model-object.html#random-effects",
+    "href": "model-object.html#random-effects",
+    "title": "5  The model object",
+    "section": "5.6 Random effects",
+    "text": "5.6 Random effects\n\nrevar(mod)\n\n$omega\n$...\n    [,1] [,2]\n1:   0.1  0.0\n2:   0.0  0.2\n\n\n$sigma\nNo matrices found",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The model object</span>"
+    ]
+  },
+  {
+    "objectID": "model-object.html#update-the-model-object",
+    "href": "model-object.html#update-the-model-object",
+    "title": "5  The model object",
+    "section": "5.7 Update the model object",
+    "text": "5.7 Update the model object\nWe frequently want to change or update the settings in the model object.\nUpdates can be made through update(). To change the simulation time grid we might use\n\nmod &lt;- update(mod, end = 240, delta = 2)\n\nto change the simulation end time to 240 hours and the output time interval to every 2 hours. This results in a new model object with updated settings that will be in place whenever you simulate from mod until you make more changes.\nYou can also update on model read\n\nmod &lt;- mread(\"model.mod\", end = 240, delta = 2)\n\nor at the time of simulation\n\nout &lt;- mod %&gt;% mrgsim(end = 240, delta = 2)\n\nAll of these update mechanisms execute updates to the model object. But only when we save the results back to mod are the updates persistent in the model.\nWhat else can I update?\n\nTime\n\nstart, end, delta, add\n\nParameters and compartment initial values\nSolver settings\n\natol, rtol\nhmax, maxsteps, mxhnil, ixpr\nUsually changing rtol, atol, and maybe hmax\n\n$OMEGA, $SIGMA\ntscale (rescale the output time)\ndigits\n\nParameter update\nTo update parameters, use param(). More on this in Chapter 9\n\nmod &lt;- param(mod, CL = 2)",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The model object</span>"
+    ]
+  },
+  {
+    "objectID": "model-object.html#advanced",
+    "href": "model-object.html#advanced",
+    "title": "5  The model object",
+    "section": "5.8 Advanced",
+    "text": "5.8 Advanced\nGet the value of a parameter or setting\n\nmod$CL\n\n[1] 1\n\nmod$end\n\n[1] 240\n\n\nExtract all parameters as a list\n\nas.list(param(mod))\n\n$CL\n[1] 1\n\n$V\n[1] 20\n\n$TVKA\n[1] 1.2\n\n\nExtract the value of one parameter\n\nmod$CL\n\n[1] 1\n\n\nExtract everything\nYou can get the model object contents as a plain list\n\nl &lt;- as.list(mod)\n\n\n\n\n\n\n\nSee the output\n\n\n\n\n\n\nl\n\n$npar\n[1] 3\n\n$neq\n[1] 2\n\n$pars\n[1] \"CL\"   \"V\"    \"TVKA\"\n\n$covariates\ncharacter(0)\n\n$param_tag\n[1] name tag \n&lt;0 rows&gt; (or 0-length row.names)\n\n$cmt\n[1] \"GUT\"  \"CENT\"\n\n$param\n$param$CL\n[1] 1\n\n$param$V\n[1] 20\n\n$param$TVKA\n[1] 1.2\n\n\n$init\n$init$GUT\n[1] 0\n\n$init$CENT\n[1] 0\n\n\n$omega\n$omega$...\n     [,1] [,2]\n[1,]  0.1  0.0\n[2,]  0.0  0.2\n\n\n$sigma\nnamed list()\n\n$fixed\nlist()\n\n$model\n[1] \"test_mod\"\n\n$project\n[1] \"/Users/kyleb/git/kylebaron/intro-to-mrgsolve-uofm/book/book-model\"\n\n$soloc\n[1] \"/private/var/folders/zv/v6tkdhrn1_bb1ndrc0c0j31w0000gp/T/RtmpXovInx/mrgsolve-so-1.5.1.9003-aarch64-apple-darwin20/test_mod\"\n\n$sodll\n[1] \"/private/var/folders/zv/v6tkdhrn1_bb1ndrc0c0j31w0000gp/T/RtmpXovInx/mrgsolve-so-1.5.1.9003-aarch64-apple-darwin20/test_mod/test_mod-so-3fd93c203d08.so\"\n\n$cfile\n[1] \"/Users/kyleb/git/kylebaron/intro-to-mrgsolve-uofm/book/book-model/test.mod\"\n\n$shlib\n$shlib$date\n[1] \"\"\n\n$shlib$par\n[1] \"CL\"   \"V\"    \"TVKA\"\n\n$shlib$cmt\n[1] \"GUT\"  \"CENT\"\n\n$shlib$compiled\n[1] TRUE\n\n$shlib$version\n[1] '1.5.1.9003'\n\n$shlib$source\n[1] \"/private/var/folders/zv/v6tkdhrn1_bb1ndrc0c0j31w0000gp/T/RtmpXovInx/mrgsolve-so-1.5.1.9003-aarch64-apple-darwin20/test_mod/test_mod-mread-source.cpp\"\n\n$shlib$neq\n[1] 2\n\n$shlib$covariates\ncharacter(0)\n\n$shlib$param_tag\n[1] name tag \n&lt;0 rows&gt; (or 0-length row.names)\n\n$shlib$cpp_variables\n     type var context\n1  double  KA    main\n2 capture  CP   table\n\n$shlib$include\ncharacter(0)\n\n$shlib$nm_import\ncharacter(0)\n\n$shlib$md5\n/Users/kyleb/git/kylebaron/intro-to-mrgsolve-uofm/book/book-model/test.mod \n                                        \"c00a2e38f610c8f608806fcbbfd113c3\" \n\n$shlib$call_event\n[1] FALSE\n\n\n$start\n[1] 0\n\n$end\n[1] 240\n\n$delta\n[1] 2\n\n$add\nnumeric(0)\n\n$capture\n  CP \n\"CP\" \n\n$out_cap\n[1] \"CP\"\n\n$out_cmt\n[1] \"GUT\"  \"CENT\"\n\n$random\n$random$omega\n[1] \"...\"\n\n$random$sigma\ncharacter(0)\n\n$random$omega_labels\n$random$omega_labels[[1]]\n[1] \".\" \".\"\n\n\n$random$sigma_labels\nnamed list()\n\n\n$code\n [1] \"$PARAM CL = 1, V = 20, TVKA = 1.2\"        \n [2] \"\"                                         \n [3] \"$OMEGA 0.1 0.2\"                           \n [4] \"\"                                         \n [5] \"$PKMODEL cmt = \\\"GUT CENT\\\", depot = TRUE\"\n [6] \"\"                                         \n [7] \"$MAIN\"                                    \n [8] \"double KA = TVKA + ETA(1);\"               \n [9] \"\"                                         \n[10] \"$TABLE\"                                   \n[11] \"capture CP = CENT/V;\"                     \n[12] \"\"                                         \n[13] \"\"                                         \n\n$details\n$details$data\n# A tibble: 0 × 0\n\n$details$embedded\n[1] TRUE\n\n\n$nm_import\ncharacter(0)\n\n$cpp_variables\n     type var context\n1  double  KA    main\n2 capture  CP   table\n\n$atol\n[1] 1e-08\n\n$rtol\n[1] 1e-08\n\n$ss_rtol\n[1] 1e-08\n\n$ss_atol\n[1] 1e-08\n\n$maxsteps\n[1] 20000\n\n$hmin\n[1] 0\n\n$hmax\n[1] 0\n\n$envir\n&lt;environment: 0x10cf6a8d0&gt;\n\n$plugins\n[1] \"base\"\n\n$digits\n[1] -1\n\n$request\n[1] \"(all)\"\n\n$tscale\n[1] 1\n\n$mindt\n[1] 2.220446e-15\n\n$preclean\n[1] FALSE\n\n$debug\n[1] FALSE\n\n$verbose\n[1] FALSE",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The model object</span>"
+    ]
+  },
+  {
+    "objectID": "event-object.html",
+    "href": "event-object.html",
+    "title": "6  Event objects",
+    "section": "",
+    "text": "6.1 Create and event object\nUse ev() and pass NMTRAN data names in lower case.\nFor example\nev(amt = 100, ii = 12, addl = 2)\n\nEvents:\n  time amt ii addl cmt evid\n1    0 100 12    2   1    1\nYou can pass\nSee ?ev for additional details.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Event objects</span>"
+    ]
+  },
+  {
+    "objectID": "event-object.html#create-and-event-object",
+    "href": "event-object.html#create-and-event-object",
+    "title": "6  Event objects",
+    "section": "",
+    "text": "time time of the event\nevid event ID\n\n1 for dose\n2 for other type\n3 for reset\n4 for dose and reset\n8 for replace\n\namt dose amount\ncmt compartment for the intervention\n\nusually the compartment number\ncan be character compartment name\n\nii inter-dose interval\naddl additional doses (or events)\n\ntotal alternative for total number of doses\n\nss advance to steady-state?\n\n0 don’t advance to steady-state\n1 advance to steady-state\n2 irregular steady-state\n\nrate give the dose zero-order with this rate\n\ntinf alternative for infusion time",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Event objects</span>"
+    ]
+  },
+  {
+    "objectID": "event-object.html#invoke-event-object",
+    "href": "event-object.html#invoke-event-object",
+    "title": "6  Event objects",
+    "section": "6.2 Invoke event object",
+    "text": "6.2 Invoke event object\n\n6.2.1 Inline\nPipe the model object to ev() then simulate.\n\nmod &lt;- house(outvars = \"GUT,CP,RESP\", end = 24)\n\nmod %&gt;% ev(amt = 100) %&gt;% mrgsim() %&gt;% plot()\n\n\n\n\n\n\n\n\n\n\n6.2.2 As object\nYou can save the event object out and pass it in.\n\ne &lt;- ev(amt = 100) \n\nmod %&gt;% ev(e) %&gt;% mrgsim() %&gt;% plot()\n\nThis is a good idea when you want to create an intervention and apply it in several different simulation scenarios.\nAlternatively, you can pass it in as the events argument for mrgsim()\n\nmod %&gt;% mrgsim(events = e) %&gt;% plot()",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Event objects</span>"
+    ]
+  },
+  {
+    "objectID": "event-object.html#combining-event-objects",
+    "href": "event-object.html#combining-event-objects",
+    "title": "6  Event objects",
+    "section": "6.3 Combining event objects",
+    "text": "6.3 Combining event objects\nWe can create more complex interventions from several simpler event objects.\n\n6.3.1 Simple combination\nUse the c() operator to concatenate.\nFor 100 mg loading dose followed by 50 mg daily x6\n\nload &lt;- ev(amt = 100) \nmaintenance &lt;- ev(time = 24, amt = 50, ii = 24, addl = 5)\n\nc(load, maintenance)\n\nEvents:\n  time amt cmt evid ii addl\n1    0 100   1    1  0    0\n2   24  50   1    1 24    5\n\n\n\n\n6.3.2 Sequence\nWe can make this simpler by putting these in a sequence. Here is 100 mg daily for a week, followed by 50 mg daily for the rest of the month\n\na &lt;- ev(amt = 100, ii = 24, total =  7) \nb &lt;- ev(amt = 50,  ii = 24, total = 21)\n\nseq(a,b)\n\nEvents:\n  time amt ii addl cmt evid\n1    0 100 24    6   1    1\n2  168  50 24   20   1    1\n\n\n\n\n6.3.3 Expand into multiple subjects\nPass an event object to ev_rep() with the IDs you want\n\nseq(a,b)\n\nEvents:\n  time amt ii addl cmt evid\n1    0 100 24    6   1    1\n2  168  50 24   20   1    1\n\nseq(a,b) %&gt;% ev_rep(1:3)\n\n  ID time amt ii addl cmt evid\n1  1    0 100 24    6   1    1\n2  1  168  50 24   20   1    1\n3  2    0 100 24    6   1    1\n4  2  168  50 24   20   1    1\n5  3    0 100 24    6   1    1\n6  3  168  50 24   20   1    1\n\n\n\n\n6.3.4 Combine into a data set\nUse as_data_set with ev_rep() to create a data set\n\nc &lt;- seq(a,b) \n\nas_data_set(\n  a %&gt;% ev_rep(1:2), \n  b %&gt;% ev_rep(1:2), \n  c %&gt;% ev_rep(1:2)\n)\n\n  ID time amt ii addl cmt evid\n1  1    0 100 24    6   1    1\n2  2    0 100 24    6   1    1\n3  3    0  50 24   20   1    1\n4  4    0  50 24   20   1    1\n5  5    0 100 24    6   1    1\n6  5  168  50 24   20   1    1\n7  6    0 100 24    6   1    1\n8  6  168  50 24   20   1    1",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Event objects</span>"
+    ]
+  },
+  {
+    "objectID": "event-object.html#modifying-event-objects",
+    "href": "event-object.html#modifying-event-objects",
+    "title": "6  Event objects",
+    "section": "6.4 Modifying event objects",
+    "text": "6.4 Modifying event objects\nYou can use a selection of the tidyverse to modify event objects\n\nsingle &lt;- ev(amt = 100) \n\nss &lt;- mutate(single, ii = 24, ss = 1)  \n\nss\n\nEvents:\n  time amt ii ss cmt evid\n1    0 100 24  1   1    1\n\n\n\nmutate()\nselect()\nfilter()",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Event objects</span>"
+    ]
+  },
+  {
+    "objectID": "event-object.html#rx-specification",
+    "href": "event-object.html#rx-specification",
+    "title": "6  Event objects",
+    "section": "6.5 Rx specification",
+    "text": "6.5 Rx specification\n\nev_rx(\"100 mg x1 then 50 q12h x 10 at 24\")\n\nEvents:\n  time amt ii addl cmt evid\n1    0 100  0    0   1    1\n2    0  50 12    9   1    1",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Event objects</span>"
+    ]
+  },
+  {
+    "objectID": "data-set.html",
+    "href": "data-set.html",
+    "title": "7  Data sets",
+    "section": "",
+    "text": "7.1 Specifics",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Data sets</span>"
+    ]
+  },
+  {
+    "objectID": "data-set.html#specifics",
+    "href": "data-set.html#specifics",
+    "title": "7  Data sets",
+    "section": "",
+    "text": "Lower or upper case names may be used for NMTRAN data items, but they must be consistent\n\nGood: AMT, CMT, TIME\nAlso good: amt, cmt, time\nBad: amt, CMT, time\n\nColumns with special handling\n\nID\nAMT\nCMT\nEVID\nII\nADDL\nRATE\nSS\n\nRequired columns for most applications\n\nID\nTIME\nCMT\n\nSome columns which are commonly used for NONMEM data sets mean nothing in mrgsolve context\n\nC\nMDV\nDV\n\nColumns that are not numeric will be dropped before simulating\nUse uctran() and lctran() to convert names\nData sets can contain mix of observation and event records\nData sets can have multiple IDs with any design\n\nNONMEM approach for when to count “new” IDs\n\nUnlimited flexibility in creating data sets\n\nBut we have some helpful tools when creating simulation skeletons on the fly",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Data sets</span>"
+    ]
+  },
+  {
+    "objectID": "data-set.html#observation-records",
+    "href": "data-set.html#observation-records",
+    "title": "7  Data sets",
+    "section": "7.2 Observation records",
+    "text": "7.2 Observation records\nData sets may or may not include observation records (EVID=0).\n\nWhen there is at least one observation record anywhere in the data set, mrgsolve will only take observations from the input data.\nWhen there no observation records in the data set, mrgsolve will insert observations according to the time grid specification in the model object.\n\nThis makes it easy to pass in a clinical data set, with arbitrary “real” observation times.\nOr, if you are conducting de novo simulations, make a data set with only dosing or event records and let mrgsolve fill in the observations for you after you customize the time grid.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Data sets</span>"
+    ]
+  },
+  {
+    "objectID": "data-set.html#building-input-data-sets",
+    "href": "data-set.html#building-input-data-sets",
+    "title": "7  Data sets",
+    "section": "7.3 Building input data sets",
+    "text": "7.3 Building input data sets\nWe will look at some convenience functions that help you create input data sets that don’t include observation records.\n\n7.3.1 Expand\nThe ev_expand() and evd_expand() functions like base::expand.grid(): it will make all combinations of your inputs, filling in missing required columns with sensible defaults.\nTo simulate 2 subjects at each of 3 doses\n\nevd_expand(amt = c(100, 300, 1000), ii = 24, total = 7, ID = 1:2)\n\n  ID TIME  AMT II ADDL CMT EVID\n1  1    0  100 24    6   1    1\n2  2    0  300 24    6   1    1\n3  3    0 1000 24    6   1    1\n4  4    0  100 24    6   1    1\n5  5    0  300 24    6   1    1\n6  6    0 1000 24    6   1    1\n\n\n\nArguments are lowercase\nThe function fills in\n\nTIME, CMT and EVID for you; be sure to override this if you want something else\n\nOnly one row for each subject\nThe result is a data.frame\n\n\n\n7.3.2 From events\nPass several event objects to as_data_set(). This allows much more flexibility. Let’s do an example:\nWe want to simulate 2 subjects at each of 3 regimens:\n\na: 100 mg daily for 28 days\nb: 50 mg daily for 14 days followed by 100 mg daily for 14 days\nc: 50 mg BID for 14 days followed by 100 mg daily for 14 days\n\nFirst, make an event object for each\n\na &lt;- ev(amt = 100, ii = 24, total = 28)\n\n\nb1 &lt;- ev(amt = 50, ii = 24, total = 14)\nb2 &lt;- mutate(a, total = 28)\nb &lt;- ev_seq(b1, b2)\n\n\nc1 &lt;- ev(amt = 50, ii = 12, total = 28)\nc2 &lt;- b2\nc &lt;- ev_seq(c1, c2)\n\nCheck the outputs\n\na\n\nEvents:\n  time amt ii addl cmt evid\n1    0 100 24   27   1    1\n\nb\n\nEvents:\n  time amt ii addl cmt evid\n1    0  50 24   13   1    1\n2  336 100 24   27   1    1\n\nc\n\nEvents:\n  time amt ii addl cmt evid\n1    0  50 12   27   1    1\n2  336 100 24   27   1    1\n\n\nThe as_data_set() function will combine these into 3 different subjects, giving them unique ID names names\n\ndata &lt;- as_data_set(a,b,c)\ndata\n\n  ID time amt ii addl cmt evid\n1  1    0 100 24   27   1    1\n2  2    0  50 24   13   1    1\n3  2  336 100 24   27   1    1\n4  3    0  50 12   27   1    1\n5  3  336 100 24   27   1    1\n\n\nWe can expand the number of subjects in each intervention by using ev_rep()\n\ndata &lt;- as_data_set(\n  ev_rep(a, ID = 1:2), \n  ev_rep(b, ID = 1:2), \n  ev_rep(c, ID = 1:2)\n) %&gt;% uctran()\n\n\ndata\n\n   ID TIME AMT II ADDL CMT EVID\n1   1    0 100 24   27   1    1\n2   2    0 100 24   27   1    1\n3   3    0  50 24   13   1    1\n4   3  336 100 24   27   1    1\n5   4    0  50 24   13   1    1\n6   4  336 100 24   27   1    1\n7   5    0  50 12   27   1    1\n8   5  336 100 24   27   1    1\n9   6    0  50 12   27   1    1\n10  6  336 100 24   27   1    1",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Data sets</span>"
+    ]
+  },
+  {
+    "objectID": "data-set.html#individual-data-sets",
+    "href": "data-set.html#individual-data-sets",
+    "title": "7  Data sets",
+    "section": "7.4 Individual data sets",
+    "text": "7.4 Individual data sets\nAnother type of data set is idata. This is a data frame of individual-level data for the problem.\n\nidata typically has columns named for parameters\nidata has only one row per subject in the problem\nidata defines the number of subjects in the problem when there is no (population) data set\n\nFor example, load the 1005 model\n\nmod &lt;- modlib(\"1005\", end = 72, delta = 0.1, capture = \"WT\")\n\nLoading required namespace: xml2\n\n\nBuilding 1005 ... done.\n\nsee(mod)\n\n\nModel file:  1005.cpp \n[ PROB ]\n1005 phase1 2 CMT like 1004 but diff. initial on V3\n\nRun \nfile.show(system.file(\"nonmem\", \"1005\", \"1005.ctl\", package = \"mrgsolve\")) \nfor equivalent NONMEM control stream. \n\n[ PKMODEL ] cmt = \"GUT CENT PERIPH\", depot = TRUE\n\n[ INPUT ] SEX = 0, WT = 70\n\n[ NMXML ] \nproject = system.file(\"nonmem\", package = \"mrgsolve\")\nrun = \"@cppstem\"\n\n[ PK ] \ndouble CL = THETA(1)*exp(ETA(1)) * pow(THETA(6),SEX) * pow(WT/70.0,THETA(7));\ndouble V2 = THETA(2)*exp(ETA(2));\ndouble KA = THETA(3)*exp(ETA(3));\ndouble Q  = THETA(4);\ndouble V3 = THETA(5);\ndouble S2 = V2;\n\n[ ERROR ] \ndouble F = CENT/S2;\ndouble Y = F*(1+EPS(1)) + EPS(2); \ndouble IPRED = F; \n\n[ CAPTURE ] \nCL Q V2 V3 KA ETA(1) ETA(2) ETA(3) IPRED\n\n\nThis model has WT as a parameter (input covariate) as well as TVKA, TVCL, and TVV.\nMake an idata set for sensitivity analysis on WT\n\nidata &lt;- expand.idata(WT = runif(100, 50, 110))\n\nhead(idata)\n\n  ID        WT\n1  1 101.70618\n2  2  84.92973\n3  3  50.73833\n4  4  79.50030\n5  5  86.58689\n6  6  86.48000\n\n\nWe have two columns\n\nID\nWT\n\nand WT is labeled as a input in the model\n\ncheck_data_names(idata, mod, mode = \"inform\")\n\nCould not find the following parameter names in `data`:\n• SEX (input)\n\n\nNotice that SEX is also tagged as an input and the check didn’t find this covariate in the data set. That’s ok; we’re just looking at WT for now.\nIf we simulate one 100 mg dose with this idata set and no IIV\n\nout &lt;- \n  mod %&gt;% \n  zero_re() %&gt;% \n  idata_set(idata) %&gt;% \n  ev(amt = 100) %&gt;% \n  Req(WT, CL, IPRED) %&gt;% \n  mrgsim()\n\nwe get 100 subjects in the output, all with varying weights\n\nout\n\nModel:  1005 \nDim:    72200 x 5 \nTime:   0 to 72 \nID:     100 \n    ID time    CL   IPRED    WT\n1:   1  0.0 14.84 0.00000 101.7\n2:   1  0.0 14.84 0.00000 101.7\n3:   1  0.1 14.84 0.03001 101.7\n4:   1  0.2 14.84 0.05749 101.7\n5:   1  0.3 14.84 0.08263 101.7\n6:   1  0.4 14.84 0.10563 101.7\n7:   1  0.5 14.84 0.12665 101.7\n8:   1  0.6 14.84 0.14584 101.7\n\nplot(out)",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Data sets</span>"
+    ]
+  },
+  {
+    "objectID": "simulation.html",
+    "href": "simulation.html",
+    "title": "8  Simulation and outputs",
+    "section": "",
+    "text": "8.1 mrgsim()\nUse the mrgsim() function to actually run the simulation\nmod &lt;- modlib(\"pk1\") %&gt;% ev(amt = 100)\nmod %&gt;% mrgsim() %&gt;% plot()",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Simulation and outputs</span>"
+    ]
+  },
+  {
+    "objectID": "simulation.html#mrgsim",
+    "href": "simulation.html#mrgsim",
+    "title": "8  Simulation and outputs",
+    "section": "",
+    "text": "8.1.1 Update\nThe mrgsim() signature contains ... which are passed to update()\n\nmod %&gt;% mrgsim(outvars = \"CP\", end = 72, delta = 0.1) %&gt;% plot()\n\n\n\n\n\n\n\n\n\n\n8.1.2 Options\nThere are some options that can only be set when you call mrgsim(). These are function arguments. You can see them at?mrgsim`\n\ncarry_out: numeric data columns to copy into the simulated output\nrecover: like carry_out but works with any type\noutput: pass \"df\" to get output as a regular data frame\nobsonly: don’t return dosing records in the simulated output\netasrc: should ETAs be simulated? or scraped from the data set\nrecsort: how doses and observations having the same time are ordered\ntad: insert time after dose into the output\nss_n and ss_fixed: settings for finding steady state\nnocb: next observation carry backward; set to FALSE for locf\n\nAbout steady state: https://mrgsolve.org/user-guide/steady-state.html\n\n\n8.1.3 Variants\nInputs\nThere are mrgsim() variants which are specific to the types of inputs\n\nmrgsim_e() - just an event object\nmrgsim_d() - just a data set\nmrgsim_ei() - event + idata set\nmrgsim_di() - data set + idata set\nmrgsim_i() - just idata set\n\nOutputs\nYou can also call mrgsim_df(), which is a wrapper for mrgsim() that always returns a data frame.\nQuick\nCall mrgsim_q() for a quick turnaround simulation, with minimal overhead (and features). Only really useful when you are simulating repeatedly … like when estimating parameters or doing optimal design.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Simulation and outputs</span>"
+    ]
+  },
+  {
+    "objectID": "simulation.html#simulated-output",
+    "href": "simulation.html#simulated-output",
+    "title": "8  Simulation and outputs",
+    "section": "8.2 Simulated output",
+    "text": "8.2 Simulated output\nmrgsim() returns an object with class mrgsims; it’s a data frame with some extra features.\n\nout &lt;- mrgsim(mod)\n\nclass(out)\n\n[1] \"mrgsims\"\nattr(,\"package\")\n[1] \"mrgsolve\"\n\nhead(out)\n\n  ID time         EV     CENT       CP\n1  1    0   0.000000  0.00000 0.000000\n2  1    0 100.000000  0.00000 0.000000\n3  1    1  36.787944 61.40526 3.070263\n4  1    2  13.533528 81.00022 4.050011\n5  1    3   4.978707 85.36010 4.268005\n6  1    4   1.831564 84.25422 4.212711\n\nsummary(out)\n\n       ID         time             EV                 CENT      \n Min.   :1   Min.   : 0.00   Min.   :  0.00000   Min.   : 0.00  \n 1st Qu.:1   1st Qu.: 5.25   1st Qu.:  0.00000   1st Qu.:39.22  \n Median :1   Median :11.50   Median :  0.00042   Median :53.61  \n Mean   :1   Mean   :11.54   Mean   :  6.08453   Mean   :52.82  \n 3rd Qu.:1   3rd Qu.:17.75   3rd Qu.:  0.20870   3rd Qu.:69.67  \n Max.   :1   Max.   :24.00   Max.   :100.00000   Max.   :85.36  \n       CP       \n Min.   :0.000  \n 1st Qu.:1.961  \n Median :2.681  \n Mean   :2.641  \n 3rd Qu.:3.483  \n Max.   :4.268  \n\n\n\n8.2.1 Output scope\n\nFirst column is always ID\nSecond column is always time\n\nBy default, you get simulated values in all compartments and for every derived output at every time\n\nhead(out)\n\n  ID time         EV     CENT       CP\n1  1    0   0.000000  0.00000 0.000000\n2  1    0 100.000000  0.00000 0.000000\n3  1    1  36.787944 61.40526 3.070263\n4  1    2  13.533528 81.00022 4.050011\n5  1    3   4.978707 85.36010 4.268005\n6  1    4   1.831564 84.25422 4.212711\n\n\n\nEV and CENT are compartments\nCP is a derived variable (CENT/V)\n\n\noutvars(mod)\n\n$cmt\n[1] \"EV\"   \"CENT\"\n\n$capture\n[1] \"CP\"\n\n\nYou can control which compartments and derived outputs are returned.\nRequest specific outputs at simulation time\n\nmod %&gt;% \n  update(outvars = \"CP\") %&gt;% \n  mrgsim()\n\nModel:  pk1 \nDim:    26 x 3 \nTime:   0 to 24 \nID:     1 \n    ID time    CP\n1:   1    0 0.000\n2:   1    0 0.000\n3:   1    1 3.070\n4:   1    2 4.050\n5:   1    3 4.268\n6:   1    4 4.213\n7:   1    5 4.063\n8:   1    6 3.886\n\n\nOr make the change persistent\n\nmod2 &lt;- update(mod, outvars = \"CP\")\n\noutvars(mod2)\n\n$cmt\ncharacter(0)\n\n$capture\n[1] \"CP\"\n\n\n\n\n8.2.2 Copy inputs into output\nInput data items can be copied into the simulated output without passing through the model code itself.\nFor most applications, use the recover argument to mrgsim()\n\ndata &lt;- expand.ev(amt = c(100,300)) %&gt;% \n  mutate(dose = amt, arm = \"100 mg x1\", \"300 mg x1\")\n\nout &lt;- mrgsim(mod, data, recover = \"dose, arm\", output = \"df\")\n\ncount(out, dose, arm)\n\n  dose       arm  n\n1  100 100 mg x1 26\n2  300 100 mg x1 26\n\n\nThis will let you copy inputs of any type into the output.\nIf you just want to get numeric inputs into the output, use carry_out\n\ndata &lt;- expand.ev(amt = c(100,300)) %&gt;%  mutate(dose = amt)\n\nout &lt;- mrgsim(mod, data, carry_out = \"dose\", output = \"df\")\n\ncount(out, dose)\n\n  dose  n\n1  100 26\n2  300 26",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Simulation and outputs</span>"
+    ]
+  },
+  {
+    "objectID": "simulation.html#working-with-mrgsims-object",
+    "href": "simulation.html#working-with-mrgsims-object",
+    "title": "8  Simulation and outputs",
+    "section": "8.3 Working with mrgsims object",
+    "text": "8.3 Working with mrgsims object\nThe mrgsims object can be convenient to work with when the output is small.\n\nmod &lt;- modlib(\"pk1\", delta = 0.1)\n\nLoading model from cache.\n\nout &lt;- mrgsim(mod, ev(amt = 100))\n\n\nout\n\nModel:  pk1 \nDim:    242 x 5 \nTime:   0 to 24 \nID:     1 \n    ID time     EV   CENT     CP\n1:   1  0.0   0.00  0.000 0.0000\n2:   1  0.0 100.00  0.000 0.0000\n3:   1  0.1  90.48  9.492 0.4746\n4:   1  0.2  81.87 18.034 0.9017\n5:   1  0.3  74.08 25.715 1.2858\n6:   1  0.4  67.03 32.619 1.6309\n7:   1  0.5  60.65 38.819 1.9409\n8:   1  0.6  54.88 44.383 2.2191\n\n\n\n8.3.1 Plot\nPlot with a formula\n\nplot(out, CP ~ time)\n\n\n\n\n\n\n\n\nor a vector of output names\n\nplot(out, \"CENT CP\")\n\n\n\n\n\n\n\n\n\n\n8.3.2 Filter\nUse filter_sims()\n\nout2 &lt;- filter_sims(out, time &lt;= 5)\n\nplot(out2)",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Simulation and outputs</span>"
+    ]
+  },
+  {
+    "objectID": "simulation.html#coerce-output",
+    "href": "simulation.html#coerce-output",
+    "title": "8  Simulation and outputs",
+    "section": "8.4 Coerce output",
+    "text": "8.4 Coerce output\nWhen output is big, these methods are less likely to be useful.\nIn this case, coerce outputs to data.frame or tibble\n\ndf &lt;- as.data.frame(out)\ndf &lt;- as_tibble(out)\nhead(df)\n\n# A tibble: 6 × 5\n     ID  time    EV  CENT    CP\n  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1     1   0     0    0    0    \n2     1   0   100    0    0    \n3     1   0.1  90.5  9.49 0.475\n4     1   0.2  81.9 18.0  0.902\n5     1   0.3  74.1 25.7  1.29 \n6     1   0.4  67.0 32.6  1.63 \n\n\nOnce the output is coerced to data frame, it is like any other R data frame.\nRemember that you can get a data frame directly back from mrgsim() with the output argument\n\nmrgsim(mod, ev(amt = 100), output = \"df\") %&gt;% class()\n\n[1] \"data.frame\"\n\n\nThis is what you’ll want to do most of the time when doing larger simulations.\n\n8.4.1 dplyr verbs\nYou can pipe simulated output directly to several dplyr verbs, for example filter() or mutate().\n\nmod %&gt;% mrgsim(ev(amt = 100)) %&gt;% mutate(rep = 1)\n\n# A tibble: 242 × 6\n      ID  time    EV  CENT    CP   rep\n   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1     1   0     0    0    0         1\n 2     1   0   100    0    0         1\n 3     1   0.1  90.5  9.49 0.475     1\n 4     1   0.2  81.9 18.0  0.902     1\n 5     1   0.3  74.1 25.7  1.29      1\n 6     1   0.4  67.0 32.6  1.63      1\n 7     1   0.5  60.7 38.8  1.94      1\n 8     1   0.6  54.9 44.4  2.22      1\n 9     1   0.7  49.7 49.4  2.47      1\n10     1   0.8  44.9 53.8  2.69      1\n# ℹ 232 more rows\n\n\nThis will first coerce the output object to a data frame and then continue to work on the simulated data according to the functions in the pipeline.\nOther verbs you can use include\n\ngroup_by()\nmutate()\nfilter()\nsummarise()\nselect()\nslice()\npull()\ndistinct()",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Simulation and outputs</span>"
+    ]
+  },
+  {
+    "objectID": "simulation.html#writing-very-large-outputs-to-disk",
+    "href": "simulation.html#writing-very-large-outputs-to-disk",
+    "title": "8  Simulation and outputs",
+    "section": "8.5 Writing very large outputs to disk",
+    "text": "8.5 Writing very large outputs to disk\nSee the paquet package:\nhttps://github.com/metrumresearchgroup/paquet",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Simulation and outputs</span>"
+    ]
+  },
+  {
+    "objectID": "parameters.html",
+    "href": "parameters.html",
+    "title": "9  Model parameters",
+    "section": "",
+    "text": "9.1 Coding model parameters\nTraditionally, we’ve used the $PARAM block to set parameter names and values\n$PARAM \nWT = 70, SEX = 0, EGFR = 100\nNew in mrgsolve 1.2.0, you can use the $INPUT block. This is another way to specify parameters, but they will have a special tag on them that we can use later.\n$INPUT \nWT = 70, SEX = 0, EGFR = 100\nIt’s best if you can set these to sensible values; specifically, set to the reference value in your covariate model.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Model parameters</span>"
+    ]
+  },
+  {
+    "objectID": "parameters.html#updating-parameter-values",
+    "href": "parameters.html#updating-parameter-values",
+    "title": "9  Model parameters",
+    "section": "9.2 Updating parameter values",
+    "text": "9.2 Updating parameter values\nYou can’t change the name or number of parameters after you compile the model, but you can change the value.\nYou can update parameters either\n\nprior to simulation or\nduring simulation\n\nWe will illustrate with this model\n\nmod &lt;- mread(\"parameters.mod\", project = here(\"model\"))\n\nBuilding parameters_mod ... done.\n\n\n\nparam(mod)\n\n\n Model parameters (N=8):\n name   value . name   value \n EGFR   100   | THETA3 0.262 \n SEX    0     | THETA4 0.331 \n THETA1 0     | THETA5 -0.211\n THETA2 3     | WT     70    \n\n\nThere parameters are:\n\nWT\nSEX\nEGFR\nTHETA1 … THETA5\n\n\n\n\n\n\n\nSee model code\n\n\n\n\n\n\n$PLUGIN autodec\n\n$INPUT\nWT   =  70\nSEX  =   0\nEGFR = 100\n\n$PARAM\nTHETA1 = log(1)\nTHETA2 = log(20)\nTHETA3 = log(1.3)\nTHETA4 = 0.331\nTHETA5 = log(0.81)\n\n$PK\nMU_1 = THETA1 + 0.75*log(WT/70.0) + THETA4*log(EGFR/100.0) + THETA5*SEX;\nCL   = exp(MU_1 + ETA(1));\n\nMU_2 = THETA2 * 1.00*log(WT/70.0);\nV    = exp(MU_2 + ETA(2));\n\nMU_3 = THETA3;\nKA   = exp(MU_3 + ETA(3));\n\n$OMEGA 0.1 0.2 0.5\n\n$PKMODEL cmt = \"A1,A2\", depot = TRUE\n\n$ERROR \ncapture CP = A2/V;\n\n$CAPTURE WT CL\n\n\n\n\n\n9.2.1 Update prior to simulation\nUse param() to update the model object. You can do this in one of two ways.\n\n9.2.1.1 Update with name=value\nThe first way is to pass the new value with the parameter name you want to change. To change WT\n\nmod$WT\n\n[1] 70\n\n\n\nmod &lt;- param(mod, WT = 80)\n\nmod$WT\n\n[1] 80\n\n\nAnd when we simulate,\n\nmrgsim(mod) %&gt;% plot(\"WT\")\n\n\n\n\n\n\n\n\nYou can also do this via update()\n\nmod &lt;- update(mod, param = list(WT = 60))\n\nmod$WT\n\n[1] 60\n\n\nRemember that mrgsim() passes to update() so you can do the same thing with\n\nout &lt;- mrgsim(mod, param = list(WT = 70))\n\nThis will generate simulated output with WT set to 70\n\n\n\n9.2.2 Update with object\nIf you have a named object, you can pass that in to the update as well. For example, pass in a named list\n\np &lt;- list(WT = 70.2, FOO = 1)\n\nmod &lt;- param(mod, p)\n\nmod$WT\n\n[1] 70.2\n\n\nOr a data frame\n\ndata &lt;- data.frame(WT = c(70, 80.1), BAR = 2)\n\nmod &lt;- param(mod, data[2,])\n\nmod$WT\n\n[1] 80.1\n\n\nThis will be a very important pattern we’ll do later on",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Model parameters</span>"
+    ]
+  },
+  {
+    "objectID": "parameters.html#update-during-simulation",
+    "href": "parameters.html#update-during-simulation",
+    "title": "9  Model parameters",
+    "section": "9.3 Update during simulation",
+    "text": "9.3 Update during simulation\nIn this approach, we’ll add a columns to our input data set with the same names as our parameters and let mrgsolve pick up the new values.\nTo illustrate, load a data set from which to simulate\n\ndata &lt;- read.csv(here(\"data/parameters-data.csv\"))\ndata\n\n  ID TIME AMT CMT WT SEX EGFR EVID\n1  1    0 100   1 60   0   60    1\n2  2    0 100   1 70   0   60    1\n3  3    0 100   1 80   0   60    1\n\n\n\nSubjects 1, 2, and 3 have different (increasing) weight\nAll subjects have SEX=0\nAll subjects have EGFR=60\n\nWhen we pass this data frame for simulation and plot\n\nout &lt;- \n  mod %&gt;% \n  data_set(data) %&gt;%\n  zero_re() %&gt;% \n  mrgsim(delta = 0.1, end = 6)\n\nplot(out, \"WT,CP\")\n\n\n\n\n\n\n\n\nAll of this only works if the names in the data set match up with the names in the model.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Model parameters</span>"
+    ]
+  },
+  {
+    "objectID": "parameters.html#check-if-the-names-match",
+    "href": "parameters.html#check-if-the-names-match",
+    "title": "9  Model parameters",
+    "section": "9.4 Check if the names match",
+    "text": "9.4 Check if the names match\nRecall that we coded the model covariates using $INPUT, rather than $PARAM?\nWe can see that these parameters have this special tag\n\nparam_tags(mod)\n\n  name   tag\n1   WT input\n2  SEX input\n3 EGFR input\n\n\nThey have the input tag, which means we expect to find them on the data set when we ask.\nWe can check this data set against the parameters in the model\n\ncheck_data_names(data, mod)\n\nFound all expected parameter names in `data`.\n\n\nNow, modify the data set so it has eGFR rather than EGFR\n\ndata2 &lt;- rename(data, eGFR = EGFR)\n\ncheck_data_names(data2, mod)\n\nWarning: Could not find the following parameter names in `data`:\n• EGFR (input)\nℹ Please check names in `data` against names in the parameter list.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Model parameters</span>"
+    ]
+  },
+  {
+    "objectID": "specification-2.html",
+    "href": "specification-2.html",
+    "title": "10  Model specification 2",
+    "section": "",
+    "text": "10.1 Covariate model\nLike NONMEM, we can use $PK (or $MAIN) to code the covariate model, random effects, F, D, R, and ALAG, and initialize compartments.\n$PK\n\ndouble CL = TVCL * pow(WT/70, 0.75) * exp(ETA(1));",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model specification 2</span>"
+    ]
+  },
+  {
+    "objectID": "specification-2.html#covariate-model",
+    "href": "specification-2.html#covariate-model",
+    "title": "10  Model specification 2",
+    "section": "",
+    "text": "Any valid c++ code is allowed\nEach line (statement) should end in semi-colon ;",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model specification 2</span>"
+    ]
+  },
+  {
+    "objectID": "specification-2.html#c-examples",
+    "href": "specification-2.html#c-examples",
+    "title": "10  Model specification 2",
+    "section": "10.2 C++ examples",
+    "text": "10.2 C++ examples\n\nif(a == 2) b = 2;\nif(b &lt;= 2) {\n  c=3;\n} else {\n  c=4;\n}\nd = a==2 ? 50 : 100;\ndouble d = pow(base,exponent);\ndouble e = exp(3);\ndouble f = fabs(-4);\ndouble g = sqrt(5);\ndouble h = log(6);\ndouble i = log10(7);\ndouble j = floor(4.2);\ndouble k = ceil(4.2);\n\nBe careful of integer division\n\ndouble result = 1/2; # 0\n\nHere, result will evaluate to 0.\nGood practice to put .0 behind whole numbers.\n\ndouble result = 1.0/2.0; # 0.5\n\nLots of help on the web http://en.cppreference.com/w/cpp/numeric/math/tgamma",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model specification 2</span>"
+    ]
+  },
+  {
+    "objectID": "specification-2.html#random-effects",
+    "href": "specification-2.html#random-effects",
+    "title": "10  Model specification 2",
+    "section": "10.3 Random effects",
+    "text": "10.3 Random effects\nThere are times when you will need to code this manually. When estimating with NONMEM and simulating with mrgsolve, these matrices will frequently be imported automatically via $NMXML.\n\n10.3.1 Omega / ETA\nDiagonal matrix\n\n$OMEGA\n0.1 0.2 0.3\n\nThis is a 3x3 matrix with 0.1, 0.2, and 0.3 on the diagonal.\nBlock matrix\n\n$OMEGA @block\n0.1 0.002 0.3\n\nThis is a 2x2 matrix matrix with 0.1 and 0.3 on the diagonal. Sometimes it’s easier to see when we code it like this\n\n$OMEGA @block\n0.1 \n0.002 0.3\n\nRandom effects simulated from OMEGA are referred to with ETA(n).\n\n\n10.3.2 Sigma / EPS\nWorks just like Omega / ETA, but use $SIGMA and EPS(n).\nFor sigma-like theta, code it just as you would in NONMEM.\n\n$PARAM THETA12 = 0.025\n\n$SIGMA 1\n\n$ERROR\ndouble W = sqrt(THETA12);\nY = (CENT/V) + W*EPS(1);\n\nThere is no FIX in mrgsolve; everything in OMEGA and SIGMA is always fixed.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model specification 2</span>"
+    ]
+  },
+  {
+    "objectID": "specification-2.html#import-estimates-from-nonmem",
+    "href": "specification-2.html#import-estimates-from-nonmem",
+    "title": "10  Model specification 2",
+    "section": "10.4 Import estimates from NONMEM",
+    "text": "10.4 Import estimates from NONMEM\n\nUse $NMEXT or $NMXML\n\n$NMEXT reads from the .ext file\n\nCan be faster\nDoesn’t retain $OMEGA and $SIGMA structure\n\n$NMXML reads from the .xml file\n\nCan be slower\nDoes retain $OMEGA and $SIGMA structure\n\n\n\nThis is the safest way to call\n\n$NMXML\npath = \"../nonmem/106/106.xml\"\nroot = \"cppfile\"\n\nYou might be able to use this run/project approach as well\n\n$NMXML \nrun = 1006\nproject = \"../sim/\"\nroot = \"cppfile\"",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model specification 2</span>"
+    ]
+  },
+  {
+    "objectID": "specification-2.html#models-in-closed-form",
+    "href": "specification-2.html#models-in-closed-form",
+    "title": "10  Model specification 2",
+    "section": "10.5 Models in closed form",
+    "text": "10.5 Models in closed form\nmrgsolve will solve one- and two-compartment models with first order input in closed form. This usually results in substantial speed up. Use $PKMODEL.\n\n$PKMODEL cmt = \"GUT,CENT\", depot = TRUE\n\nCertain symbols are required to be defined depending on the model. mrgsolve models are always parameterized in terms of clearances and volumes except for absorption, which is in terms of rate constant.\n\nCL / V\nCL / V / KA\nCL / V2 / Q / V3\nCL / V2 / Q / V3 / KA\n\nThese can be defined as a parameter or a derived quantity in $PK.\nCompartment names are user-choice; the only thing mrgsolve cares about is the number of compartments.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model specification 2</span>"
+    ]
+  },
+  {
+    "objectID": "specification-2.html#plugins",
+    "href": "specification-2.html#plugins",
+    "title": "10  Model specification 2",
+    "section": "10.6 Plugins",
+    "text": "10.6 Plugins\n\n10.6.1 autodec\nHistorically, you have had to declare the type of any new variable you want to create.\n\n$PK\ndouble KE = CL/V;\n\nFor most models, the numeric variables you declare are likely to be floating point numbers … with type double.\nWe created a plugin that tells mrgsolve to look for new variables and declare them for you.\n\n$PLUGIN autodec\n\n$PK\nKE = CL/V;\n\n\n\n10.6.2 nm-vars\nmrgsolve historically used\n\nCENT\ndxdt_CENT\nF_CENT\nD_CENT\n\netc. When we started mrgsolve, this was a really nice feature because you didn’t have to think about compartment numbers. However, this made translation of the model more difficult.\nWhen you invoke the nm-vars plugin, you can write in a syntax that is much more like NONMEM.\nFor example\n\n$PK\nF2 = THETA(3);\n\nALAG2 = EXP(THETA(4));\n\n$DES\nDADT(1) = - KA * A(1);\n\nOther convenience syntax\n\nLOG() and log()\nEXP() and exp()\nSQRT() and sqrt()\n\nRegardless of whether you have nm-vars invoked or not, you can still use THETA(n) to refer to parameter THETAn.\nTry the nm-like model in the model library for an example.\n\nmod &lt;- modlib(\"nm-like\")\n\nmod@code\n\n\n\n10.6.3 Rcpp (random numbers)\nThis gives you functions and data structures that you’re used to using in R, but they work in c++.\nThe main use for this is random number generation. Any d/q/p/r function in R will be available; arguments are the same, but omit n (you always get just one draw when calling from c++.\nFor a draw from U(0,1)\n\n$PLUGIN Rcpp\n\n$ERROR\ndouble u = R::runif(0, 1);\n\nNote: this will slightly increase compile time.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model specification 2</span>"
+    ]
+  },
+  {
+    "objectID": "specification-2.html#other-blocks",
+    "href": "specification-2.html#other-blocks",
+    "title": "10  Model specification 2",
+    "section": "10.7 Other blocks",
+    "text": "10.7 Other blocks\n\nUse $SETUP to configure the model object on load\n\nFor example, set the simulation end time\n\nUse $ENV to define a set of R objects that might be evaluated in other model blocks\nUse $PRED for other closed form models\nUse $PREAMBLE for code that gets run once at the start of a problem NEWIND==0\nUse $GLOBAL to define variables outside of any other block",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model specification 2</span>"
+    ]
+  },
+  {
+    "objectID": "specification-2.html#variables-and-macros",
+    "href": "specification-2.html#variables-and-macros",
+    "title": "10  Model specification 2",
+    "section": "10.8 Variables and macros",
+    "text": "10.8 Variables and macros\nThere is too much syntax to mention it all here. You will find all the syntax here\nhttps://mrgsolve.org/user-guide/specification.html#sec-variables-macros",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model specification 2</span>"
+    ]
+  },
+  {
+    "objectID": "specification-2.html#modeled-event-times",
+    "href": "specification-2.html#modeled-event-times",
+    "title": "10  Model specification 2",
+    "section": "10.9 Modeled event times",
+    "text": "10.9 Modeled event times\nTo get the model to stop at any time (even if not in the data set) with EVID 2\n\ndouble mt1 = self.mtime(1.23 + ETA(1));\n\nTo get the model to stop at any time with user-specified EVID (e.g. 33)\n\nself.mevent(1.23 + ETA(1), 33);",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model specification 2</span>"
+    ]
+  },
+  {
+    "objectID": "validation.html",
+    "href": "validation.html",
+    "title": "11  Validation",
+    "section": "",
+    "text": "11.1 Validate using PRED\nFirst, load the mrgsolve model that you want to validate\nrunno &lt;- 106\n\nmod &lt;- mread(here(glue(\"model/pk/{runno}.mrgsolve\")))\n\nLoading required namespace: xml2\n\n\nBuilding 106_mrgsolve ... done.\nNext load in the model estimation data set.\ncsv &lt;- read_csv(here(\"data/derived/analysis3.csv\"), na = \".\")\n\nhead(csv, n = 3)\n\n# A tibble: 3 × 34\n  C       NUM    ID  TIME   SEQ   CMT  EVID   AMT    DV   AGE    WT    HT  EGFR\n  &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 NA        1     1  0        0     1     1     5   0    28.0  55.2  160.  114.\n2 NA        2     1  0.61     1     2     0    NA  61.0  28.0  55.2  160.  114.\n3 NA        3     1  1.15     1     2     0    NA  91.0  28.0  55.2  160.  114.\n# ℹ 21 more variables: ALB &lt;dbl&gt;, BMI &lt;dbl&gt;, SEX &lt;dbl&gt;, AAG &lt;dbl&gt;, SCR &lt;dbl&gt;,\n#   AST &lt;dbl&gt;, ALT &lt;dbl&gt;, CP &lt;dbl&gt;, TAFD &lt;dbl&gt;, TAD &lt;dbl&gt;, LDOS &lt;dbl&gt;,\n#   MDV &lt;dbl&gt;, BLQ &lt;dbl&gt;, PHASE &lt;dbl&gt;, STUDYN &lt;dbl&gt;, DOSE &lt;dbl&gt;, SUBJ &lt;dbl&gt;,\n#   USUBJID &lt;chr&gt;, STUDY &lt;chr&gt;, ACTARM &lt;chr&gt;, RF &lt;chr&gt;\nNext, load the table file that contains PRED\ntab &lt;- read_table(here(glue(\"model/pk/{runno}/{runno}.tab\")), skip = 1)\nhead(tab, n = 3)\n\n# A tibble: 3 × 8\n    NUM IPRED   NPDE  CWRES    DV  PRED    RES   WRES\n  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1     1   0    0      0       0     0    0      0    \n2     2  68.5 -0.633 -0.512  61.0  60.6  0.422 -0.533\n3     3  90.8  0.403  0.126  91.0  78.5 12.4    0.142\nNow join them together with tab on the left; the NUM column provides a key to join these two\ndata &lt;- left_join(tab, csv, by = \"NUM\")\n\nhead(data, n = 3)\n\n# A tibble: 3 × 41\n    NUM IPRED   NPDE  CWRES  DV.x  PRED    RES   WRES C        ID  TIME   SEQ\n  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1     1   0    0      0       0     0    0      0     NA        1  0        0\n2     2  68.5 -0.633 -0.512  61.0  60.6  0.422 -0.533 NA        1  0.61     1\n3     3  90.8  0.403  0.126  91.0  78.5 12.4    0.142 NA        1  1.15     1\n# ℹ 29 more variables: CMT &lt;dbl&gt;, EVID &lt;dbl&gt;, AMT &lt;dbl&gt;, DV.y &lt;dbl&gt;, AGE &lt;dbl&gt;,\n#   WT &lt;dbl&gt;, HT &lt;dbl&gt;, EGFR &lt;dbl&gt;, ALB &lt;dbl&gt;, BMI &lt;dbl&gt;, SEX &lt;dbl&gt;, AAG &lt;dbl&gt;,\n#   SCR &lt;dbl&gt;, AST &lt;dbl&gt;, ALT &lt;dbl&gt;, CP &lt;dbl&gt;, TAFD &lt;dbl&gt;, TAD &lt;dbl&gt;,\n#   LDOS &lt;dbl&gt;, MDV &lt;dbl&gt;, BLQ &lt;dbl&gt;, PHASE &lt;dbl&gt;, STUDYN &lt;dbl&gt;, DOSE &lt;dbl&gt;,\n#   SUBJ &lt;dbl&gt;, USUBJID &lt;chr&gt;, STUDY &lt;chr&gt;, ACTARM &lt;chr&gt;, RF &lt;chr&gt;\nNow, simulate from this data set after turning off all the random effects. We also bring EVID and PRED into the output to help post-processing\nout &lt;- \n  mod %&gt;% \n  zero_re() %&gt;% \n  obsonly() %&gt;% \n  mrgsim(data = data, recover = \"NM = PRED\", output = \"df\", digits = 5)\n\nhead(out, n = 3)\n\n  ID TIME     GUT   CENT   PERIPH     CL    V2  IPRED      Y     NM\n1  1 0.61 1.93350 2.9359 0.064811 3.0305 48.46 60.583 60.583 60.583\n2  1 1.15 0.83383 3.8064 0.177380 3.0305 48.46 78.548 78.548 78.548\n3  1 1.73 0.33787 4.0241 0.312270 3.0305 48.46 83.040 83.040 83.040\nNotice, too, we limited the number of output digits to 5 (what NONMEM is giving).\nNow, we have the NONMEM-generated PRED in the data as NM (the reference) and we can pick between IPRED and Y as the test.\nplot(out$NM, out$IPRED)\n\n\n\n\n\n\n\nsummary(out$NM - out$IPRED)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n      0       0       0       0       0       0\nThis mrgsolve model gives identical result.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Validation</span>"
+    ]
+  },
+  {
+    "objectID": "validation.html#validate-using-ipred",
+    "href": "validation.html#validate-using-ipred",
+    "title": "11  Validation",
+    "section": "11.2 Validate using IPRED",
+    "text": "11.2 Validate using IPRED\nMore recent versions of mrgsolve also allow you to validate by IPRED.\nRead in an additional table that contain the post-hoc ETA values\n\ntab &lt;- read_table(\n  here(glue(\"model/pk/{runno}/{runno}par.tab\")), \n  na = '.', skip = 1\n)\netas &lt;- select(tab, matches(\"NUM|ETA\"))\n\nand we join this to the data set\n\ndata &lt;- left_join(data, etas, by = \"NUM\")\n\nNow, we simulate with the etasrc option set to data.all and recovering IPRED into the output\n\nout &lt;- mrgsim(\n  mod, \n  data, \n  etasrc = \"data.all\", \n  obsonly = TRUE, \n  recover = \"NMIPRED = IPRED, NMPRED = PRED\", \n  digits = 5\n)\n\nAnd summarize again\n\nplot(out$IPRED, out$NMIPRED)\n\n\n\n\n\n\n\nsummary(100*(out$IPRED - out$NMIPRED)/out$NMIPRED)\n\n      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. \n-8.861e-03  0.000e+00  0.000e+00  4.452e-05  0.000e+00  9.092e-03",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Validation</span>"
+    ]
+  },
+  {
+    "objectID": "replicate.html",
+    "href": "replicate.html",
+    "title": "12  Replicate simulation",
+    "section": "",
+    "text": "12.1 Basic replicate simulation",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Replicate simulation</span>"
+    ]
+  },
+  {
+    "objectID": "replicate.html#basic-replicate-simulation",
+    "href": "replicate.html#basic-replicate-simulation",
+    "title": "12  Replicate simulation",
+    "section": "",
+    "text": "12.1.1 Load the model\nFirst, load a model and data set from which to simulate\n\nmod &lt;- mread(\"106.mrgsolve\", project = here(\"model/pk\"))\n\nmod &lt;- update(mod, outvars = \"CL,IPRED,Y\")\n\nparam_tags(mod)\n\n  name   tag\n1   WT input\n2 EGFR input\n3  ALB input\n4  AGE input\n\n\n\n\n12.1.2 Data skeleton\nNow create a template data set; we’ll resample from the input data from this model run.\n\ndat &lt;- read_csv(here(\"data/derived/analysis3.csv\"), na = '.')\n\nid &lt;- distinct(dat, ID, WT, ALB, AGE, EGFR)\n\ncovariates &lt;- slice_sample(id, n = 1000, replace = TRUE)\n\ncovariates &lt;- mutate(covariates, ID = row_number())\n\nLook at the 10 and 25 mg doses at steady state\n\ndata &lt;- crossing(\n  covariates, \n  AMT = c(10,25), \n  CMT = 1, \n  TIME = 0, \n  EVID = 1, \n  II = 24, \n  SS = 1\n)\n\ndata &lt;- mutate(data, DOSE = AMT, ID = row_number())\n\nRemember to check the names in your data set\n\ncheck_data_names(data, mod)\n\nFound all expected parameter names in `data`.\n\n\n\n\n12.1.3 Set up simulation\nI prefer to create a function that executes a single simulation replicate.\n\nsim &lt;- function(i, model, data) {\n  mrgsim(\n    model,\n    data = data, \n    recover = \"WT,DOSE\",\n    output = \"df\", \n    obsonly = TRUE, \n    end = 24, \n    add = seq(0, 2, 0.1),\n    recsort = 3\n  ) %&gt;% mutate(irep = i)\n}\n\nNote in this function\n\nThe first argument is the current simulation replicate\nWe also pass in the data and the model object\nWe bring WT and DOSE into the simulated output\nOutput is data.frame; we don’t get any benefit from the mrgsims object\nWe mutate() the simulated output so we can track it later\n\nThen try your function\n\nsim(2, mod, data) %&gt;% filter(TIME %in% c(0,24)) %&gt;% head()\n\n  ID TIME       CL     IPRED         Y    WT DOSE irep\n1  1    0 4.145285  50.60451  63.50874 72.53   10    2\n2  1   24 4.145285  50.60451  36.33340 72.53   10    2\n3  2    0 2.124093 370.72296 369.87872 72.53   25    2\n4  2   24 2.124093 370.72296 348.49494 72.53   25    2\n5  3    0 3.884892  69.18339  48.38359 68.31   10    2\n6  3   24 3.884892  69.18339  57.88598 68.31   10    2\n\n\nNow, call lapply() a simulate the desired number of replicates, setting the seed first to ensure reproducibility\n\nnsim &lt;- 10\n\nset.seed(98765)\nout &lt;- lapply(1:nsim, sim, mod, data) %&gt;% bind_rows()\n\nNow we have 10 replicates of our data skeleton\n\ncount(out, irep, DOSE)\n\n   irep DOSE     n\n1     1   10 43000\n2     1   25 43000\n3     2   10 43000\n4     2   25 43000\n5     3   10 43000\n6     3   25 43000\n7     4   10 43000\n8     4   25 43000\n9     5   10 43000\n10    5   25 43000\n11    6   10 43000\n12    6   25 43000\n13    7   10 43000\n14    7   25 43000\n15    8   10 43000\n16    8   25 43000\n17    9   10 43000\n18    9   25 43000\n19   10   10 43000\n20   10   25 43000\n\n\nThe median pre-dose concentration at steady state is\n\nsumm &lt;- \n  out %&gt;% \n  filter(TIME==24) %&gt;% \n  group_by(irep,DOSE) %&gt;% \n  summarise(Median = median(IPRED), .groups = \"drop\")\n\nhead(summ)\n\n# A tibble: 6 × 3\n   irep  DOSE Median\n  &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;\n1     1    10   82.8\n2     1    25  210. \n3     2    10   84.5\n4     2    25  207. \n5     3    10   86.1\n6     3    25  209.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Replicate simulation</span>"
+    ]
+  },
+  {
+    "objectID": "replicate.html#simulate-with-uncertainty",
+    "href": "replicate.html#simulate-with-uncertainty",
+    "title": "12  Replicate simulation",
+    "section": "12.2 Simulate with uncertainty",
+    "text": "12.2 Simulate with uncertainty\n\n12.2.1 Load uncertainty estimates\nWe have bootstrap parameter estimates for this model here\n\nboot &lt;- read_csv(here(\"data/boot-106.csv\"))\nboot\n\n# A tibble: 1,000 × 16\n   run   THETA1 THETA2 THETA3 THETA4 THETA5 THETA6   THETA7 THETA8 `OMEGA(1,1)`\n   &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;\n 1 001    0.494   4.19   1.20   4.20   1.24  0.488 -0.0615   0.377        0.293\n 2 002    0.405   4.07   1.14   4.23   1.32  0.536 -0.103    0.517        0.241\n 3 003    0.500   4.09   1.15   4.21   1.27  0.413 -0.0752   0.523        0.184\n 4 004    0.578   4.16   1.20   4.18   1.30  0.518 -0.0502   0.418        0.270\n 5 005    0.499   4.14   1.16   4.25   1.22  0.436 -0.0686   0.394        0.261\n 6 006    0.556   4.15   1.17   4.19   1.27  0.524 -0.0143   0.365        0.230\n 7 007    0.352   4.05   1.13   4.21   1.35  0.510 -0.0225   0.439        0.257\n 8 008    0.385   4.11   1.18   4.23   1.30  0.483 -0.0354   0.351        0.182\n 9 009    0.512   4.18   1.22   4.16   1.16  0.501  0.00906  0.493        0.283\n10 010    0.506   4.17   1.22   4.19   1.26  0.451 -0.0736   0.299        0.257\n# ℹ 990 more rows\n# ℹ 6 more variables: `OMEGA(2,1)` &lt;dbl&gt;, `OMEGA(2,2)` &lt;dbl&gt;,\n#   `OMEGA(3,1)` &lt;dbl&gt;, `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;,\n#   `SIGMA(1,1)` &lt;dbl&gt;\n\n\nWe have 1000 bootstrap replicates for THETA, OMEGA and SIGMA.\nLet’s separate things. Just select columns for THETA\n\nthetas &lt;- select(boot, contains(\"THETA\"))\n\nFor OMEGA and SIGMA, we have to turn these data into matrices. We do this with as_bmat().\nThe second argument is a regular expression for selecting columns from which to make the matrix.\n\nomegas &lt;- as_bmat(boot, \"OMEGA\")\nsigmas &lt;- as_bmat(boot, \"SIGMA\")\n\nNow, omegas is a list with length equal to the number of rows in boot\n\nclass(omegas)\n\n[1] \"list\"\n\nlength(omegas)\n\n[1] 1000\n\n\nEach position in omegas is another OMEGA matrix\n\nomegas[[10]]\n\n          [,1]      [,2]      [,3]\n[1,] 0.2572420 0.0778079 0.1506750\n[2,] 0.0778079 0.0896459 0.0796598\n[3,] 0.1506750 0.0796598 0.1248070\n\n\nSimilar for sigmas\n\nsigmas[[100]]\n\n          [,1]\n[1,] 0.0389401\n\n\n\n\n12.2.2 Simulation function to use with bootstrap estimates\nNow, we do three update steps to update the model object with the ith set of bootstrap estimates.\n\nparam() to update THETAs\nomat() to update OMEGA\nsmat() to update SIGMA\n\n\nsimu &lt;- function(i, model, data, thetas, omegas, sigmas) {\n  \n  model &lt;- param(model, slice(thetas, i))\n  model &lt;- omat(model, omegas[[i]])\n  model &lt;- smat(model, sigmas[[i]])\n  \n  mrgsim(\n    model,\n    data = data, \n    recover = \"WT,DOSE\",\n    output = \"df\", \n    obsonly = TRUE, \n    end = 24, \n    add = seq(0, 2, 0.1),\n    recsort = 3\n  ) %&gt;% mutate(irep = i)\n}\n\nAgain, it’s a good idea to test this out\n\nsimu(23, mod, data, thetas, omegas, sigmas) %&gt;% as_tibble()\n\n# A tibble: 86,000 × 8\n      ID  TIME    CL IPRED     Y    WT  DOSE  irep\n   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1     1   0    2.08  146.  147.  72.5    10    23\n 2     1   0.1  2.08  159.  178.  72.5    10    23\n 3     1   0.2  2.08  170.  121.  72.5    10    23\n 4     1   0.3  2.08  181.  203.  72.5    10    23\n 5     1   0.4  2.08  190.  166.  72.5    10    23\n 6     1   0.5  2.08  199.  246.  72.5    10    23\n 7     1   0.6  2.08  207.  136.  72.5    10    23\n 8     1   0.7  2.08  215.  256.  72.5    10    23\n 9     1   0.8  2.08  221.  126.  72.5    10    23\n10     1   0.9  2.08  227.  253.  72.5    10    23\n# ℹ 85,990 more rows\n\n\nJust like before, we can simulate with lapply\n\nnsim &lt;- 10\n\nset.seed(98765)\noutu &lt;- lapply(1:nsim, simu, mod, data, thetas, omegas, sigmas) %&gt;% bind_rows()\n\nNow we have 10 replicates of our data skeleton\n\ncount(outu, irep, DOSE)\n\n   irep DOSE     n\n1     1   10 43000\n2     1   25 43000\n3     2   10 43000\n4     2   25 43000\n5     3   10 43000\n6     3   25 43000\n7     4   10 43000\n8     4   25 43000\n9     5   10 43000\n10    5   25 43000\n11    6   10 43000\n12    6   25 43000\n13    7   10 43000\n14    7   25 43000\n15    8   10 43000\n16    8   25 43000\n17    9   10 43000\n18    9   25 43000\n19   10   10 43000\n20   10   25 43000",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Replicate simulation</span>"
+    ]
+  },
+  {
+    "objectID": "replicate.html#parallelization",
+    "href": "replicate.html#parallelization",
+    "title": "12  Replicate simulation",
+    "section": "12.3 Parallelization",
+    "text": "12.3 Parallelization\nReplicate simulations might start to take a long time to complete. If so, you can easily parallelize these simulations.\nWe recommend using the future.apply package, which is built on top of future.\n\nlibrary(future.apply)\n\nLoading required package: future\n\n\nThis package will give us a function (future_lapply) that works just like lapply, but it will send each replicate to different cores on your computer, running multiple replicates at a time rather than sequentially.\nYou have to tell future what evaluation strategy you want to use.\nIf you are running on a unix-alike system, I recommend the multicore plan. This creates workers from a fork of your current R session. The performance tends to be a little better than multisession.\nIf you are running on a Windows system, you must use multisession parallelization. This strategy starts new R processes for running the jobs.\nWe tell future that we want 3 workers for this simulation.\n\noptions(future.fork.enable = TRUE)\nplan(multicore, workers = 3L)\n\nNow, we can call simu() in parallel\n\nout &lt;- future_lapply(\n  1:10, \n  simu, mod, data, thetas, omegas, sigmas, \n  future.seed = TRUE\n) %&gt;% bind_rows()\n\nYou will not see any benefit from parallelization with this few replicates. We can try to increase the size of the problem to see if we can see a difference.\nTo simulate with multisession\n\nplan(multisession, workers = 3L)\n\nout &lt;- future_lapply(\n  1:10, \n  simu, mod, data, thetas, omegas, sigmas, \n  future.seed = TRUE\n) %&gt;% bind_rows()\n\nYou will experience a small lag when calling plan(multisession); this lag is from the time required to start up the new R processes.\nI also like the future.callr package when simulations get large and overhead isn’t that big of a deal https://cran.r-project.org/web/packages/future.callr/index.html",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Replicate simulation</span>"
+    ]
+  }
+]

@@ -1,0 +1,130 @@
+# Validation
+
+```{r}
+#| include: false
+source(here::here("src/global.R"))
+library(here)
+library(mrgsolve)
+library(dplyr)
+library(readr)
+library(glue)
+options(mrgsolve_mread.quiet = TRUE)
+```
+
+There are easy ways to validate the model you coded when you have a finished
+NONMEM run. 
+
+Outputs from the finished NONMEM run provide reference values and simulations
+from `mrgsolve` provide test values which are compared against the reference.
+
+__Recommendation__
+
+- Have a dedicated script setup to validate your models or
+- Put some validation code at the top of your VPC script
+
+
+## Validate using `PRED`
+
+First, load the `mrgsolve` model that you want to validate
+
+```{r}
+runno <- 106
+
+mod <- mread(here(glue("model/pk/{runno}.mrgsolve")))
+```
+
+Next load in the model estimation data set.
+
+```{r, message = FALSE}
+csv <- read_csv(here("data/derived/analysis3.csv"), na = ".")
+
+head(csv, n = 3)
+```
+
+Next, load the table file that contains `PRED`
+
+```{r, message = FALSE}
+tab <- read_table(here(glue("model/pk/{runno}/{runno}.tab")), skip = 1)
+head(tab, n = 3)
+```
+
+Now join them together with `tab` on the left; the `NUM` column provides a key 
+to join these two
+
+```{r}
+data <- left_join(tab, csv, by = "NUM")
+
+head(data, n = 3)
+```
+
+Now, simulate from this data set after turning off all the random effects. We 
+also bring `EVID` and `PRED` into the output to help post-processing
+
+```{r}
+out <- 
+  mod %>% 
+  zero_re() %>% 
+  obsonly() %>% 
+  mrgsim(data = data, recover = "NM = PRED", output = "df", digits = 5)
+
+head(out, n = 3)
+```
+
+Notice, too, we limited the number of output digits to 5 (what NONMEM is 
+giving).
+
+Now, we have the NONMEM-generated `PRED` in the data as `NM` (the reference)
+and we can pick between `IPRED` and `Y` as the test. 
+
+```{r}
+plot(out$NM, out$IPRED)
+
+summary(out$NM - out$IPRED)
+```
+
+This `mrgsolve` model gives identical result.
+
+
+## Validate using `IPRED`
+
+More recent versions of `mrgsolve` also allow you to validate by `IPRED`. 
+
+Read in an additional table that contain the post-hoc ETA values
+
+```{r, message = FALSE}
+tab <- read_table(
+  here(glue("model/pk/{runno}/{runno}par.tab")), 
+  na = '.', skip = 1
+)
+etas <- select(tab, matches("NUM|ETA"))
+```
+
+and we join this to the data set
+
+```{r}
+data <- left_join(data, etas, by = "NUM")
+```
+
+Now, we simulate with the `etasrc` option set to `data.all` and recovering 
+`IPRED` into the output
+
+```{r}
+out <- mrgsim(
+  mod, 
+  data, 
+  etasrc = "data.all", 
+  obsonly = TRUE, 
+  recover = "NMIPRED = IPRED, NMPRED = PRED", 
+  digits = 5
+)
+```
+
+
+And summarize again
+
+```{r}
+plot(out$IPRED, out$NMIPRED)
+
+summary(100*(out$IPRED - out$NMIPRED)/out$NMIPRED)
+```
+

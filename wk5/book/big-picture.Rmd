@@ -1,0 +1,115 @@
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(message = FALSE)
+options(mrgsolve.soloc = "build")
+```
+
+
+```{r, include = FALSE}
+source(here::here("src/global.R"))
+library(mrgsolve)
+library(tidyverse)
+library(knitr)
+library(lattice)
+```
+
+
+# Big picture
+
+There are 3 (or 4) main workflows that we want to work up to. 
+
+Decide what is the output you want and that will tell you what 
+the inputs you need. 
+
+
+## You need a model
+
+For every workflow, you need a model. This is coded in a separate 
+file and read in by `mread()`
+
+```{r}
+mod <- mread_cache("azithro-fixed.mod", project = here("model"))
+```
+
+We'll code up a model right after this overview.
+
+## Single profile
+
+To get a single profile, use and event object
+
+```{r}
+mod %>% 
+  ev(amt = 250, ii = 24, addl = 4) %>% 
+  mrgsim(end = 144, delta = 0.1) %>% 
+  plot("CP") 
+```
+
+
+## Population
+
+To simulate a population, you'll need what we call a data set
+
+```{r}
+mod <- mread_cache("azithro.mod", project = here("model"))
+data <- expand.ev(amt = 250, WT = runif(30, 50, 100))
+```
+
+```{r}
+set.seed(9876)
+
+mod %>% 
+  data_set(data) %>% 
+  mrgsim(end = 24) %>% 
+  plot("CP")
+```
+
+## Batch 
+
+You can also simulate a population (or a batch of subjects) with a 
+data set of parameters and an event object
+
+
+```{r}
+mod <- mread_cache("azithro-fixed.mod", project = here("model"))
+
+data <- data.frame(WT = runif(30, 50, 100))
+
+mod %>% 
+  ev(amt = 250, ii = 24, addl = 4) %>% 
+  idata_set(data) %>% 
+  mrgsim(end = 144) %>% 
+  plot("CP")
+```
+
+## Replicate
+
+The other pattern is just like data set, but we do that in a loop
+to generate replicate simulations. 
+
+This simulation might look something like this
+
+
+```{r}
+#| eval: false
+
+sim <- function(i, model, data) {
+  mod %>% 
+    data_set(data) %>%
+    mrgsim() %>% 
+    mutate(irep = i)
+}
+
+out <- lapply(1:1000, sim, model = mod, data = data) %>% bind_rows()
+```
+
+See @sec-replicate for full examples on replicate simulation.
+
+
+## The overall pattern 
+
+- Code a model 
+- Load it with `mread()`
+- Set up your intervention and population
+- Simulate with `mrgsim()`
+- Plot or process your output
+

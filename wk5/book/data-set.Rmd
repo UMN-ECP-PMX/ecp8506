@@ -1,0 +1,258 @@
+# Data sets
+
+```{r}
+#| include: false
+source(here::here("src/global.R"))
+options(pillar.width = Inf)
+```
+
+
+`mrgsolve` will receive data sets just like those you create
+for NONMEM, but in `data.frame` format. 
+
+Naming is similar to what we learned in the previous chapter for 
+event objects, but you can use upper or lower case naming. 
+
+Example
+
+```{r}
+#| message: false
+data <- read.csv(here("data/derived/analysis3.csv"), na = '.')
+head(data, n = 3)
+```
+
+Data sets are passed through the `data_set` pipe function
+
+```{r}
+#| eval: false
+mod %>% 
+  data_set(data) %>%
+  mrgsim()
+```
+
+or just pass it in as the `data` argument to `mrgsim()`
+
+```{r}
+#| eval: false
+mrgsim(mod, data = data)
+```
+
+
+## Specifics
+
+- Lower or upper case names may be used for NMTRAN data items, but 
+  they must be consistent 
+  - Good: `AMT`, `CMT`, `TIME`
+  - Also good: `amt`, `cmt`, `time`
+  - Bad: `amt`, `CMT`, `time`
+
+- Columns with special handling
+  - `ID`
+  - `AMT`
+  - `CMT`
+  - `EVID`
+  - `II`
+  - `ADDL`
+  - `RATE`
+  - `SS`
+
+- Required columns for most applications
+  - `ID`
+  - `TIME`
+  - `CMT` 
+
+- Some columns which are commonly used for NONMEM data sets mean 
+  nothing in `mrgsolve` context
+  - `C`
+  - `MDV`
+  - `DV`
+
+- Columns that are not numeric will be dropped before simulating
+
+- Use `uctran()` and `lctran()` to convert names
+
+- Data sets can contain mix of observation and event records
+
+- Data sets can have multiple IDs with any design
+  - NONMEM approach for when to count "new" IDs
+
+- Unlimited flexibility in creating data sets
+  - But we have some helpful tools when creating simulation 
+    skeletons on the fly
+
+
+
+
+## Observation records
+
+Data sets may or may not include observation records (EVID=0). 
+
+- When there is **at least one** observation record anywhere in the 
+  data set, `mrgsolve` will only take observations from the 
+  input data. 
+- When there **no** observation records in the data set, `mrgsolve` will
+  insert observations according to the time grid specification in the 
+  model object. 
+
+This makes it easy to pass in a _clinical_ data set, with arbitrary "real"
+observation times. 
+
+Or, if you are conducting _de novo_ simulations, make a data set with only 
+dosing or event records and let `mrgsolve` fill in the observations for you
+after you customize the time grid. 
+
+## Building input data sets
+
+We will look at some convenience functions that help you create input data sets
+that _don't_ include observation records. 
+
+
+### Expand
+
+The `ev_expand()` and `evd_expand()` functions like `base::expand.grid()`: it 
+will make all combinations of your inputs, filling in missing required columns
+with sensible defaults. 
+
+To simulate 2 subjects at each of 3 doses
+
+```{r}
+evd_expand(amt = c(100, 300, 1000), ii = 24, total = 7, ID = 1:2)
+```
+
+- Arguments are lowercase
+- The function fills in 
+  - `TIME`, `CMT` and `EVID` for you; be sure to override this if you want 
+    something else
+- Only one row for each subject
+- The result is a data.frame
+
+### From events
+
+Pass several event objects to `as_data_set()`. This allows much more 
+flexibility. Let's do an example:
+
+We want to simulate 2 subjects at each of 3 regimens: 
+
+- a: 100 mg daily for 28 days
+- b: 50 mg daily for 14 days followed by 100 mg daily for 14 days
+- c: 50 mg BID for 14 days followed by 100 mg daily for 14 days
+
+First, make an event object for each
+
+```{r}
+a <- ev(amt = 100, ii = 24, total = 28)
+```
+
+```{r}
+b1 <- ev(amt = 50, ii = 24, total = 14)
+b2 <- mutate(a, total = 28)
+b <- ev_seq(b1, b2)
+```
+
+```{r}
+c1 <- ev(amt = 50, ii = 12, total = 28)
+c2 <- b2
+c <- ev_seq(c1, c2)
+```
+
+Check the outputs
+
+```{r}
+a
+b
+c
+```
+
+The `as_data_set()` function will combine these into 3 different subjects, 
+giving them unique ID names names
+
+```{r}
+data <- as_data_set(a,b,c)
+data
+```
+
+We can expand the number of subjects in each intervention by using 
+`ev_rep()`
+
+```{r}
+data <- as_data_set(
+  ev_rep(a, ID = 1:2), 
+  ev_rep(b, ID = 1:2), 
+  ev_rep(c, ID = 1:2)
+) %>% uctran()
+```
+
+```{r}
+#| include: false
+rownames(data) <- NULL
+```
+
+
+```{r}
+data
+```
+
+## Individual data sets
+
+Another type of data set is `idata`. This is a data frame of individual-level
+data for the problem. 
+
+- `idata` typically has columns named for parameters
+- `idata` has only one row per subject in the problem
+- `idata` defines the number of subjects in the problem when there is no
+  (population) `data` set
+  
+
+For example, load the `1005` model
+
+```{r}
+mod <- modlib("1005", end = 72, delta = 0.1, capture = "WT")
+
+see(mod)
+```
+
+This model has `WT` as a parameter (input covariate) as well as `TVKA`, `TVCL`, 
+and  `TVV`.
+
+Make an `idata` set for sensitivity analysis on `WT`
+
+```{r}
+idata <- expand.idata(WT = runif(100, 50, 110))
+
+head(idata)
+```
+
+We have two columns
+
+- `ID`
+- `WT`
+
+and `WT` is labeled as a input in the model
+
+```{r}
+check_data_names(idata, mod, mode = "inform")
+```
+
+Notice that `SEX` is _also_ tagged as an input and the check didn't find this 
+covariate in the data set. That's ok; we're just looking at `WT` for now.
+
+
+If we simulate one 100 mg dose with this `idata` set and no IIV 
+
+```{r}
+out <- 
+  mod %>% 
+  zero_re() %>% 
+  idata_set(idata) %>% 
+  ev(amt = 100) %>% 
+  Req(WT, CL, IPRED) %>% 
+  mrgsim()
+```
+
+we get 100 subjects in the output, all with varying weights
+
+```{r}
+out
+plot(out)
+```
+

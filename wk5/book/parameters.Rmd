@@ -1,0 +1,241 @@
+# Model parameters {#sec-parameters}
+
+```{r}
+#| include: false
+source(here::here("src/global.R"))
+data <- expand.grid(
+  WT = c(60, 70, 80), 
+  SEX = 0, 
+  EGFR = 60
+)
+data <- mutate(
+  data, 
+  ID = row_number(), 
+  TIME = 0,
+  AMT = 100, 
+  CMT = 1, 
+  EVID = 1
+) %>% select(ID, TIME, AMT, CMT, everything())
+write.csv(
+  x = data, 
+  file = here("data/parameters-data.csv"), 
+  quote = FALSE, row.names = FALSE
+)
+```
+
+
+Model parameters are `name` / `value` pairs that are used _inside_ your model, 
+but they can be varied _outside_ the model. 
+
+Understanding how mrgsolve handles model "parameters" particularly important 
+for generating interesting and robust simulations. 
+
+Big picture
+
+- `mrgsolve` maintains a parameter list, including names and values
+  - This list is used by default if nothing else is done
+  - The parameter values in this list can be updated
+
+- `mrgsolve` will check input data sets for _columns_ which have the same 
+  name as a parameter
+  - When a match is made between data set and parameter list, `mrgsolve`
+    will update the value based on what is passed on the data
+  - Parameters in `idata` are checked (and parameter list  updated) first; 
+    after that, the data set is checked (and parameter list updated)
+
+## Coding model parameters
+
+Traditionally, we've used the `$PARAM` block to set parameter names and values
+
+```{r, eval = FALSE}
+$PARAM 
+WT = 70, SEX = 0, EGFR = 100
+```
+
+New in mrgsolve 1.2.0, you can use the `$INPUT` block. This is another way
+to specify parameters, but they will have a special _tag_ on them that we can 
+use later. 
+
+```{r, eval = FALSE}
+$INPUT 
+WT = 70, SEX = 0, EGFR = 100
+```
+
+
+It's best if you can set these to sensible values; specifically, set to 
+the _reference_ value in your covariate model.
+
+## Updating parameter values
+
+You can't change the name or number of parameters after you compile the model, 
+but you can change the value. 
+
+You can update parameters either 
+
+- _prior to_ simulation or 
+- _during_ simulation
+
+We will illustrate with this model
+
+
+```{r}
+mod <- mread("parameters.mod", project = here("model"))
+```
+
+```{r}
+param(mod)
+```
+
+There parameters are: 
+
+- `WT`
+- `SEX`
+- `EGFR`
+- `THETA1` ... `THETA5`
+
+::: {.callout-note collapse=true appearance="simple"}
+# See model code
+```{r, code = mod@code, eval = FALSE}
+```
+:::
+
+### Update _prior to_  simulation
+
+
+Use `param()` to update the model object. You can do this in one of two ways. 
+
+#### Update with `name=value`
+
+The first way is to pass the new value with the parameter name you want to 
+change. To change `WT`
+
+
+```{r}
+mod$WT
+```
+
+```{r}
+mod <- param(mod, WT = 80)
+
+mod$WT
+```
+
+And when we simulate, 
+
+```{r}
+mrgsim(mod) %>% plot("WT")
+```
+
+You can also do this via `update()`
+
+```{r}
+mod <- update(mod, param = list(WT = 60))
+
+mod$WT
+```
+
+Remember that `mrgsim()` passes to `update()` so you can do the same thing
+with 
+
+```{r}
+#| eval: false
+out <- mrgsim(mod, param = list(WT = 70))
+```
+
+This will generate simulated output with `WT` set to 70
+
+### Update with object
+
+If you have a named object, you can pass that in to the update 
+as well. For example, pass in a named list
+
+```{r}
+p <- list(WT = 70.2, FOO = 1)
+
+mod <- param(mod, p)
+
+mod$WT
+```
+
+Or a data frame
+
+```{r}
+data <- data.frame(WT = c(70, 80.1), BAR = 2)
+
+mod <- param(mod, data[2,])
+
+mod$WT
+```
+
+**This will be a very important pattern we'll do later on**
+
+
+## Update _during_  simulation 
+
+In this approach, we'll add a columns to our input data set
+with the same names as our parameters and let `mrgsolve`
+pick up the new values. 
+
+
+
+To illustrate, load a data set from which to simulate
+
+```{r}
+data <- read.csv(here("data/parameters-data.csv"))
+data
+```
+
+- Subjects 1, 2, and 3 have different (increasing) weight
+- All subjects have `SEX=0`
+- All subjects have `EGFR=60`
+
+
+When we pass this data frame for simulation and plot
+
+```{r}
+out <- 
+  mod %>% 
+  data_set(data) %>%
+  zero_re() %>% 
+  mrgsim(delta = 0.1, end = 6)
+
+plot(out, "WT,CP")
+```
+
+
+
+All of this _only_ works if the names in the data set
+match up with the names in the model. 
+
+## Check if the names match
+
+Recall that we coded the model covariates using `$INPUT`, rather 
+than `$PARAM`?
+
+We can see that these parameters have this special tag
+
+```{r}
+param_tags(mod)
+```
+
+They have the `input` tag, which means we expect to find them on the data set
+_when we ask_.
+
+
+We can check this data set against the parameters in the model
+
+```{r}
+check_data_names(data, mod)
+```
+
+
+Now, modify the data set so it has `eGFR` rather than `EGFR`
+
+```{r}
+data2 <- rename(data, eGFR = EGFR)
+
+check_data_names(data2, mod)
+```
+
+
+

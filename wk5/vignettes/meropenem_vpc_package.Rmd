@@ -1,0 +1,147 @@
+---
+title: "Meropenem VPC with vpc package"
+author: "Metrum Research Group"
+---
+
+
+```{r, message = FALSE}
+source(here::here("src/global.R"))
+library(tidyverse)
+library(mrgsolve)
+library(data.table)
+library(furrr)
+library(vpc)
+library(here)
+
+options(future.fork.enable = TRUE)
+future::plan(future::sequential)
+
+
+.colSet1 <- function(x,...) scale_color_brewer(palette = "Set1", ...)
+.fillSet1 <- function(x,...) scale_fill_brewer(palette = "Set1", ...)
+
+```
+
+
+# Introduction
+
+- "Population Pharmacokinetic Analysis and Dosing Regimen Optimization of 
+Meropenem in Adult Patients"
+- Li et al. J Clin Pharmacol 2006
+- Meropenem is broad-spectrum carbapenem antibiotic
+- Efficacy related to time above MIC
+- IV dosing every 8 hours by infusion or bolus
+- bolus over 3 to 5 minutes
+- infusion over 15 to 30 minutes
+- Authors are interested in seeing if a longer infusion duration 
+can increase time above MIC
+
+# Read and fix up the data set
+```{r}
+data <- 
+  read_csv(here("data/Simulated_DatasetMeropenem.csv"), na = '.')  %>% 
+  mutate(CMT=1, DUR = AMT/RATE)
+```
+
+
+
+Derive a column that describes the infusion duration for each subject
+```{r}
+data %<>% 
+  group_by(ID) %>% 
+  mutate(DUR = first(DUR[!is.na(AMT)])) %>%
+  ungroup
+
+data <- 
+  data %>%
+  mutate(
+    DUR = round(DUR,1), 
+    RATE = replace_na(RATE,0)
+  )
+
+```
+
+Look at distinct values of `CMT`, `EVID`, `DUR` in `data`
+
+```{r}
+count(data,CMT,EVID,DUR,RATE)
+```
+
+
+# Load the meropenem model
+
+```{r}
+mod <- mread("meropenem", here("model"))
+
+```
+
+This model looks a little different because we got it 
+off of DDMoRe model repository.
+
+
+A function to do the (replicate) simulation
+
+Arguments
+
+- `i` the replicate number
+
+Returns simulated data set 
+
+- time as in `des`
+- `DUR` the infusion duration 
+- `TIME > 0` and `Y > 0`
+- Labeled with replicate number
+
+```{r}
+simvpc <- function(i,mod) {
+  mod %>% 
+    carry_out(DUR) %>%
+    obsonly() %>%
+    mrgsim_d(data,carry_out = "DV,DUR") %>% 
+    filter(TIME > 0) %>%
+    mutate(irep = i)
+}
+```
+
+Simulate
+
+- 300 iterations
+- Use future
+- Bind into a single data frame
+
+```{r}
+niter <- 300
+set.seed(1234)
+opt <- furrr_options(seed = TRUE)
+out <- future_map_dfr(seq(niter), simvpc, mod = mod, .options = opt) 
+```
+
+This chunk needed for pred-correction
+```{r}
+pmod <- zero_re(mod)
+set.seed(1234)
+prd <- future_map_dfr(seq(niter), simvpc, mod = pmod, .options = opt) 
+out[["PRED"]] <- prd[["Y"]]
+```
+
+```{r}
+sims <- filter(out, Y > 0, DV > 0)
+obs <- filter(sims, irep ==1)
+```
+
+The function is called `vpc`
+
+```{r}
+vpc(
+  obs = obs,
+  sim = sims,
+  sim_cols=list(dv="Y", sim="irep"), 
+  log_y = TRUE, 
+  stratify = "DUR",
+  ci = c(0.025, 0.975), 
+  pred_corr = TRUE, 
+  show = list(obs_dv=TRUE)
+) 
+
+```
+

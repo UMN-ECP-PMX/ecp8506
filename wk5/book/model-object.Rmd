@@ -1,0 +1,298 @@
+# The model object
+
+```{r}
+#| include: false
+library(mrgsolve)
+library(dplyr)
+options(mrgsolve_mread.quiet = TRUE)
+```
+
+
+This chapter introduces the ___model object___. 
+
+- The model object contains all information about _the model_
+  - Compartments
+  - ODE
+  - Algebraic relationships
+  - Random effects
+  - Etc
+- The model object is what you use in R to 
+  - Query the model
+  - Run simulations
+  
+## `mread()`
+
+Load a model from a model specification file using `mread()`. 
+
+- Don't worry for now what is in that file; we'll show you how to create it
+- Your model can have any extension
+
+### Syntax to load a model 
+
+__Provide the complete path to the file__
+
+```{r}
+#| eval: false
+mod <- mread("book-model/test.mod")
+```
+
+
+__Provide the directory as an argument__
+
+- Assumes you are keeping all simulation code in the `models` directory
+
+```{r}
+#| eval: false
+mod <- mread("test.mod", project = "book-model")
+```
+
+
+__Set `project` as an option__
+
+- All my models are in this directory _for this project_
+
+```{r}
+#| eval: false
+options(mrgsolve.project = "book-model")
+
+mod <- mread("test.mod")
+```
+
+__Update on load__
+
+- Set the simulation end time to `240`
+- Set (increase) ODE solver relative tolerance to `1e-5`
+
+```{r}
+#| eval: false
+mod <- mread("book-model/test.mod", end = 240, rtol = 1e-5)
+```
+
+
+### Read and cache
+
+Use `mread_cache()` to build and cache the model. 
+
+Load it once
+
+```{r}
+mod <- mread_cache("book-model/test.mod")
+```
+
+Load it again
+
+```{r}
+mod <- mread_cache("book-model/test.mod")
+```
+
+Look at the `soloc` argument; this will let you place the cached model in 
+a stable location. 
+
+## `modlib()`
+
+Use the `modlib()` function to load a model from an internal model library.
+
+- Pre-coded models
+- Sourced from inside the `mrgsolve` installation directory
+- Great way to get models to experiment with
+  - But I rarely use these for production work
+
+This code will load a 1-compartment PK model. 
+
+```{r}
+#| eval: false
+mod <- modlib("pk1")
+```
+ 
+List out the location of he model library
+
+```{r}
+modlib()
+```
+
+So the `modlib()` function is equivalent to 
+
+```{r}
+#| eval: false
+mod <- mread("pk1", project = modlib())
+```
+
+Find out what models are in the library
+
+```{r}
+#| eval: false
+?modlib
+```
+
+## Overview
+
+You can print `mod` to the R console and see what's going on 
+
+```{r}
+mod
+```
+
+or summarize
+
+```{r}
+summary(mod)
+```
+
+or see the model code
+
+```{r}
+see(mod)
+```
+
+
+## Parameters
+
+Query the parameter list with `param()`
+
+```{r}
+param(mod)
+```
+
+This output shows you there are 3 parameters in the model 
+
+- `CL`, with nominal value 1
+- `V`, with nominal value 20
+- `KA`, with nominal value 1
+
+Note that each parameter has
+
+- A **name**(e.g. `CL`)
+- A **value** (must be _numeric_) 
+
+
+
+## Compartments
+
+We'll keep working with the model object we loaded in the previous section. 
+
+Models also have compartments. Like parameters, compartments have 
+
+- A **name**
+- A **value** 
+
+Compartments also have a ___number___ 
+
+Query the compartment list with `init()`
+
+```{r}
+init(mod)
+```
+
+Notice that each compartment has a number associated with it. This is mainly
+used for dosing. But there is a model syntax that allows you to write a 
+model in terms of named compartments (e.g. `A(2)` or `F1`). 
+
+## Random effects
+
+```{r}
+revar(mod)
+```
+
+
+## Update the model object
+
+We frequently want to _change_ or _update_ the settings in the model object. 
+
+Updates can be made through `update()`. To change the simulation time grid
+we might use
+
+```{r}
+mod <- update(mod, end = 240, delta = 2)
+```
+
+to change the simulation end time to `240` hours and the output time interval
+to every 2 hours. This results in a new model object with updated settings that 
+will be in place whenever you simulate from `mod` until you make more changes. 
+
+You can also update on model read
+
+```{r}
+#| eval: false
+mod <- mread("model.mod", end = 240, delta = 2)
+```
+
+or at the time of simulation 
+
+```{r}
+#| eval: false
+out <- mod %>% mrgsim(end = 240, delta = 2)
+```
+
+All of these update mechanisms execute updates to the model object. But only 
+when we save the results back to `mod` are the updates persistent in the model.
+
+__What else can I update?__
+
+- Time
+  - `start`, `end`, `delta`, `add`
+- Parameters and compartment initial values
+- Solver settings
+  -  `atol`, `rtol`
+  -  `hmax`, `maxsteps`, `mxhnil`, `ixpr`
+  - Usually changing `rtol`, `atol`, and maybe `hmax`
+- `$OMEGA`, `$SIGMA`
+- `tscale` (rescale the output time)
+- `digits`
+
+__Parameter update__
+
+To update parameters, use `param()`. More on this in @sec-parameters 
+
+```{r}
+#| eval: false
+mod <- param(mod, CL = 2)
+```
+
+
+
+
+
+## Advanced
+
+__Get the value of a parameter or setting__
+
+```{r}
+mod$CL
+mod$end
+```
+
+
+
+
+__Extract all parameters as a list__
+
+```{r}
+as.list(param(mod))
+```
+
+Extract the value of one parameter
+
+```{r}
+mod$CL
+```
+
+
+__Extract everything__
+
+You can get the model object contents as a plain list
+
+
+
+```{r}
+l <- as.list(mod)
+```
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+# See the output
+
+```{r}
+l
+```
+
+:::

@@ -1,0 +1,11 @@
+$PARAM CL = 1, V2 = 20, KA = 1.2, Q = 5, V3 = 25
+
+$CMT DEPOT CENT PERIPH
+
+$DES
+dxdt_DEPOT = -KA * DEPOT;
+dxdt_CENT  =  KA * DEPOT - (CL/V2)*CENT - (Q/V2)*CENT + (Q/V3)*PERIPH;
+dxdt_PERIPH = Q*(CENT/V2 - PERIPH/V3);
+
+$TABLE
+capture CP = CENT/V2;

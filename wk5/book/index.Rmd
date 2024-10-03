@@ -1,0 +1,19 @@
+
+# Tools and Methods for Clinical Simulation
+
+<img align="right" src = "images/hex.png" width="135px">
+
+1. Introduction  - about mrgsolve
+1. Three (or 4) simulation workflows
+
+    - Single profile / `events`
+    - Population / `data_set`
+    - Batch / `idata_set`
+    - Replicate
+  
+1. Model syntax I
+1. Working with simulated output
+1. Customizing outputs
+1. Model syntax II
+1. Validation
+1. Replicate simulation

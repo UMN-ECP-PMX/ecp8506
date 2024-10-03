@@ -1,0 +1,166 @@
+# Event objects
+
+```{r}
+#| include: false
+library(mrgsolve)
+library(dplyr)
+options(mrgsolve_mread.quiet = TRUE)
+```
+
+Event objects are quick ways to generate an intervention or
+a sequence of interventions to apply to your model. 
+
+These are like quick and easy data sets. 
+
+
+## Create and event object
+
+
+Use `ev()` and pass NMTRAN data names in lower case. 
+
+For example
+
+```{r}
+ev(amt = 100, ii = 12, addl = 2)
+```
+
+You can pass
+
+- `time` time of the event
+- `evid` event ID
+  - 1 for dose
+  - 2 for other type
+  - 3 for reset
+  - 4 for dose and reset
+  - 8 for replace
+- `amt` dose amount
+- `cmt` compartment for the intervention
+  - usually the compartment number
+  - can be character compartment name
+- `ii` inter-dose interval
+- `addl` additional doses (or events)
+  - `total` alternative for total number of doses
+- `ss` advance to steady-state?
+  - 0 don't advance to steady-state
+  - 1 advance to steady-state
+  - 2 irregular steady-state
+- `rate` give the dose zero-order with this rate
+  - `tinf` alternative for infusion time 
+
+
+See `?ev` for additional details. 
+
+## Invoke event object
+
+
+### Inline
+
+Pipe the model object to `ev()` then simulate.
+
+```{r}
+#| fig-height: 3
+mod <- house(outvars = "GUT,CP,RESP", end = 24)
+
+mod %>% ev(amt = 100) %>% mrgsim() %>% plot()
+```
+
+### As object
+
+You can save the event object out and pass it in. 
+
+```{r, eval = FALSE}
+e <- ev(amt = 100) 
+
+mod %>% ev(e) %>% mrgsim() %>% plot()
+```
+
+This is a good idea when you want to create an intervention 
+and apply it in several different simulation scenarios.
+
+
+Alternatively, you can pass it in as the `events` argument
+for `mrgsim()`
+
+```{r, eval = FALSE}
+mod %>% mrgsim(events = e) %>% plot()
+```
+
+## Combining event objects 
+
+We can create more complex interventions from several
+simpler event objects. 
+
+### Simple combination
+
+Use the `c()` operator to concatenate. 
+
+For 100 mg loading dose followed by 50 mg daily x6
+
+```{r}
+load <- ev(amt = 100) 
+maintenance <- ev(time = 24, amt = 50, ii = 24, addl = 5)
+
+c(load, maintenance)
+```
+
+### Sequence
+
+We can make this simpler by putting these in a sequence. Here is 
+100 mg daily for a week, followed by 50 mg daily for the rest of the month
+
+```{r}
+a <- ev(amt = 100, ii = 24, total =  7) 
+b <- ev(amt = 50,  ii = 24, total = 21)
+
+seq(a,b)
+```
+
+
+### Expand into multiple subjects
+
+Pass an event object to `ev_rep()` with the IDs you want
+
+```{r}
+seq(a,b)
+
+seq(a,b) %>% ev_rep(1:3)
+```
+
+
+### Combine into a data set
+
+Use `as_data_set` with `ev_rep()` to create a data set
+
+```{r}
+c <- seq(a,b) 
+
+as_data_set(
+  a %>% ev_rep(1:2), 
+  b %>% ev_rep(1:2), 
+  c %>% ev_rep(1:2)
+)
+```
+
+## Modifying event objects
+
+You can use a selection of the tidyverse to modify event objects
+
+```{r}
+single <- ev(amt = 100) 
+
+ss <- mutate(single, ii = 24, ss = 1)  
+
+ss
+```
+
+- `mutate()`
+- `select()`
+- `filter()`
+
+## Rx specification
+
+
+```{r}
+ev_rx("100 mg x1 then 50 q12h x 10 at 24")
+```
+

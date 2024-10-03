@@ -1,0 +1,218 @@
+---
+title: "Probability of Technical Success - EPO IV/SC QW/TIW"
+---
+
+```{r}
+#| message: false
+source(here::here("src/global.R"))
+library(mrgsolve)
+library(tidyverse)
+library(future.apply)
+library(future.callr)
+options(future.fork.enable = TRUE)
+set.seed(112)
+```
+
+
+__Population Pharmacokinetic and Pharmacodynamic Model- Based Comparability 
+Assessment of a Recombinant Human Epoetin Alfa and the Biosimilar HX575__
+
+- Xiaoyu Yan, MS, Philip J. Lowe, PhD, Martin Fink, PhD, 
+Alexander Berghout, PhD, Sigrid Balser, PhD, and Wojciech Krzyzanski, PhD
+- J Clin Pharmacol. 2012 November ; 52(11): 1624–1644. 
+- https://www.ncbi.nlm.nih.gov/pubmed/22162538
+
+
+# Read in data ...
+
+```{r}
+post <- readRDS(here("data/epo_post.RDS"))
+
+post <- select(post, contains("THETA"))
+
+head(post)
+
+dim(post)
+```
+
+# ... and the model
+```{r}
+mod <- mread_cache("epo", here("model")) 
+mod <- zero_re(mod)
+see(mod)
+```
+
+Drop the initial `HGB` by a little bit
+
+```{r}
+mod <- param(mod,    THETA19 = mod$THETA19*0.8)
+post <- mutate(post, THETA19 = THETA19*0.8)
+```
+
+# Weekly and tiw dosing
+
+```{r}
+tiw <- ev_days(ev(amt = 7000, rate = -2), days="m,w,f", addl = 3)
+tiw
+
+qw <- filter(tiw, time==0) %>% mutate(amt = 40000)
+qw
+```
+
+```{r}
+data_sc <- bind_rows(tiw, qw) %>% mutate(ID = amt)
+data_sc
+```
+
+# SC administration
+
+- When subcuteneous administration, 40,000 IU weekly has similar efficacy
+to 100 IU/kg TIW
+
+- We're looking out to 4 weeks here
+
+```{r}
+mod %>% 
+  mrgsim(data = data_sc, end = 672) %>%
+  plot("EPOi, HGBi")
+```
+
+# IV administration
+
+```{r}
+data_sc
+data_iv <- mutate(data_sc, cmt = 2, rate = 0)
+data_iv
+```
+
+- But when we look at the TIW versus QW comparison with IV administration,
+the once-weekly is less effective than three-times-weekly
+
+```{r}
+mod %>% 
+  mrgsim(data = data_iv, end = 672) %>%
+  plot("EPOi, HGBi")
+```
+
+# Probability of technical success
+
+Let's look at the probability of technical success for the QW versus TIW
+dosing in the IV case
+
+Let's ramp this up for PTS
+
+## Population data sets
+
+TIW data
+
+```{r}
+iv_tiw <- ev_rep(tiw, ID = 1:250) %>% mutate(cmt = 2, rate = 0)
+```
+
+QW data
+
+```{r}
+iv_qw <- filter(iv_tiw, time==0) %>% mutate(amt = 40000, ID = ID + 10000)
+```
+
+If we bind this all together, we can simulate both regimens in one go
+
+```{r}
+data <- bind_rows(iv_tiw, iv_qw) %>% mutate(qw = as.integer(amt==40000))
+
+head(data)
+```
+
+- What about simulating some variability in Weight?
+
+
+A simulation function
+
+Arguments
+
+- `i` replicate number
+- `mod` the EPO model object
+- `data` a template data set
+
+```{r}
+mod <- mread_cache("epo", here("model"), rtol = 1e-5)
+mod <- param(mod, THETA19 = mod$THETA19*0.8)
+
+sim <- function(i, mod, data) {
+  
+  mod <- param(mod, slice(post, i))
+  
+  out <- mrgsim(
+    mod, 
+    data = data, 
+    obsonly = TRUE,
+    recover = "qw", 
+    end = -1, 
+    add = c(0, 672), 
+    output = "df"
+  )
+  
+  mutate(out, irep = i)
+}
+```
+
+
+Test it out
+
+```{r}
+sim(2, mod, data) %>% head()
+```
+
+
+## Simulate
+
+- Remember to set a seed
+- What about uncertainty in the random effect variances?
+
+```{r}
+set.seed(10020)
+
+plan(callr, workers = 4L)
+
+out <- future_lapply(
+  seq(500),
+  sim, 
+  mod, data, 
+  future.seed = TRUE
+) %>% bind_rows()
+```
+
+
+## Summarize
+
+Our target is HGB > 10
+
+```{r}
+sum1 <- 
+  out %>% 
+  filter(time > 0) %>%
+  group_by(irep, time, qw) %>%
+  summarise(success = mean(HGBi >= 10), n = n(), .groups = "drop") %>%
+  mutate(week = time/168)
+
+sum1
+
+ggplot(sum1, aes(x = success)) + 
+  geom_histogram(col = "grey") + 
+  facet_grid(week ~ qw) 
+```
+
+Our success criteria is at least 75% of patients hitting the target
+
+```{r}
+sum2 <- 
+  sum1 %>%
+  group_by(week,qw) %>% 
+  summarise(PR = mean(success > 0.75), .groups = "drop")
+```
+
+The bottom line
+
+```{r}
+sum2
+```

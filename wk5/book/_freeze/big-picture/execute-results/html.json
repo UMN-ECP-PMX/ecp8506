@@ -1,0 +1,17 @@
+{
+  "hash": "a61fa19b2e008c8d7e1a0555ea867ced",
+  "result": {
+    "engine": "knitr",
+    "markdown": "::: {.cell}\n\n:::\n\n\n\n\n\n\n\n# Big picture\n\nThere are 3 (or 4) main workflows that we want to work up to. \n\nDecide what is the output you want and that will tell you what \nthe inputs you need. \n\n\n## You need a model\n\nFor every workflow, you need a model. This is coded in a separate \nfile and read in by `mread()`\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmod <- mread_cache(\"azithro-fixed.mod\", project = here(\"model\"))\n```\n:::\n\n\n\n\nWe'll code up a model right after this overview.\n\n## Single profile\n\nTo get a single profile, use and event object\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmod %>% \n  ev(amt = 250, ii = 24, addl = 4) %>% \n  mrgsim(end = 144, delta = 0.1) %>% \n  plot(\"CP\") \n```\n\n::: {.cell-output-display}\n![](big-picture_files/figure-html/unnamed-chunk-4-1.png){width=672}\n:::\n:::\n\n\n\n\n\n## Population\n\nTo simulate a population, you'll need what we call a data set\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmod <- mread_cache(\"azithro.mod\", project = here(\"model\"))\ndata <- expand.ev(amt = 250, WT = runif(30, 50, 100))\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nset.seed(9876)\n\nmod %>% \n  data_set(data) %>% \n  mrgsim(end = 24) %>% \n  plot(\"CP\")\n```\n\n::: {.cell-output-display}\n![](big-picture_files/figure-html/unnamed-chunk-6-1.png){width=672}\n:::\n:::\n\n\n\n\n## Batch \n\nYou can also simulate a population (or a batch of subjects) with a \ndata set of parameters and an event object\n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmod <- mread_cache(\"azithro-fixed.mod\", project = here(\"model\"))\n\ndata <- data.frame(WT = runif(30, 50, 100))\n\nmod %>% \n  ev(amt = 250, ii = 24, addl = 4) %>% \n  idata_set(data) %>% \n  mrgsim(end = 144) %>% \n  plot(\"CP\")\n```\n\n::: {.cell-output-display}\n![](big-picture_files/figure-html/unnamed-chunk-7-1.png){width=672}\n:::\n:::\n\n\n\n\n## Replicate\n\nThe other pattern is just like data set, but we do that in a loop\nto generate replicate simulations. \n\nThis simulation might look something like this\n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nsim <- function(i, model, data) {\n  mod %>% \n    data_set(data) %>%\n    mrgsim() %>% \n    mutate(irep = i)\n}\n\nout <- lapply(1:1000, sim, model = mod, data = data) %>% bind_rows()\n```\n:::\n\n\n\n\nSee @sec-replicate for full examples on replicate simulation.\n\n\n## The overall pattern \n\n- Code a model \n- Load it with `mread()`\n- Set up your intervention and population\n- Simulate with `mrgsim()`\n- Plot or process your output\n\n",
+    "supporting": [
+      "big-picture_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,33 @@
+project:
+  type: book
+  output-dir: ../docs
+
+book:
+  title: "Intro to mrgsolve"
+  author: ["Kyle Baron"]
+  date: "03/27/2024"
+  chapters:
+    - index.Rmd
+    - intro.Rmd
+    - big-picture.Rmd
+    - specification-1.Rmd
+    - model-object.Rmd
+    - event-object.Rmd
+    - data-set.Rmd
+    - simulation.Rmd
+    - parameters.Rmd
+    - specification-2.Rmd
+    - validation.Rmd
+    - replicate.Rmd
+
+format:
+  html:
+    theme: cosmo
+    freeze: auto
+    linkcolor: "#097f5f"
+    toc-title: Contents
+    code-overflow: wrap
+    fig-height: 4
+
+#  pdf:
+#    documentclass: scrreprt
