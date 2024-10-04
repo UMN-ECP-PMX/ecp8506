@@ -174,7 +174,7 @@
     "href": "big-picture.html#population",
     "title": "3  Big picture",
     "section": "3.3 Population",
-    "text": "3.3 Population\nTo simulate a population, you’ll need what we call a data set\n\nmod &lt;- mread_cache(\"azithro.mod\", project = here(\"model\"))\ndata &lt;- expand.ev(amt = 250, WT = runif(30, 50, 100))\n\n\nset.seed(9876)\n\nmod %&gt;% \n  data_set(data) %&gt;% \n  mrgsim(end = 24) %&gt;% \n  plot(\"CP\")",
+    "text": "3.3 Population\nTo simulate a population, you’ll need what we call a data set\n\nmod &lt;- mread_cache(\"azithro.mod\", project = here(\"model\"))\ndata &lt;- expand.evd(amt = 250, WT = runif(30, 50, 100))\n\n\n\n  ID TIME AMT CMT EVID       WT\n1  1    0 250   1    1 75.76394\n2  2    0 250   1    1 83.29321\n3  3    0 250   1    1 57.20915\n\n\n\nset.seed(9876)\n\nmod %&gt;% \n  data_set(data) %&gt;% \n  mrgsim(end = 24) %&gt;% \n  plot(\"CP\")",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Big picture</span>"
     ]
@@ -184,7 +184,7 @@
     "href": "big-picture.html#batch",
     "title": "3  Big picture",
     "section": "3.4 Batch",
-    "text": "3.4 Batch\nYou can also simulate a population (or a batch of subjects) with a data set of parameters and an event object\n\nmod &lt;- mread_cache(\"azithro-fixed.mod\", project = here(\"model\"))\n\ndata &lt;- data.frame(WT = runif(30, 50, 100))\n\nmod %&gt;% \n  ev(amt = 250, ii = 24, addl = 4) %&gt;% \n  idata_set(data) %&gt;% \n  mrgsim(end = 144) %&gt;% \n  plot(\"CP\")",
+    "text": "3.4 Batch\nYou can also simulate a population (or a batch of subjects) with a data set of parameters and an event object\n\nmod &lt;- mread_cache(\"azithro-fixed.mod\", project = here(\"model\"))\n\nidata &lt;- expand.idata(WT = runif(30, 50, 100))\n\n\n\n  ID       WT\n1  1 95.01629\n2  2 54.84729\n3  3 93.31941\n\n\n\nmod %&gt;% \n  ev(amt = 250, ii = 24, addl = 4) %&gt;% \n  idata_set(idata) %&gt;% \n  mrgsim(end = 144) %&gt;% \n  plot(\"CP\")",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Big picture</span>"
     ]

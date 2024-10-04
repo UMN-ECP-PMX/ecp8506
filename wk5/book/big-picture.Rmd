@@ -51,7 +51,11 @@ To simulate a population, you'll need what we call a data set
 
 ```{r}
 mod <- mread_cache("azithro.mod", project = here("model"))
-data <- expand.ev(amt = 250, WT = runif(30, 50, 100))
+data <- expand.evd(amt = 250, WT = runif(30, 50, 100))
+```
+
+```{r, echo = FALSE}
+head(data, n = 3)
 ```
 
 ```{r}
@@ -72,11 +76,18 @@ data set of parameters and an event object
 ```{r}
 mod <- mread_cache("azithro-fixed.mod", project = here("model"))
 
-data <- data.frame(WT = runif(30, 50, 100))
+idata <- expand.idata(WT = runif(30, 50, 100))
+```
+
+```{r, echo = FALSE}
+head(idata, n = 3)
+```
+
+```{r}
 
 mod %>% 
   ev(amt = 250, ii = 24, addl = 4) %>% 
-  idata_set(data) %>% 
+  idata_set(idata) %>% 
   mrgsim(end = 144) %>% 
   plot("CP")
 ```
