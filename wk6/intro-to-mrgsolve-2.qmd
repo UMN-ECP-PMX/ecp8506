@@ -10,19 +10,26 @@ format:
 editor: visual
 ---
 
-# Outline{.smaller}
+# Outline {.smaller}
 
-*   Model parameters: `[ param ]` and `[ theta ]`
-*   Model specifications   
+-   Model parameters: `[ param ]` and `[ theta ]`
 
-    - Covariate model: `[ main ]` (i.e., `[ pk ]`)
-    - Random effects: `[ omega ]` and `[ sigma ]`   
-    - Import `NONMEM` estimates: `[ nmext ]` and `[ nmxml ]`
-    - Models in Closed form: `[ pkmodel ]` 
-    - `[ plugin ]` 
-    - Other blocks
-  
-*   Model validations
+-   Model specifications
+
+    -   Covariate model: `[ main ]` (i.e., `[ pk ]`)
+    -   Random effects: `[ omega ]` and `[ sigma ]`\
+    -   Import `NONMEM` estimates: `[ nmext ]` and `[ nmxml ]`
+    -   Models in Closed form: `[ pkmodel ]`
+    -   `[ plugin ]`
+    -   Other blocks
+
+-   Model validations
+
+## An example model {.smaller}
+
+`NONMEM` model `./wk6/nm-model/106.mod`
+
+![](./pics/model.png){width=200}
 
 ## An example model {.smaller}
 
@@ -268,9 +275,10 @@ see(mod)
 ## `param()`{.smaller}
 
 <!-- ```{.r} -->
-<!-- mod <- param(mod, WT=80) -->
-<!-- ``` -->
 
+<!-- mod <- param(mod, WT=80) -->
+
+<!-- ``` -->
 
 ```{r}
 #| echo: true
@@ -284,10 +292,12 @@ mod$WT
 ## `update()`
 
 <!-- ```{.r} -->
-<!-- mod <- update(mod, param = list(WT = 60)) -->
-<!-- out <- mrgsim_df(mod, param = list(WT = 65)) -->
-<!-- ``` -->
 
+<!-- mod <- update(mod, param = list(WT = 60)) -->
+
+<!-- out <- mrgsim_df(mod, param = list(WT = 65)) -->
+
+<!-- ``` -->
 
 ```{r}
 #| echo: true
@@ -421,7 +431,7 @@ check_data_names(data, mod)
 
 # Covariate model {.smaller}
 
-Syntax in `[ main ]` and `[ pk ]` are in `C++`. 
+Syntax in `[ main ]` and `[ pk ]` are in `C++`.
 
 ``` {.cpp code-line-numbers="32-45"}
 
@@ -942,19 +952,22 @@ Like `NONMEM`, `mrgsolve` also has "short-cut" to solve one- and two-compartment
 <!-- * `NONMEM $SUBROUTINE` -->
 
 <!-- <div style="overflow-y: scroll; height: 400px;" class="scroll-container"> -->
+
 <!-- ![](pics/advan.png){.nostretch width="90%"} -->
+
 <!-- </div> -->
 
 ## `NONMEM $SUBROUTINE` {.smaller}
 
-<div style="overflow-y: scroll; height: 600px;" class="scroll-container">
+::: {.scroll-container style="overflow-y: scroll; height: 600px;"}
 ![](pics/trans.png){width="90%"}
-</div>
+:::
+
 ## `[ pkmodel ]`
 
 `mrgsolve`
 
-```{.cpp code-line-numbers="|4"} 
+``` {.cpp code-line-numbers="|4"}
 [ pkmodel ] cmt = "CENT"           , depot = FALSE // 1-cmt IV
 [ pkmodel ] cmt = "GUT CENT"       , depot = TRUE  // 1-cmt oral/SC
 [ pkmodel ] cmt = "CENT PHRIPH"    , depot = FALSE // 2-cmt IV
@@ -963,7 +976,7 @@ Like `NONMEM`, `mrgsolve` also has "short-cut" to solve one- and two-compartment
 
 `NONMEM`
 
-```{.cpp code-line-numbers="|4"}
+``` {.cpp code-line-numbers="|4"}
 $SUBROUTINE ADVAN1 TRANS2; 1-CMT IV
 $SUBROUTINE ADVAN2 TRANS2; 1-CMT oral/SC
 $SUBROUTINE ADVAN3 TRANS4; 2-CMT IV
@@ -1080,10 +1093,11 @@ DADT(3) = Q*(A(2)/V2 - A(3)/V3)
 ...
 ```
 :::
+
 ::: {.column width="50%"}
 `mrgsolve`
 
-```{.cpp code-line-numbers="|3,9-10,13-15"}
+``` {.cpp code-line-numbers="|3,9-10,13-15"}
 [ pk ]
 ...
 double KA  = exp(THETA(1) + ETA(1));
@@ -1110,7 +1124,7 @@ dxdt_PERIPH = Q*(CENT/V2 - PERIPH/V3);
 ::: {.column width="50%"}
 `NONMEM`
 
-```{.cpp}
+``` cpp
 $PK
 ...
 KA   = EXP(THETA(1)+ETA(1))
@@ -1129,10 +1143,11 @@ DADT(3) = Q*(A(2)/V2 - A(3)/V3)
 ...
 ```
 :::
+
 ::: {.column width="50%"}
 `mrgsolve` with `nm-vars`
 
-```{.cpp code-line-numbers="|7,13-14,17-19"}
+``` {.cpp code-line-numbers="|7,13-14,17-19"}
 [ plugin ] nm-vars
 
 ...
@@ -1253,7 +1268,7 @@ $OMEGA @object Sigma
 
 ## `[ pred ]`{.smaller}
 
--   Use `$PRED` to write a model **without** differential equations. 
+-   Use `$PRED` to write a model **without** differential equations.
 
 -   In this block, write all algebraic expressions for derived parameters, the response, and any other derived output quantities.
 
@@ -1261,10 +1276,11 @@ $OMEGA @object Sigma
 
 ## An example model using `$PRED`
 
-:::columns
-:::{.column width=50%}
+::: columns
+::: {.column width="50%"}
 `NONMEM`
-```{.cpp .code-overflow-wrap}
+
+``` {.cpp .code-overflow-wrap}
 $PROBLEM A MODEL WITH $PRED
 $INPUT ID TIME DV AUC
 $DATA SOMEDATA
@@ -1281,9 +1297,11 @@ $SIGMA   4
 $ESTIMATION
 ```
 :::
-:::{.column width=50%}
+
+::: {.column width="50%"}
 `mrgsolve`
-```{.cpp .code-overflow-wrap}
+
+``` {.cpp .code-overflow-wrap}
 [ PARAM ] 
 TVE0 = 100 
 AUC50 = 100
@@ -1344,7 +1362,7 @@ double KA=x[2]; // 3rd value of x
 
 <https://mrgsolve.org/user-guide/specification.html#sec-variables-macros>
 
-```{.r}
+``` r
 double mt1 = self.mtime(1.23 + ETA(1));
 self.mevent(1.23 + ETA(1), 33);
 ```
@@ -1357,3 +1375,10 @@ self.mevent(1.23 + ETA(1), 33);
 
     -   `PRED`: `NONMEM` vs `mrgsolve`.
     -   `IPRED`: `NONMEM` vs `mrgsolve`.
+
+# Homework {.smaller}
+
+-   Translate a `NONMEM` model (`./wk6/nm-model/hwwk6.mod`) into a `mrgsolve` model.
+-   Perform validation using the script (`./wk6/validation_hwwk6.qmd`). Knit into a `html` file for submission.
+-   Deadline: **Oct. 25 2024**
+-   We will use the first hour of the Oct. 18 in-class lecture to work on this together. So feel free to explore it by yourself before Oct. 18 lecture.
