@@ -29,7 +29,7 @@ editor: visual
 
 `NONMEM` model `./wk6/nm-model/106.mod`
 
-![](./pics/model.png){width=200}
+![](./pics/model.png){width="200"}
 
 ## An example model {.smaller}
 
@@ -1379,6 +1379,7 @@ self.mevent(1.23 + ETA(1), 33);
 # Homework {.smaller}
 
 -   Translate a `NONMEM` model (`./wk6/nm-model/hwwk6.mod`) into a `mrgsolve` model.
+    -   Capture the individual predictions as a variable named `IPRED`. 
 -   Perform validation using the script (`./wk6/validation_hwwk6.qmd`). Knit into a `html` file for submission.
 -   Deadline: **Oct. 25 2024**
 -   We will use the first hour of the Oct. 18 in-class lecture to work on this together. So feel free to explore it by yourself before Oct. 18 lecture.
