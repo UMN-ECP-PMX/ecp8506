@@ -1317,7 +1317,7 @@ double Y=R+EPS(1);
 :::
 :::
 
-## `[ premable ]`{.smaller}
+## `[ preamble ]`{.smaller}
 
 -   Only called one time during the simulation run (right at the start). The code in this block is typically used to configure or initialize `C++` variables or data structures that were declared in `[ global ]`.
 
@@ -1379,7 +1379,7 @@ self.mevent(1.23 + ETA(1), 33);
 # Homework {.smaller}
 
 -   Translate a `NONMEM` model (`./wk6/nm-model/hwwk6.mod`) into a `mrgsolve` model.
-    -   Capture the individual predictions as a variable named `IPRED`. 
+    -   Capture the individual predictions as a variable named `IPRED`.
 -   Perform validation using the script (`./wk6/validation_hwwk6.qmd`). Knit into a `html` file for submission.
 -   Deadline: **Oct. 25 2024**
 -   We will use the first hour of the Oct. 18 in-class lecture to work on this together. So feel free to explore it by yourself before Oct. 18 lecture.

@@ -1,0 +1,194 @@
+---
+title: "Deterministic Simulations"
+author: "Shen Cheng"
+date: "10/25/2024"
+format: 
+  revealjs: 
+    embed-resources: true
+editor: visual
+---
+
+# Drug X {.smaller}
+
+-   Drug X is a small molecule drug under early-phase clinical investigation to treat Disease Y in pediatric patients (age 2-18 years).
+
+-   An phase-I single ascending dose (SAD) clinical study has been completed to investigate the PK of drug X, with 50 patients receiving 1, 2, 5, 10 and 20 mg dose of drug X.
+
+-   A population PK model was developed using these PK data (`./wk8/model/hwwk6.mod`).
+
+-   Some efficacy related endpoints were also collected and the clinical team are interested in exploring exposure-response relationships.
+
+# Exercise 1: Typical Value Simulation {.smaller}
+
+-   The study team is now interested in exploring the weight-based dosing of **0.1 mg/kg**. They want to know what would be the typical exposures in study population.
+
+-   **Question:** What are the typical $C_{max}$ and $AUC_{0-48}$ following the administration of **0.1 mg/kg single dose** in:
+
+    -   a 2-year old subject with 10 kg body weight.
+    -   a 10-year old subject with 40 kg body weight.
+    -   a 18-year old subject with 70 kg body weight.
+
+## Workflow-Typical Value Simulations
+
+![](pics/tvs1.png)
+
+## Workflow-Typical Value Simulations
+
+![](pics/tvs2.png)
+
+## Hands-on Session: Exercise 1 {.smaller}
+
+**Files:**
+
+-   `wk8/model/hwwk6.mod`: `mrgsolve` model for Drug X.
+-   `wk8/ex1.R`: `R` script to implement simulation.
+
+**Implementation notes:**
+
+-   What is the most efficient way to calculate AUC in the simulation?\
+    -   Using the accumulation compartment to integrate concentration over time.
+-   No uncertainty and variability (`mod <- mod %>% zero_re()`).
+-   Weight-based dosing.
+-   Need to have `rate=-2` to enable the use of dosing duration (`D1`) in the model.
+
+## Hands-on Session: Exercise 1
+
+::: columns
+::: {.column width="50%"}
+![](pics/tvs_fig.png)
+:::
+
+::: {.column width="50%"}
+![](pics/tvs_tab.png)
+:::
+:::
+
+# Exercise 2: EBE Simulation {.smaller}
+
+-   The study team want to explore the preliminary exposure-response relationships. They want you to derive the individual exposures (i.e., $C_{max}$ and $AUC_{0-48}$) in the analysis data set.
+
+-   **Question:** What are the individual $C_{max}$ and $AUC_{0-48}$ in the analysis data set?
+
+## Workflow-EBE Simulations
+
+![](pics/ebes1.png)
+
+## Workflow-EBE Simulations
+
+![](pics/ebes2.png)
+
+## Hands-on Session: Exercise 2 {.smaller}
+
+**Files:**
+
+-   `wk8/model/hwwk6.mod`: `mrgsolve` model for Drug X.
+-   `wk8/ex2.R`: `R` script to implement simulation.
+-   `wk8/data/cov_eta.csv`: individual covariates and EBEs output by `NONMEM`.
+-   `wk8/data/iparam.csv` individual PK parameters output by `NONMEM`.
+
+**Implementation notes:**
+
+-   Using the accumulation compartment to integrate concentration over time.
+-   `mod <- mod %>% zero_re()`
+-   `rate=-2`
+
+## Multiple ways to do this...
+
+-   **Method 1:** Input individual PK parameters (output by `NONMEM`) for simulation.\
+-   **Method 2:** Input typical model parameters, individual covariates and EBEs (output by `NONMEM`) to derive the individual PK parameters in `mrgsolve` for simulation.
+    
+## EBE Simulation: Method 1{.smaller}
+
+Input individual PK parameters (output by `NONMEM`) for simulation.
+
+```{r}
+#| echo: true
+library(here)
+cov_eta <- read.csv(here("wk8/data/cov_eta.csv"))
+head(cov_eta)
+```
+
+```{.r}
+out1 <- mod %>% 
+  data_set(cov_eta) %>%              
+  mrgsim(...
+         etasrc="data.all", # Search for ETAs in input data (cov_eta)         
+         ...)      
+```
+
+## EBE Simulation: Method 2{.smaller}
+
+Input typical model parameters, individual covariates and EBEs (output by `NONMEM`) to derive the individual PK parameters in `mrgsolve` for simulation.
+
+-   **Step 1:** changes in the `mrgsolve` model file 
+
+```{.cpp code-line-numbers="|4-7,16-21"}
+[ PARAM ]  
+  WT   = 70  // Body weight in Kg
+  AGE  = 35  // Age in years
+  CLI  = -1  // Dummy variable for input individual CL
+  VI   = -1  // Dummy variable for input individual V
+  KAI  = -1  // Dummy variable for input individual KA
+  D1I  = -1  // Dummy variable for input individual D1
+...
+[ PK ] 
+  ...
+  double CL  = TVCL*CLCOV*exp(ETA(1));
+  double V   = TVV*VCOV*exp(ETA(2)); 
+  double KA  = TVKA; 
+  double D1  = TVD1*exp(ETA(3));
+  
+  if (CLI > 0){ // Using EBE if input
+    CL = CLI; 
+    V  = VI; 
+    KA = KAI; 
+    D1 = D1I;
+  }
+  ...
+```
+
+## EBE Simulation: Method 2{.smaller}
+
+Input typical model parameters, individual covariates and EBEs (output by `NONMEM`) to derive the individual PK parameters in `mrgsolve` for simulation.
+
+-   **Step 2:** changes in the simulation workflow
+
+```{r}
+#| echo: true
+library(here)
+iparam <- read.csv(here("wk8/data/iparam.csv"))
+head(iparam)
+```
+
+```{.r}
+# Simulate
+out2 <- mod_ebe %>% 
+  data_set(iparam) %>%                
+  mrgsim(...)
+```
+
+## Alignment between Methods 1 and 2
+
+![Individual parameters](pics/ind_param.png)
+
+## Alignment between Methods 1 and 2
+
+![Individual predictions (`IPRED`)](pics/ipred.png)
+
+## Hands-on Session: Exercise 2
+
+![](pics/ebesim1.png){width=70%}
+
+## Hands-on Session: Exercise 2
+
+::: columns
+::: {.column width="50%"}
+![](pics/ebesim2.png)
+:::
+
+::: {.column width="50%"}
+![](pics/ebesim3.png)
+:::
+:::
+
+
