@@ -18,8 +18,8 @@
 | 6 (10/07/2024)   | Introduction to `mrgsolve` 2                         | Shen Cheng, PhD                                            |
 | 7 (10/14/2024)   | `mrgsolve` Q&A + simulation concepts                 | Shen Cheng, PhD                                            |
 | 8 (10/21/2024)   | Deterministic simulations                            | Shen Cheng, PhD                                            |
-| 9 (10/28/2024)   | Stochastic simulations                               | Samuel Callisto, PhD & Shen Cheng, PhD                     |
-| 10 (11/04/2024)  | Virtual patient simulations                          | Curtis Johnston, PharmD & Shen Cheng, PhD                  |
+| 9 (10/28/2024)   | Virtual patient simulations                          | Curtis Johnston, PharmD & Shen Cheng, PhD                  |
+| 10 (11/04/2024)  | Stochastic simulations                               | Samuel Callisto, PhD & Shen Cheng, PhD                     |
 | 11 (11/11/2024)  | ACoP15 NO CLASS                                      |                                                            |
 | 12 (11/18/2024)  | Simulation with parameter uncertainty 1              | Mutaz Jaber, PharmD, PhD & Shen Cheng, PhD                 |
 | 13 (11/25/2024)  | Thanksgiving NO CLASS                                |                                                            |
