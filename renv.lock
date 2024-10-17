@@ -176,6 +176,16 @@
       ],
       "Hash": "a45594a00f5dbb073d5ec9f48592a08a"
     },
+    "RcppThread": {
+      "Package": "RcppThread",
+      "Version": "2.1.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "496f1ac14c8eb1c560e07a96515eea76"
+    },
     "SparseM": {
       "Package": "SparseM",
       "Version": "1.84",
@@ -1383,6 +1393,22 @@
       ],
       "Hash": "e1b9c55281c5adc4dd113652d9e26768"
     },
+    "kde1d": {
+      "Package": "kde1d",
+      "Version": "1.0.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "BH",
+        "Rcpp",
+        "RcppEigen",
+        "graphics",
+        "randtoolbox",
+        "stats",
+        "utils"
+      ],
+      "Hash": "cdb8dccc8b8fd2eb247c4461d84a3c1a"
+    },
     "knitr": {
       "Package": "knitr",
       "Version": "1.47",
@@ -2013,6 +2039,16 @@
       ],
       "Hash": "e3087db406e079a8a2fd87f413918ed3"
     },
+    "randtoolbox": {
+      "Package": "randtoolbox",
+      "Version": "2.0.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "rngWELL"
+      ],
+      "Hash": "3fbb3aa5688a4004b3d1c7efd80689f5"
+    },
     "rappdirs": {
       "Package": "rappdirs",
       "Version": "0.3.3",
@@ -2144,6 +2180,16 @@
       ],
       "Hash": "27f9502e1cdbfa195f94e03b0f517484"
     },
+    "rngWELL": {
+      "Package": "rngWELL",
+      "Version": "0.10-9",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "b5c163aebf9187ab8a91df92832ff88e"
+    },
     "rpart": {
       "Package": "rpart",
       "Version": "4.1.19",
@@ -2215,6 +2261,28 @@
         "xml2"
       ],
       "Hash": "0bcf0c6f274e90ea314b812a6d19a519"
+    },
+    "rvinecopulib": {
+      "Package": "rvinecopulib",
+      "Version": "0.6.3.1.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "BH",
+        "R",
+        "Rcpp",
+        "RcppEigen",
+        "RcppThread",
+        "assertthat",
+        "grDevices",
+        "graphics",
+        "kde1d",
+        "lattice",
+        "stats",
+        "utils",
+        "wdm"
+      ],
+      "Hash": "b54aca1e4114698063949d5204fba575"
     },
     "sass": {
       "Package": "sass",
@@ -2500,6 +2568,16 @@
       ],
       "Hash": "d44e2fcd2e4e076f0aac540208559d1d"
     },
+    "truncnorm": {
+      "Package": "truncnorm",
+      "Version": "1.0-9",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "ef5b32c5194351ff409dfb37ca9468f1"
+    },
     "tzdb": {
       "Package": "tzdb",
       "Version": "0.4.0",
@@ -2629,6 +2707,17 @@
         "withr"
       ],
       "Hash": "390f9315bc0025be03012054103d227c"
+    },
+    "wdm": {
+      "Package": "wdm",
+      "Version": "0.2.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "b2433e44ad8445262093137e0d9c6afd"
     },
     "whisker": {
       "Package": "whisker",
