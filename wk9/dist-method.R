@@ -19,10 +19,13 @@ dataDir <- here("wk9/data")
 pop <- read.csv(file.path(dataDir, "pop.csv"))
 
 # Separate the dataset based on SEX
-pop_male <- pop %>% filter(SEX == "male")
-pop_female <- pop %>% filter(SEX == "female")
+pop_male    <- pop %>% filter(SEX == "male")
+pop_female  <- pop %>% filter(SEX == "female")
 
-nsub <- nrow(pop) # Count number of subjects
+# Count number of subjects
+nsub        <- nrow(pop)        # Count number of subjects
+nsub_male   <- nrow(pop_male)   # Count number of subjects
+nsub_female <- nrow(pop_female) # Count number of subjects
 
 # Check population
 summ(pop) %>% knitr::kable()
@@ -39,21 +42,33 @@ dev.off()
 # Marginal distributions --------------------------------------------------
 
 # Function to simulate from truncated normal distribution
-sim_from_md <- function(x){
-  rtruncnorm(nsub, a=0, b=Inf, mean=mean(pop[[x]]), sd=sd(pop[[x]]))
+sim_from_md <- function(num, x, data){
+  rtruncnorm(num, a=0, b=Inf, mean=mean(data[[x]]), sd=sd(data[[x]]))
 }
 
 withr::with_seed(
   seed=12315,
-  vp1 <- data.frame(
-    AGE  = sim_from_md("AGE"),
-    WT   = sim_from_md("WT"), 
-    HT   = sim_from_md("HT"),
-    EGFR = sim_from_md("EGFR") ,
-    ALB  = sim_from_md("ALB"),
-    BMI  = sim_from_md("BMI"),
-    SEX  = sample(c("male","female"), size=nsub, replace=TRUE)
-    ))
+  vp1_male <- data.frame(
+    AGE  = sim_from_md(nsub_male, "AGE" , pop_male),
+    WT   = sim_from_md(nsub_male, "WT"  , pop_male), 
+    HT   = sim_from_md(nsub_male, "HT"  , pop_male),
+    EGFR = sim_from_md(nsub_male, "EGFR", pop_male),
+    ALB  = sim_from_md(nsub_male, "ALB" , pop_male),
+    BMI  = sim_from_md(nsub_male, "BMI" , pop_male),
+    SEX  = "male"))
+
+withr::with_seed(
+  seed=53124,
+  vp1_female <- data.frame(
+    AGE  = sim_from_md(nsub_female, "AGE" , pop_female),
+    WT   = sim_from_md(nsub_female, "WT"  , pop_female), 
+    HT   = sim_from_md(nsub_female, "HT"  , pop_female),
+    EGFR = sim_from_md(nsub_female, "EGFR", pop_female),
+    ALB  = sim_from_md(nsub_female, "ALB" , pop_female),
+    BMI  = sim_from_md(nsub_female, "BMI" , pop_female),
+    SEX  = "female"))
+
+vp1 <- bind_rows(vp1_male, vp1_female)
 
 # Check summary statistics
 left_join(summ(pop), summ(vp1)) %>% knitr::kable()
@@ -95,13 +110,13 @@ cov_female <- pop_female %>%
 
 withr::with_seed(
   seed=12315, 
-  vp2_male   <- mvrnorm(n=100, mu=means_male, Sigma=cov_male) %>% 
+  vp2_male   <- mvrnorm(n=nsub_male, mu=means_male, Sigma=cov_male) %>% 
     as.data.frame() %>% mutate(SEX="male")
 )
 
 withr::with_seed(
   seed=35671, 
-  vp2_female <- mvrnorm(n=100, mu=means_female, Sigma=cov_female) %>% 
+  vp2_female <- mvrnorm(n=nsub_female, mu=means_female, Sigma=cov_female) %>% 
     as.data.frame() %>% mutate(SEX="female")
 )
 
@@ -147,13 +162,13 @@ copula_female <- estimate_vinecopula_from_data(
 
 withr::with_seed(
   seed = 4321, 
-  vp3_male   <- simulate(copula_male  , n=100, value_only=FALSE) %>% 
+  vp3_male   <- simulate(copula_male  , n=nsub_male, value_only=FALSE) %>% 
     mutate(SEX="male")
   )
 
 withr::with_seed(
   seed=4312,
-  vp3_female <- simulate(copula_female, n=100, value_only=FALSE) %>% 
+  vp3_female <- simulate(copula_female, n=nsub_female, value_only=FALSE) %>% 
     mutate(SEX="female")
   )
 
