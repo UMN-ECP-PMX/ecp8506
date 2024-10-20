@@ -33,52 +33,43 @@ smat(mod)
 #' for the calculation of AUC0-48
 mod <- update(mod, end=48, delta=0.1)
 
-# Assemble a data frame for simulation ----------------------------------
+# Simulation example ------------------------------------------------------
 
-#' We can use `expand.idata` function in `mrgsolve` package 
-#' to assemble the data frame
-
-data <- data.frame(ID=1:3, DOSEMGKG = 0.1, # 0.1 mg/kg dosing
-                   WT = c(10,40,70),       # 10, 40 and 70 kg body weight
-                   AGE = c(2,10,18)) %>%   # 2, 10, 18 years old
-  mutate(AMT = DOSEMGKG*WT,                # Calculate actual dosing
-         EVID = 1,                         # Dosing records
-         RATE = -2,                        # To enable the use of `D1` in `hwwk6.mod`
-         CMT = 1,                          # Dose in `DEPOT` 
-         TIME=0)                           # Start dose at time 0
-
-# Simulation --------------------------------------------------------------
-
+#' Perform simulation
 #' `obsonly=TRUE` requests observation records only in the output
 #' `output="df"` makes the output as a data frame
 #' `Req="IPRED,AUC"` request the output of IPRED and AUC
-#' `recover="WT,AGE"` recover the WT and AGE in the input `data`
 
-out <- mrgsim(mod, data, obsonly=TRUE, 
-              output="df", Req="IPRED,AUC", 
-              recover="WT,AGE")
+out_example <- mod %>% 
+  ev(amt=0.1*10, # Calculate total dose "0.1 mg/kg * 10 kg"
+     rate=-2, # Enable the use of `D1`
+     time=0, cmt=1) %>% 
+  mrgsim(param=list(WT=10, AGE=2), # 10 kg & 2 years old
+         obsonly=TRUE, 
+         output="df", 
+         Req="IPRED,AUC")
 
-# Simulation graphical checks ---------------------------------------------
+#' Check simulation output
+head(out_example)
 
-out %>% mutate(Group=paste0(WT, " kg and ", AGE, " years")) %>% 
-  ggplot(aes(x=TIME, y=IPRED, group=ID, color=Group))+
-  geom_line()+xlab("Time (hours)")+ylab("Concentration (ug/L)")+
-  theme_bw()+
-  theme(legend.position = "bottom")
+#' Graphical check simulation output
+out_example %>% ggplot(aes(x=time, y=IPRED))+
+  geom_line()+ # line plot
+  xlab("Time (hours)")+ylab("Concentration (ug/L)") # Changes X and Y axis labels
 
-# Calculate Cmax and AUC0-48 ----------------------------------------------
+#' Calculate `Cmax` and `AUC0-48`
+out_example %>% summarise(Cmax=max(IPRED), `AUC0-48`=max(AUC))
 
-tab <- out %>% group_by(WT, AGE) %>% 
-  summarise(`Cmax`=max(IPRED), 
-            `AUC0-48`=max(AUC)) %>% 
-  ungroup()
+# It's your turn! ---------------------------------------------------------
 
-# Format table ------------------------------------------------------------
+#' 1. Perform simulation for a typical subject with
+#'  (1). 2  years old AGE, 10 kg WT
+#'  (2). 10 years old AGE, 40 kg WT
+#'  (3). 18 years old AGE, 70 kg WT
+#' 2. Graphical check the output
+#' 3. Calculate `Cmax` and `AUC0-48` for each typical subject
 
-tab %>% mutate(across(`Cmax`:`AUC0-48`, ~round(.x, digits = 2))) %>% 
-  rename(`WT (kg)`=`WT`, 
-         `AGE (years)`=`AGE`, 
-         `Cmax (ug/L)`=`Cmax`, 
-         `AUC0-48 (ug*hour/L)`=`AUC0-48`) %>% 
-  knitr::kable()
+
+
+
 

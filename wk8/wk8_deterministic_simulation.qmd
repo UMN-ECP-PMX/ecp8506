@@ -53,7 +53,7 @@ editor: visual
 
 ## Hands-on Session: Exercise 1
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 ![](pics/tvs_fig.png)
 :::
@@ -61,7 +61,7 @@ editor: visual
 ::: {.column width="50%"}
 ![](pics/tvs_tab.png)
 :::
-:::
+:::::
 
 # Exercise 2: EBE Simulation {.smaller}
 
@@ -94,35 +94,16 @@ editor: visual
 
 ## Multiple ways to do this...
 
--   **Method 1:** Input individual PK parameters (output by `NONMEM`) for simulation.\
--   **Method 2:** Input typical model parameters, individual covariates and EBEs (output by `NONMEM`) to derive the individual PK parameters in `mrgsolve` for simulation.
-    
-## EBE Simulation: Method 1{.smaller}
+-   **Method 1:** Input typical model parameters, individual covariates and EBEs (output by `NONMEM`) to derive the individual PK parameters in `mrgsolve` for simulation.
+-   **Method 2:** Input individual PK parameters (output by `NONMEM`) for simulation.
 
-Input individual PK parameters (output by `NONMEM`) for simulation.
-
-```{r}
-#| echo: true
-library(here)
-cov_eta <- read.csv(here("wk8/data/cov_eta.csv"))
-head(cov_eta)
-```
-
-```{.r}
-out1 <- mod %>% 
-  data_set(cov_eta) %>%              
-  mrgsim(...
-         etasrc="data.all", # Search for ETAs in input data (cov_eta)         
-         ...)      
-```
-
-## EBE Simulation: Method 2{.smaller}
+## EBE Simulation: Method 1 {.smaller}
 
 Input typical model parameters, individual covariates and EBEs (output by `NONMEM`) to derive the individual PK parameters in `mrgsolve` for simulation.
 
--   **Step 1:** changes in the `mrgsolve` model file 
+-   **Step 1:** changes in the `mrgsolve` model file
 
-```{.cpp code-line-numbers="|4-7,16-21"}
+``` {.cpp code-line-numbers="|4-7,16-21"}
 [ PARAM ]  
   WT   = 70  // Body weight in Kg
   AGE  = 35  // Age in years
@@ -147,7 +128,7 @@ Input typical model parameters, individual covariates and EBEs (output by `NONME
   ...
 ```
 
-## EBE Simulation: Method 2{.smaller}
+## EBE Simulation: Method 1 {.smaller}
 
 Input typical model parameters, individual covariates and EBEs (output by `NONMEM`) to derive the individual PK parameters in `mrgsolve` for simulation.
 
@@ -160,11 +141,30 @@ iparam <- read.csv(here("wk8/data/iparam.csv"))
 head(iparam)
 ```
 
-```{.r}
+``` r
 # Simulate
 out2 <- mod_ebe %>% 
   data_set(iparam) %>%                
   mrgsim(...)
+```
+
+## EBE Simulation: Method 2 {.smaller}
+
+Input individual PK parameters (output by `NONMEM`) for simulation.
+
+```{r}
+#| echo: true
+library(here)
+cov_eta <- read.csv(here("wk8/data/cov_eta.csv"))
+head(cov_eta)
+```
+
+``` r
+out1 <- mod %>% 
+  data_set(cov_eta) %>%              
+  mrgsim(...
+         etasrc="data.all", # Search for ETAs in input data (cov_eta)         
+         ...)      
 ```
 
 ## Alignment between Methods 1 and 2
@@ -177,11 +177,11 @@ out2 <- mod_ebe %>%
 
 ## Hands-on Session: Exercise 2
 
-![](pics/ebesim1.png){width=70%}
+![](pics/ebesim1.png){width="70%"}
 
 ## Hands-on Session: Exercise 2
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 ![](pics/ebesim2.png)
 :::
@@ -189,6 +189,4 @@ out2 <- mod_ebe %>%
 ::: {.column width="50%"}
 ![](pics/ebesim3.png)
 :::
-:::
-
-
+:::::
