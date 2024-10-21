@@ -1,0 +1,44 @@
+---
+title: "Homework Week 9"
+author: "Curtis Johnston and Shen Cheng"
+date: "11/01/2024"
+format: 
+  html: 
+    embed-resources: true
+editor: visual
+---
+
+# Dataset
+
+We have a population dataset, including five continuous covariates (`./wk9/data/hwpop.csv`): 
+
+-   `AGE`: age in years
+-   `ALB`: albumin in g/dL
+-   `SCR`: serum creatinine in mg/dL 
+-   `WT`: body weight in kg 
+-   `HT`: height in cm
+
+All subjects in this dataset are **female** subjects. Each row represent one subject. 
+
+```{r}
+suppressPackageStartupMessages(library(here)) # Load R package
+hwpop <- read.csv(here("wk9/data/hwpop.csv")) # Load hw pop dataset
+head(hwpop) # check first 5 rows of the dataset
+```
+
+
+# Question
+
+Please create two virtual populations:   
+
+-   One created using a resampling-based method. 
+-   One created using a distribution-based method. 
+
+Answer the following questions: 
+
+-   Plot (either pairs plot or contour plot) the covariate distribution of 
+    *   (1) the original dataset (`./wk9/data/hwpop.csv`); 
+    *   (2) the virtual population created using the resampling method; 
+    *   (3) the virtual population created using the distribution-based method.  
+
+-   Describe how similar each virtual population in comparison to the original population (`./wk9/data/hwpop.csv`). 
