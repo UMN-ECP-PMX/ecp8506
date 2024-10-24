@@ -1,0 +1,98 @@
+---
+title: "Stochastic Simulations"
+author: "Shen Cheng"
+date: "11/08/2024"
+format: 
+  revealjs: 
+    embed-resources: true
+editor: visual
+---
+
+# Drug X {.smaller}
+
+-   Drug X is a small molecule drug under early-phase clinical investigation to treat Disease Y in pediatric patients (age 2-18 years).
+
+-   An phase-I single ascending dose (SAD) clinical study has been completed to investigate the PK of drug X, with 50 patients receiving 1, 2, 5, 10 and 20 mg dose of drug X.
+
+-   A population PK model was developed using these PK data (`./wk8/model/hwwk6.mod`).
+
+-   Some efficacy related endpoints were also collected and the clinical team are interested in exploring exposure-response relationships.
+
+# Exercise 1: Stochastic Simulation {.smaller}
+
+-   The study team is now designing a Phase 2 proof of concept (POC) study, which they plan to use a twice daily dose (BID) dosing. They want to understand what dosage levels are appropriate to test.
+
+-   Preclinical study shows:
+
+    -   IC90 of drug X is **1 ug/L**.
+    -   Drug X concentration above **15 ug/L** is associated with dose-limit toxicity.
+
+## Exercise 1: Question {.smaller}
+
+<!-- The study team wants to maintain the steady-state Cmin above drug X IC90 (1 ug/L) in \> 80% patients while maintaining the steady-state Cmax below toxicity limit (15 ug/L) in \< 10% of patients. -->
+
+Considering steady-state is achieve after 4 days with BID dosing. The study team is wondering:
+
+-   At what dose level can we achieve a steady-state Cmin \> 1 ug/L in \> 80% patients.
+
+-   At what dose level can we maintain a steady-state Cmax \> 15 ug/L in \< 10% patients.
+
+## Workflow-Stochastic Simulations
+
+![](pics/ss1.png)
+
+## Workflow-Stochastic Simulations
+
+![](pics/ss2.png)
+
+## Hands-on Session: Exercise 1 {.smaller}
+
+**Files:**
+
+-   `wk10/model/hwwk6.mod`: `mrgsolve` model for Drug X.
+-   `wk10/ex1.R`: `R` script to implement simulation.
+-   `wk10/data/pop.csv`: population covariate for simulation.
+
+**Implementation notes:**
+
+-   Don't need residual variability in simulation (`mod <- mod %>% zero_re(sigma)`).\
+-   Use `wk10/data/pop.csv` for population covariates.\
+-   Use `addl` and `ii` to implement multiple dosing (e.g., BID).
+-   Weight-based dosing.
+-   Need to have `rate=-2` to enable the use of dosing duration (`D1`) in the model.
+
+## Hands-on Session: Exercise 1
+
+![](pics/sim-check.png)
+
+## Hands-on Session: Exercise 1 Cmin
+
+![](pics/cmin1.png)
+
+## Hands-on Session: Exercise 1 Cmin
+
+::: columns
+::: {.column width="35%"}
+![](pics/cmin3.png)
+:::
+
+::: {.column width="65%"}
+![](pics/cmin2.png)
+:::
+:::
+
+## Hands-on Session: Exercise 1 Cmin
+
+![](pics/cmax1.png)
+
+## Hands-on Session: Exercise 1 Cmin
+
+::: columns
+::: {.column width="35%"}
+![](pics/cmax3.png)
+:::
+
+::: {.column width="65%"}
+![](pics/cmax2.png)
+:::
+:::
