@@ -12,9 +12,9 @@ editor: visual
 
 -   Drug X is a small molecule drug under early-phase clinical investigation to treat Disease Y in pediatric patients (age 2-18 years).
 
--   An phase-I single ascending dose (SAD) clinical study has been completed to investigate the PK of drug X, with 50 patients receiving 1, 2, 5, 10 and 20 mg dose of drug X.
+-   A phase-I single ascending dose (SAD) clinical study has been completed to investigate the PK of drug X, with 50 patients receiving 1, 2, 5, 10 and 20 mg dose of drug X.
 
--   A population PK model was developed using these PK data (`./wk8/model/hwwk6.mod`).
+-   A population PK model was developed using these PK data (`./wk8/model/hwwk6.cpp`).
 
 -   Some efficacy related endpoints were also collected and the clinical team are interested in exploring exposure-response relationships.
 
@@ -53,7 +53,7 @@ editor: visual
 
 ## Hands-on Session: Exercise 1
 
-::::: columns
+::: columns
 ::: {.column width="50%"}
 ![](pics/tvs_fig.png)
 :::
@@ -61,7 +61,7 @@ editor: visual
 ::: {.column width="50%"}
 ![](pics/tvs_tab.png)
 :::
-:::::
+:::
 
 # Exercise 2: EBE Simulation {.smaller}
 
@@ -181,7 +181,7 @@ out1 <- mod %>%
 
 ## Hands-on Session: Exercise 2
 
-::::: columns
+::: columns
 ::: {.column width="50%"}
 ![](pics/ebesim2.png)
 :::
@@ -189,4 +189,4 @@ out1 <- mod %>%
 ::: {.column width="50%"}
 ![](pics/ebesim3.png)
 :::
-:::::
+:::
