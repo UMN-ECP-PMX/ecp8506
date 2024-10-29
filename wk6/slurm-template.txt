@@ -1,0 +1,21 @@
+#!/bin/bash -l
+#SBATCH --time=12:00:00
+#SBATCH --mem=10g
+#SBATCH --tmp=10g
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task={{ncpu}}
+#SBATCH -L nonmem@slurmdb:1
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user={{email}}
+#SBATCH -p {{partition}}
+
+ulimit -l unlimited
+
+module load nonmem/750-rocky8
+
+{{#parallel}}
+{{bbi_exe_path}} nonmem run local {{model_path}}.mod --parallel --threads={{ncpu}} --config {{bbi_config_path}}
+{{/parallel}}
+{{^parallel}}
+{{bbi_exe_path}} nonmem run local {{model_path}}.mod --config {{bbi_config_path}}
+{{/parallel}}
