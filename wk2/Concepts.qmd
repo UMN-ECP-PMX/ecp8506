@@ -1,0 +1,288 @@
+---
+title: Concepts of Pharmacometric Model-Based Decision Making
+format: revealjs
+editor: visual
+Rendering:
+  embed-resources: true
+slides: 
+  slide-number: true
+author: "Shen Cheng"
+date: "09/13/2024"
+---
+
+## Outline
+
+-   Model-Based Decision Making in Pharmacometrics
+-   Modeling and Simulation
+-   General Framework
+
+## Outline
+
+-   **Model-Based Decision Making in Pharmacometrics**
+-   Modeling and Simulation
+-   General Framework
+
+## Developing a New Drug is Increasingly Expensive and Time-Consuming
+
+-   The median capitalized R&D investment to bring a new drug to the market was **\$985.3 million**. [^1]
+-   The median clinical development time for FDA-approved drugs from 2010-2020 was reported to be **8.3 years**. [^2]
+
+[^1]: Wouters OJ, et al. JAMA. 2020
+
+[^2]: Brown DG, et al. Nat Rev Drug Discov. 2021
+
+## Deloitte: Measuring the Return from Pharmaceutical Innovation
+
+<!-- *"Our analysis over the past 14 years has shown a steady decline in productivity between 2010 and 2019, a short-lived improvement due to the impact of the COVID-19 assets in 2020 and 2021, followed by a dip in 2022. In the 2023 cycle, we are beginning to see signs of some improvement..."*^[Deloitte: Measuring the return from pharmaceutical innovation – 14th edition] -->
+
+![](pics/deloitte.png){width="80%"}
+
+## Model Informed Drug Development (MIDD) {.smaller}
+
+::: columns
+::: {.column width="50%"}
+-   Innovative approach are needed to reduce the overall time and cost of drug development.
+
+    -   EMA: *"...quantitative framework...aimed at improving the quality, efficiency and cost effectiveness of decision making."*
+    -   FDA: *"...approach that has been recognized as critical to streamline and accelerate the development of new medical products and enable more informed decision-making, and reduce uncertainty."*
+:::
+
+::: {.column width="50%"}
+![](pics/midd-papers.png){width="100%"}
+:::
+:::
+
+## Model Informed Drug Development (MIDD)
+
+![](pics/midd.png){width="80%"}[^3]
+
+[^3]: Rajanikanth M, et al. Pharmaceutical Research. 2022.
+
+## Precision Medicine
+
+::: columns
+::: {.column width="50%"}
+*"In 2015, President Barack Obama launched the Precision Medicine Initiative that outlined efforts to move beyond the “one-size-fits-all” approach of modern medicine and into the realm of individualized, tailored dosing. "*[^4]
+:::
+
+::: {.column width="50%"}
+![](pics/pm.png){width="100%"}
+:::
+:::
+
+[^4]: Zachary T, et al. CPT:PSP. 2023
+
+## Model Informed Precision Dosing (MIPD)
+
+-   A "state-of-the art" science fall under the umbrella of precision medicine.
+-   Aim to optimize the drug treatment outcome using a model-based approach.
+-   Clinical Decision Support (CDS) platforms
+
+![](pics/mipd.png){width="100%"}
+
+## Model-Based Decision Making in Pharmacometrics
+
+-   Model-Informed Drug Development (MIDD)
+-   Model-Informed Precision Dosing (MIPD)
+
+## Outline
+
+-   Model-Based Decision Making in Pharmacometrics
+-   **Modeling and Simulation**
+-   General Framework
+
+## Models?
+
+::: incremental
+-   Knowledge management tools[^5]
+    -   Knowledge of biological systems
+        -   Drug properties (e.g., potency, binding affinity, etc)
+        -   Disease mechanism (e.g., signaling pathways)
+        -   How a drug affects the human body (e.g., PK)
+        -   How a human body responds to the drug (e.g., PD)
+    -   Emerging data from diverse sources (e.g., *in vitro*, preclinical and clinical studies)
+:::
+
+[^5]: Marc G, ACoP, 2019
+
+## Models
+
+<!-- :::{.incremental} -->
+
+<!-- -   Mathematical representations of accumulated knowledge in physiology and pharmacology -->
+
+<!-- -   Can be used to answer drug development/clinical questions -->
+
+<!-- -   The structural and statistical components of the model determine the type of questions to answer -->
+
+<!-- ::: -->
+
+```{=tex}
+\begin{equation}
+\begin{aligned}
+
+\frac{dA}{dt} &= -CL \times C; \quad  A_{t=0} = 0\\[5pt]
+C_{} &= \frac{A}{V} \\[15pt]
+CL_{i} &= TVCL \times e^{\eta_{1i}} &\quad \eta_{1i} \in N(0, \omega_{1}^{2})\\[5pt]
+V_{i} &= TVV \times e^{\eta_{2i}} &\quad \eta_{2i} \in N(0, \omega_{2}^{2})\\[5pt]
+OBS_{i,j} &= C_{i,j}*(1+\epsilon_{i,j}) &\quad \epsilon_{i,j} \in N(0, \sigma_{1}^{2})
+
+\end{aligned}
+\end{equation}
+```
+## Simulations {.smaller}
+
+-   Allow us to **extract information** from models
+
+![](pics/exsim.png){width="80%"}
+
+::: incremental
+-   Allow us to answer drug development/clinical questions in a quantitative manner
+    -   Are does adjustments needed in patients with a specific genotype?
+    -   Which dosing regimen provides a better efficacy/safety profiles?
+    -   What clinical effect might be observed if a metabolic inhibitor co-administered?
+-   Enables the decision-making in drug development / precision dosing
+:::
+
+## The Application of Simulations[^6] {.smaller}
+
+-   Analysis
+    -   Model evaluations (e.g., predictive checks)
+-   Illustration
+    -   Summarise and illustrate data/concepts
+    -   Integrate information across multiple sources
+-   Exploration
+    -   Interpolate between observed data
+    -   Extrapolate to new conditions
+    -   Express expected range of variability and/or uncertainty in response relationship
+-   Decision-making
+    -   Quantify the probability of outcome given decision path
+
+## Outline
+
+-   Model-Based Decision Making in Pharmacometrics
+-   Modeling and Simulation
+-   **General Framework**
+
+## General Framework[^6]
+
+[^6]: Marc G, ACoP, 2019
+
+::: incremental
+-   Define the Questions
+-   Translate into Quantitative Terms
+-   Define Prior Knowledge, Assumptions, Constrains
+-   Model Development and Evaluations
+-   Plan and Execute Simulations
+-   Summarise and Present Results
+:::
+
+## Defining the Questions[^6] {.smaller}
+
+-   Guide model development and evaluation.
+    -   Which structural models?
+    -   Which statistical models?
+
+. . .
+
+-   Guide simulation design.
+    -   Alternative dosing regimens?
+    -   Number of subjects, patient characteristics, duration of simulation.
+    -   Variability versus uncertainty?
+
+## Translate into Quantitative Terms[^6] {.smaller}
+
+::: incremental
+-   The question must be translated into quantitative terms before simulations.
+
+    -   Question: How many subjects are needed in the upcoming pediatric PK study?
+    -   Quantitative translation: How many subjects needed to be enrolled to prospectively powered to target a **95% CI** within **60% to 140% of the geometric mean estimate of CL** for Drug A in each pediatric group with **\>80% power**.
+
+-   Defining the quantitative criteria is the **key** to formulate modeling and simulation strategies.
+:::
+
+## Prior Knowledge[^6]
+
+-   Prior (existing) models
+    -   Structural/statistical model
+    -   Parameter uncertainty
+-   Prior disease and physiology knowledge
+    -   Covariate (age, body weight, etc) distributions
+    -   Clinically important effect size
+    -   Expert opinions
+
+## Assumptions and Constrains[^6] {.smaller}
+
+-   Assumptions needed to implement M&S
+    -   Same exposure-response in adults and pediatrics?
+    -   Fixing parameter values because we have no data to estimate them?
+    -   Assuming a covariance matrix of random effects?
+    -   What is the clinically meaningful change in effect size? Subjective specification?
+
+. . .
+
+-   Constrains
+    -   Limited sample size for trial design
+    -   Limited number of samples per subjects
+    -   Limited follow-up time
+
+## Model Development[^6] {.smaller}
+
+Which model components are needed to implement a simulation to answer the question.
+
+-   Endpoints (PK/PD, clinical outcomes)
+-   Structure models (empirical versus mechanism-based)
+-   Covariate relationships (which covariates needed?)
+-   Random effects
+    -   Inter-individual, inter-occasion variability
+    -   Residual variability
+    -   Covariance among the random effects
+-   Parameter uncertainty (parameteric versus non-parameteric)
+
+## Model Evaluation[^6] {.smaller}
+
+::: columns
+::: {.column width="65%"}
+-   Basic diagnostics
+    -   Plausibility of model structure and parameter estimates
+    -   Comparison with relevant literature models
+    -   Convergence, successful covariance step, stability
+    -   Goodness-of-fit plots
+-   Simulation-based
+    -   Predictive checks (longitudinal versus landmark)[^7]
+-   Parameter estimates
+    -   Precise enough?
+    -   Healthy variance-covariance matrices?
+:::
+
+::: {.column width="35%"}
+![](pics/vpc.png){width="100%"}
+
+![](pics/vpc2.png){width="100%"}
+:::
+:::
+
+[^7]: [MeRGE Expo 1](https://merge.metrumrg.com/expo/expo1-nonmem-foce/posts/pk-vpc-final.html)
+
+## Plan and Execute Simulations[^6] {.smaller}
+
+-   Trial-related components
+    -   Drop-out, non-compliance, randomizations, duration
+-   Patients population (covariates)
+    -   Resample from previous studies
+    -   Resample from existing dataset ([NHANES](https://www.cdc.gov/nchs/nhanes/index.htm))
+    -   Derive a joint distribution for resampling
+-   Statistical components
+    -   Deterministic versus stochastic simulations
+    -   Include inter-occasion variability?
+    -   With/without parameter uncertainty
+
+## Summarise and Present Results[^6]
+
+-   Re-state and answer the questions asked at the beginning.
+-   Be prepare to present to the audience with a diverse background.
+    -   Emphasize on important findings.
+    -   Focus on 1-2 key figures / tables that likely impacts the decision-making.
+    -   Usually not so useful to present P-values and model diagnostics.
+
+## The end
