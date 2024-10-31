@@ -1,0 +1,9 @@
+time="2023-10-13T13:54:54-04:00" level=info msg="Successfully loaded default configuration from /data/home/ryanm/bbr-nonmem-poppk-foce/model/pk/106/bbi.yaml"
+time="2023-10-13T13:54:54-04:00" level=info msg="Beginning Local Path"
+time="2023-10-13T13:54:54-04:00" level=info msg="A total of 1 models have completed the initial preparation phase"
+time="2023-10-13T13:54:54-04:00" level=info msg="[106] Beginning local work phase"
+time="2023-10-13T13:56:34-04:00" level=info msg="[106] Beginning cleanup phase"
+time="2023-10-13T13:56:35-04:00" level=info msg="[106] Cleanup completed"
+time="2023-10-13T13:56:35-04:00" level=info msg="Waiting for any post execution hooks to finish"
+time="2023-10-13T13:56:35-04:00" level=info msg="\r1 models completed in 1m40.496979624s"
+

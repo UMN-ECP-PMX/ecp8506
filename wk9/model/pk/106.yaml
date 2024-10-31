@@ -1,0 +1,22 @@
+model_type: nonmem
+based_on:
+- '105'
+model_path: 106.ctl
+tags:
+- two-compartment + absorption
+- ETA-CL
+- ETA-KA
+- ETA-V2
+- CLWT-allo
+- V2WT-allo
+- QWT-allo
+- V3WT-allo
+- CLEGFR
+- CLAGE
+- CLALB
+- proportional RUV
+notes:
+- Client was interested in adding Albumin to CL
+description: Final Model
+star:
+- yes
