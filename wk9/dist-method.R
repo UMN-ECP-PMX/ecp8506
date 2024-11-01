@@ -174,6 +174,9 @@ withr::with_seed(
 
 vp3 <- bind_rows(vp3_male, vp3_female)
 
+# Check summary statistics
+left_join(summ(pop), summ(vp3)) %>% knitr::kable()
+
 # Check actual distribution
 png(here("wk9", "pics", "copula1.png"), height = 720, width = 720)
 p3a <- ggpairs(vp3, columns=cont_cov, 

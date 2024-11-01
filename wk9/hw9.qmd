@@ -36,16 +36,13 @@ Please create two virtual populations:
 Answer the following questions:
 
 -   Plot (either pairs plot or contour plot) the covariate distribution of
-    -   
 
-        (1) the original dataset (`./wk9/data/hwpop.csv`);
+    *   (1) the original dataset (`./wk9/data/hwpop.csv`);
 
-    -   
+    *   (2) the virtual population created using the resampling method;
 
-        (2) the virtual population created using the resampling method;
+    *   (3) the virtual population created using the distribution-based method.
 
-    -   
-
-        (3) the virtual population created using the distribution-based method.
 -   Describe how similar each virtual population in comparison to the original population (`./wk9/data/hwpop.csv`).
+
 -   Under which circumstances would you want to use one population over another?
