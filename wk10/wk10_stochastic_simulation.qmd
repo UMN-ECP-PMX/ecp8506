@@ -33,9 +33,9 @@ editor: visual
 
 Considering steady-state is achieve after 4 days with BID dosing. The study team is wondering:
 
--   At what dose level can we achieve a steady-state Cmin \> 1 ug/L in \> 80% patients.
+-   At what dose levels can we achieve a steady-state Cmin \> 1 ug/L in \> 80% patients.
 
--   At what dose level can we maintain a steady-state Cmax \> 15 ug/L in \< 10% patients.
+-   At what dose levels can we maintain a steady-state Cmax \> 15 ug/L in \< 10% patients.
 
 ## Workflow-Stochastic Simulations
 

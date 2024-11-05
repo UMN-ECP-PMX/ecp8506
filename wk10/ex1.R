@@ -32,6 +32,7 @@ mod <- update(mod, end=96, delta=1)
 
 #' Load demographics
 pop <- read.csv(here("wk10/data/pop.csv"))
+head(pop)
 
 #' Put together doses
 
@@ -39,8 +40,8 @@ data <- map(seq(0.1,1.2,0.1), # Test dose 0.1-1.2 mg/kg
             function(dose){
               xx <- pop %>% 
                 mutate(DOSE=dose) %>% 
-                mutate(AMT=DOSE*WT, TIME=0, RATE=-2, 
-                       EVID=1, CMT=1, ADDL=7, II=12) %>%
+                mutate(AMT=DOSE*WT, TIME=0, RATE=-2,      # Weight-based dosing
+                       EVID=1, CMT=1, ADDL=7, II=12) %>%  # BID dosing
                 dplyr::select(ID, TIME, AMT, CMT, 
                               RATE, EVID, ADDL, II, everything())
               return(xx)}
@@ -49,7 +50,7 @@ data <- map(seq(0.1,1.2,0.1), # Test dose 0.1-1.2 mg/kg
 # Simulation --------------------------------------------------------------
 
 withr::with_seed(
-  seed=123, 
+  seed=123,    # Set a seed because the simulation is stochastic
   out <- mrgsim(mod, data, 
                 obsonly=TRUE, 
                 output="df", 
@@ -61,10 +62,10 @@ withr::with_seed(
 summ <- out %>% 
   group_by(DOSE, TIME) %>% 
   summarise(
-    Q10 = quantile(IPRED, prob=0.1), 
-    Q50 = quantile(IPRED, prob=0.5), 
-    Q90 = quantile(IPRED, prob=0.9)) %>% 
-  mutate(DOSE=paste0(DOSE, " mg/kg"))
+    Q10 = quantile(IPRED, prob=0.1),      # 10th percentile
+    Q50 = quantile(IPRED, prob=0.5),      # median
+    Q90 = quantile(IPRED, prob=0.9)) %>%  # 90th percentile
+  mutate(DOSE=paste0(DOSE, " mg/kg"))     # Add unit for dose
   
 summ %>% ggplot(aes(x=TIME))+
   geom_line(aes(y=Q50))+
@@ -84,6 +85,7 @@ fraction_above <- function(x,boundary) { length(x[x>boundary])/length(x) }
 cmin <- out %>% group_by(ID, DOSE) %>% 
   summarise(Cmin=IPRED[TIME==96], .groups = "drop") %>% 
   mutate(Dose=paste0(DOSE, " mg/kg"))
+head(cmin)
 
 #' Check Cmin distributions by dose
 ggplot(cmin)+geom_histogram(aes(x=Cmin))+
