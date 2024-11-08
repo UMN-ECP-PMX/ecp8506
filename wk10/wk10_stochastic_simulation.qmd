@@ -81,11 +81,11 @@ Considering steady-state is achieved after 4 days with BID dosing. The study tea
 :::
 :::
 
-## Hands-on Session: Exercise 1 Cmin
+## Hands-on Session: Exercise 1 Cmax
 
 ![](pics/cmax1.png)
 
-## Hands-on Session: Exercise 1 Cmin
+## Hands-on Session: Exercise 1 Cmax
 
 ::: columns
 ::: {.column width="35%"}
