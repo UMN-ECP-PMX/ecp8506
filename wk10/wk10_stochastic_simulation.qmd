@@ -31,7 +31,7 @@ editor: visual
 
 <!-- The study team wants to maintain the steady-state Cmin above drug X IC90 (1 ug/L) in \> 80% patients while maintaining the steady-state Cmax below toxicity limit (15 ug/L) in \< 10% of patients. -->
 
-Considering steady-state is achieve after 4 days with BID dosing. The study team is wondering:
+Considering steady-state is achieved after 4 days with BID dosing. The study team is wondering:
 
 -   At what dose levels can we achieve a steady-state Cmin \> 1 ug/L in \> 80% patients.
 
