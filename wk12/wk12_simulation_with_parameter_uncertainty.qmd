@@ -1,0 +1,288 @@
+---
+title: "Week 12 Simulation with Parameter Uncertainty"
+author: "Shen Cheng"
+date: "11/22/2024"
+format: 
+  revealjs: 
+    scrollable: true
+    embed-resources: true
+editor: visual
+---
+
+```{r}
+options('bbr.bbi_exe_path' = here::here("bin/bbi"))
+```
+
+# Outline
+
+-   Variability vs uncertainty
+-   Simulate parameter uncertainty using `simpar`
+-   Simulation with parameter uncertainty
+
+# Variability vs uncertainty
+
+## Variability
+
+$$Y_{ij}=f(\theta, \eta_{i}, \epsilon_{ij})$$
+
+-   $\theta$: fixed-effect **parameters**
+
+-   $(\eta_{i}, \epsilon_{ij})$[^1]: individual random-effect with **parameters** $(\Omega, \Sigma)$
+
+    -   $\Omega$: between subject [variability]{style="color:blue;"} (BSV)
+    -   $\Sigma$: residual unexplained [variability]{style="color:blue;"} (RUV)
+
+[^1]: Notes:
+
+    -   i: individual index (e.g., the ith individual)
+    -   j: observation index (e.g., the observation at the jth time point)
+
+## Uncertainty
+
+-   Parameter estimates $(\theta, \Omega, \Sigma)$ are obtained with [uncertainty]{style="color:red"}
+
+    -   Parameteric:
+
+        -   Variance-covariance matrix (e.g., NONMEM .cov file).
+
+    -   Non-parametric:
+
+        -   Bootstrap
+        -   Sampling-importance resampling (SIR)
+        -   Bayesian posterior distribution
+
+## Variability and uncertainty
+
+-   Both were commonly represented by probability distribution.
+
+-   Differ conceptually:
+
+    -   [Variability]{style="color:blue"}:
+
+        -   **Inherent difference** in the system.
+        -   Often **cannot** be reduced with more data.
+
+    -   [Uncertainty]{style="color:red"}:
+
+        -   How **confident** we are in our estimates of the system.
+        -   Often **can** be reduced with more data
+
+## General simulation workflow in pharmacometrics {.smaller}
+
+![](pics/general-sim-workflow.png)
+
+## Types of intervals[^4]
+
+-   x% Confidence Intervals (CIs): derived from observed data that covers [the parameter of interest]{style="text-decoration: underline;"} x% of times in repeated sample.
+
+    -   Interval width: [uncertainty]{style="color:red"}
+
+-   x% Prediction Intervals (PIs): derived from observed data that covers [a future observation]{style="text-decoration: underline;"} x% of times in repeated sample.
+
+    -   Interval width: [uncertainty]{style="color:red"} + [variability]{style="color:blue"}
+
+## Simulation workflow for VPCs
+
+![](pics/vpc-workflow.png)
+
+## VPC Intervals[^4]
+
+-   Lack of accounting for uncertainty.
+
+    -   Intervals on VPC [do not have the statistical coverage properties]{style="text-decoration: underline;"} required for formal inference, despite having often been called CIs/PIs.
+
+-   Useful in pharmacometrics as visual diagnostics
+
+-   No associated statistical terms (not really PI or CI)
+
+## Types of intervals[^4]{.smaller}
+
+-   Confidence Intervals (CIs):
+
+    -   Use [uncertainty]{style="color:red"}
+    -   Interval width: [uncertainty]{style="color:red"}
+
+-   Prediction Intervals (PIs):
+
+    -   Use [uncertainty]{style="color:red"} + [variability]{style="color:blue"} (BSV + RUV)
+    -   Interval width: [uncertainty]{style="color:red"} + [variability]{style="color:blue"}
+
+-   VPC Intervals
+
+    -   [variability]{style="color:blue"} (BSV + RUV)
+    -   Interval width: [variability]{style="color:blue"}
+
+## How we should present a VPC {.smaller}
+
+::: columns
+::: {.column width="50%"}
+![](pics/vpc-example.png)
+:::
+
+::: {.column width="50%"}
+Figure XXX. Visual predictive checks for drug ABC[^2]. Points represent observed values. Solid and dashed red line represent the observed 5th, 50th and 95th percentiles. Shaded bands represents approximate 90% prediction intervals for the 5th, 50th and 95th percentiles using simulated values[^3].
+:::
+:::
+
+[^2]: Figure adapted from Bergstrand M., 2011. AAPS J
+
+[^3]: Rogers J., 2019. MetrumRG JET/HUB presentation.
+
+## Common applications of different intervals[^4] {.smaller}
+
+[^4]: Hu C., 2022. Journal of Pharmacokinet Pharmacodyn
+
+![](pics/interval-types.png)
+
+# Simulate parameter uncertainty using `simpar`
+
+-   An `R` package for the simulation of parameter uncertainties.
+-   Freely available on [Github](https://github.com/metrumresearchgroup/simpar).
+
+## Parameter uncertainty simulations in `simpar`[^5] {.smaller .scrollable}
+
+[^5]: Cheng S. Green S. Marinelli R. Baron K., 2023. ACoP14
+
+-   Given a set of [parameter estimates]{style="text-decoration: underline;"} and the associated [variance-covariance matrix]{style="text-decoration: underline;"} output by a pharmacometric / statistical model (i.e., mixed-effect model), `simpar` allows:
+
+    -   Sample fixed-effect parameters ($\theta$) assuming a [multivariate normal distribution]{style="text-decoration: underline;"}.
+
+    -   Sample random-effect parameters ($\omega^{2}$ and $\sigma^{2}$) assuming
+
+        -   [Inverse chi-square distribution]{style="text-decoration: underline;"} if the matrix dimension is 1 $\times$ 1.
+        -   [Inverse Wishart distribution]{style="text-decoration: underline;"} if the matrix dimension is 2 $\times$ 2 or more.
+
+## Example input of `simpar`[^6] {.smaller}
+
+[^6]: Cheng S. Green S. Marinelli R. Baron K., 2023. ACoP14
+
+```{r}
+suppressPackageStartupMessages(library(bbr))
+suppressPackageStartupMessages(library(here))
+# Load a NONMEM model
+mod   <- bbr::read_model(here("wk6", "nm-model", "106"))
+# Get model summary
+sum   <- mod %>% model_summary()
+th    <- bbr::get_theta(sum) # Get THETA estimates
+om    <- bbr::get_omega(sum) # Get OMEGA estimates
+sg    <- bbr::get_sigma(sum) # Get SIGMA estimates
+covar <- bbr::cov_cor(sum)$cov_theta # Get THETA covariance matrix
+```
+
+<font size="5">
+
+::: columns
+::: {.column width="60%"}
+```{r}
+#| echo: true
+th 
+covar
+```
+:::
+
+::: {.column width="40%"}
+```{r}
+#| echo: true
+om
+sg
+```
+:::
+:::
+
+</font>
+
+## Example code using `simpar`[^7] {.smaller}
+
+[^7]: Cheng S. Green S. Marinelli R. Baron K., 2023. ACoP14
+
+::: columns
+::: {.column width="35%"}
+```{r}
+#| echo: true
+library(simpar)
+set.seed(12345)
+uc <- simpar(
+  nsim=1000, 
+  theta=th, 
+  covar=covar, 
+  omega=om, 
+  odf=160, # >= nid 
+  sigma=sg, 
+  sdf=3142 # >= nobs
+) %>% as.data.frame()
+```
+:::
+
+::: {.column width="65%"}
+-   <font size="5">**nsim**: number of parameter vectors to simulate.</font>
+-   <font size="5">**theta**: vector of point estimates of $\theta$.</font>
+-   <font size="5">**covar**: variance-covariance matrix of $\theta$.</font>
+-   <font size="5">**omega**: list of $\Omega$ matrices (first-level random-effect).</font>
+-   <font size="5">**odf**: vector of $\Omega$ matrix degrees of freedom, one per matrix (typically $\geq$ number of subjects in the data set).</font>
+-   <font size="5">**sigma**: list of $\Sigma$ matrices (second-level random-effect).</font>
+-   <font size="5">**sdf**: vector of $\Sigma$ matrix degrees of freedom, one per matrix (typically $\geq$ number of observations in the data set).</font>
+:::
+:::
+
+## Example output of `simpar`[^8] {.smaller}
+
+[^8]: Cheng S. Green S. Marinelli R. Baron K., 2023. ACoP14
+
+```{r}
+#| echo: true
+uc
+```
+
+## Incorporate simulated parameter uncertainty in downstream simulation[^9] {.smaller}
+
+[^9]: Cheng S. Green S. Marinelli R. Baron K., 2023. ACoP14
+
+```{css echo=FALSE}
+.small-code{
+  font-size: 80%  
+}
+```
+
+<div class=small-code>
+
+::: columns
+::: {.column width="55%"}
+```{r}
+#| echo: true
+names(uc) <- gsub("[[:punct:]]", "", names(uc))
+names(uc) <- gsub("TH", "THETA", names(uc))
+names(uc) <- gsub("OM", "OMEGA", names(uc))
+names(uc) <- gsub("SG", "SIGMA", names(uc))
+head(uc)
+```
+:::
+
+::: {.column width="45%"}
+``` r
+suppressPackageStartupMessages(library(mrgsolve))
+simmod <- mread(here("wk6/mrg-model/106.cpp"))
+
+simfunc <- function(i){
+
+  simmod <- param(mod, uc[i,])
+  simmod <- omat(mod, as_bmat(uc[i,], "OMEGA"))
+  simmod <- smat(mod, as_bmat(uc[i,], "SIGMA"))
+  
+  mrgsim(simmod, 
+         data = simpop, 
+         output = "df", 
+         recover = "DOSE",
+         obsonly = TRUE, 
+         quite = TRUE) %>% 
+    mutate(isim=i)
+}
+
+set.seed(12315)
+sims <- lapply(1:1000, simfunc) %>% bind_rows()
+```
+:::
+:::
+
+<div>
+
+# Simulation with parameter uncertainty
