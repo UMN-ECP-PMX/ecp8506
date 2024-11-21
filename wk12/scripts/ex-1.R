@@ -146,10 +146,11 @@ plot_pop <- sim_pop |>
   summarize(med = median(Y), 
             lo  = quantile(Y, 0.05), 
             up  = quantile(Y, 0.95)) |>
-  ggplot(aes(time, med, group=DOSE)) +
-  geom_line(aes(color = DOSE)) + 
-  geom_ribbon(aes(ymin = lo, ymax = up), alpha =0.5) + 
-  geom_hline(yintercept = 500)
+  ggplot(aes(time, med, group=as.factor(DOSE))) +
+  geom_line(aes(color = as.factor(DOSE))) + 
+  geom_ribbon(aes(ymin = lo, ymax = up, fill=as.factor(DOSE)), alpha =0.5) + 
+  geom_hline(yintercept = 500) + 
+  geom_vline(xintercept = 12)
 
 fsim_pop <- filter(sim_pop, time == 12)
 
@@ -164,8 +165,8 @@ fsim_pop |>
 
 
 
-## Question 4: What is the probability for each dose to have an observed 
-## concentration above 500 mg/L at 24 hours?
+## Question 4: What is the probability to measure
+## concentration above 500 mg/L at 24 hours for 100, 150 and 250 mg?
 
 
 
