@@ -1,0 +1,38 @@
+nm_version: ""
+overwrite: false
+clean_lvl: 1
+copy_lvl: 0
+git: true
+bbi_binary: ""
+save_config: true
+output_dir: '{{ .Name }}'
+threads: 4
+debug: false
+local:
+  create_child_dirs: true
+nonmem:
+  "750":
+    home: /common/software/install/manual/nonmem/750
+    executable: nmfe75
+    nmqual: false
+    default: true
+parallel: true
+delay: 0
+nmqual: false
+json: false
+log_file: ""
+nmfe_options:
+  license_file: ""
+  prsame: false
+  background: false
+  prcompile: false
+  prdefault: false
+  tprdefault: false
+  nobuild: false
+  maxlim: 2
+mpi_exec_path: /common/software/install/migrated/oneapi/2022.1/mpi/2021.5.1/bin/mpiexec
+parallel_timeout: 2147483647
+parafile: ""
+post_work_executable: ""
+additional_post_work_envs: []
+grid_name_prefix: ""

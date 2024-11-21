@@ -1,0 +1,17 @@
+clean_lvl: 1
+git: yes
+local:
+  create_child_dirs: yes
+mpi_exec_path: /common/software/install/migrated/oneapi/2022.1/mpi/2021.5.1/bin/mpiexec
+nmfe_options:
+  maxlim: 2
+nonmem:
+  '750':
+    default: yes
+    executable: nmfe75
+    home: /common/software/install/manual/nonmem/750
+output_dir: '{{ .Name }}'
+parallel: no
+parallel_timeout: 2147483647
+save_config: yes
+threads: 2

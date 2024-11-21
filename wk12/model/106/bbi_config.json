@@ -1,0 +1,37 @@
+{
+    "bbi_version": "v3.3.0",
+    "model_name": "106.mod",
+    "original_model": "106.mod",
+    "model_path": "/panfs/jay/groups/35/cheng423/cheng423/learning/project-abc/model/106.mod",
+    "data_path": "../../data/analysis3.csv",
+    "data_md5": "84a596d0fd81c2d187a64bc62d96b433",
+    "model_md5": "e6e6e6868fbac64dd1cd96c52974867f",
+    "model_filename": "106",
+    "model_extension": "mod",
+    "original_path": "/panfs/jay/groups/35/cheng423/cheng423/learning/project-abc/model",
+    "output_dir": "/panfs/jay/groups/35/cheng423/cheng423/learning/project-abc/model/106",
+    "configuration": {
+        "clean_lvl": 1,
+        "git": true,
+        "save_config": true,
+        "output_dir": "{{ .Name }}",
+        "threads": 4,
+        "local": {
+            "create_child_dirs": true
+        },
+        "nonmem": {
+            "750": {
+                "home": "/common/software/install/manual/nonmem/750",
+                "executable": "nmfe75",
+                "default": true
+            }
+        },
+        "parallel": true,
+        "nmfe_options": {
+            "maxlim": 2
+        },
+        "mpi_exec_path": "/common/software/install/migrated/oneapi/2022.1/mpi/2021.5.1/bin/mpiexec",
+        "parallel_timeout": 2147483647
+    },
+    "error": null
+}
