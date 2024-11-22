@@ -57,7 +57,7 @@ mod <- param(model, slice(df, 1))
 param(mod)
 mod <- param(model, slice(df, 2)) 
 param(mod)
-mrg_momodmrg_mod |>
+mrg_mod |>
   zero_re() |>
   mrgsim(ev_data, end=24, delta=0.1) |>
   plot()

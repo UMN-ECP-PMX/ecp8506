@@ -1,5 +1,14 @@
 ## Setup the engine 
 
+# Drug X is a novel small molecule being developed for Disease Y. Phase 1a/1b studies
+# have been completed with single doses of 100, 150, and 250 mg in healthy volunteers 
+# and a small cohort of patients (Phase 1b). The drug showed a promising safety 
+# profile and preliminary efficacy signals. The target concentration for efficacy
+# has been established as 500 mg/L based on preclinical studies.
+# 
+# The development team needs to select an optimal dose for Phase 2 studies.
+# You have been provided with a population PK model (106.mod, 106.cpp) developed 
+# from Phase 1 data, including parameter estimates and their uncertainty.
 
 library(tidyverse)
 library(simpar)
@@ -63,8 +72,12 @@ sim_engine <- function(i, model, param_data, events){
     mutate(irep=i) 
 }
 
-## Question 0: What is the typical concentration-time profile after oral dose of 
-## 100, 150 and 250 mg including the 95%CI (or 5th-95th of the typical value)?
+# Q1. 
+#. A. Given the uncertainty in model parameters, characterize the typical
+# concentration-time profiles for each dose level (100, 150, 250 mg). 
+# What is the 90% confidence interval around these profiles?  
+#  B. Calculate typical AUC0-24 and Cmax with 5th and 95th around
+# the typical value. 
 
 typical_events <- expand.ev(amt = c(100, 150, 250), 
                             ii = 0, 
@@ -99,15 +112,13 @@ out_plot |>
   geom_ribbon(aes(ymin = lo, ymax = up), alpha = 0.5)
 
 
-## Question 1: What is the typical (median) Cmax (with 95%CI) after 100, 
-## 150 and 250 mg from Drug X? 
 
 
-
-
-## Question 2: what is the probability that an individual patient will have a 
-## concentration equal or above the 500 mg/L threshold at 12hr  post dose
-## Test: 100 mg, 150 mg and 250 mg?
+# Q2. What is the probability that individual patients will maintain concentrations 
+# above the target threshold of 500 mg/L at 12 hours post-dose for each dose level? 
+# Consider both parameter uncertainty and between-subject variability in your 
+# analysis. How does this impact dose selection?
+# Can you look at the probability on 24 hrs? 
 
 pop_value <- expand.ev(amt = c(100, 150, 250), 
                        ID = 1:10, 
@@ -159,14 +170,11 @@ fsim_pop |>
   summarize(prop = mean(Y >= 500 ))
 
 
-## Question 3: what is the probability that an individual patient will have a 
-## concentration equal or above 500 mg/L 24 hr post dose after taking 100 mg, 150 mg and 250 mg?
-
-
-
-
-## Question 4: What is the probability to measure
-## concentration above 500 mg/L at 24 hours for 100, 150 and 250 mg?
+## Q3. What is the probability that patients will have an observed 
+# concentrations above the target threshold of 500 mg/L at 24 hours 
+# post-dose for each dose level? Consider both parameter uncertainty,
+# between-subject variability and residual unexplained variability in your analysis. 
+# How does this impact dose selection?
 
 
 
