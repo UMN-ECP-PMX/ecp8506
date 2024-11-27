@@ -1,0 +1,166 @@
+---
+title: "Week 14 Covariate Effect (Forest) Plot"
+subtitle: "Application: Simulation with Parameter Uncertainty"
+author: "Shen Cheng"
+date: "12/06/2024"
+format: 
+  revealjs: 
+    scrollable: true
+    embed-resources: true
+editor: visual
+---
+
+# Outline
+
+-   Forest plot introduction
+-   Hands-on
+
+## Forest plot introduction {.smaller}
+
+-   Traditionally, forest plot used to display results of multiple clinical studies[^1].
+    -   Extensively used in Cross-study meta-analyses.
+    -   Point estimates with associated intervals are displayed.
+-   Recently, its applications in pharmacometrics were documented in the FDA popPK guidance[^2].
+    -   Simulation with uncertainty on fixed effect parameters.
+    -   Visualize the covariate effect on simulated parameters of interest (e.g., AUC, Cmax, T\>MIC, etc).
+
+[^1]: Marier et al. 2022. CPT:PSP
+
+[^2]: FDA Guidance for Industry: PopPK. 02/2022
+
+## A forest plot example[^3] {.smaller}
+
+[^3]: Jonsson and Nyberg. 2024. CPT:PSP
+
+![](pics/fp1.jpg)
+
+## Interpretation of a forest plot[^4] {.smaller}
+
+[^4]: Jonsson and Nyberg. 2024. CPT:PSP
+
+![](pics/fp2.jpg)
+
+## Simulation workflow {.smaller}
+
+-   Acquire parameter uncertainty distributions (covariance matrix, bootstrap, SIR or Bayesian posterior).
+
+. . .
+
+-   Simulate with parameter uncertainty on fixed-effect parameters for:
+    -   a reference subject.
+    -   a few non-reference subjects by **changing one covariate at a time** (*ceteris paribus*).
+
+. . .
+
+-   For each subject at each simulation replicate, PK/PD parameters of interest (e.g., AUC, Cmax, etc) were calculated.
+
+. . .
+
+-   Standardize the PK/PD parameters of each non-reference subject relative to the reference subject.
+
+. . .
+
+-   Plotting the simulation.
+
+## Simulation workflow[^5] {.smaller}
+
+[^5]: Marier et al. 2022. CPT:PSP
+
+![](pics/fp3.jpg)
+
+## Advantages and disadvantages[^6] [^7] {.smaller}
+
+[^6]: Marier et al. 2022. CPT:PSP
+
+[^7]: Jonsson and Nyberg. 2024. CPT:PSP
+
+-   Advantages:
+    -   Visually appealing and intuitively understandable.
+    -   Allow the assessment of covariate effect one at a time.
+    -   Provide uncertainty measurements around the point estimates.
+        -   Potential to make inferences on statistical significance and clinical relevance.
+
+. . .
+
+-   Disadvantages:
+    -   Do not account for correlation among covariates.
+    -   Non-plausible scenrios can be obtained by varying covariates at a time.
+    -   Only assessing "marginal effects".
+
+## Forest plot with both uncertainty and variability[^8] {.smaller}
+
+[^8]: Marier et al. 2022. CPT:PSP
+
+![](pics/fp5.png){width=50%}
+
+## Simulation workflow {.smaller}
+
+-   Simulate a large and realistic covariate distribution (virtual population).
+
+. . .
+
+-   Pharmacometric simulations using the covariate distribution, between-subject variability and uncertainty.
+
+. . .
+
+-   For each subject at each simulation replicate, PK/PD parameters of interest (e.g., AUC, Cmax, etc) were calculated.
+
+. . .
+
+-   Stratify covariates based on quantiles, and standardize the PK/PD parameters of each subject in non-reference quantile relative to the subject in reference quantile.
+
+. . .
+
+-   Plotting the simulation.
+
+## Forest plot with both uncertainty and variability[^9] {.smaller}
+
+[^9]: Marier et al. 2022. CPT:PSP
+
+![](pics/fp4.jpg){width=80%}
+
+## Controversy {.smaller}
+
+::: incremental
+-   The application of a forest plot constructed with both uncertainty and variability is not well-documented in the recent FDA popPK guidance.[^10]
+
+-   "Simulations based on uncertainty of fixed-effect parameters, BSV, and uncertainty on BSV is considered more robust and realistic, as it provides the joint effects of BSV and multiple covariates based on a database of real patients or in a virtual population with correlated covariates."[^11]
+
+-   "Although it is technically feasible to use forest plots for visualizing between-subject variability, we strongly advise against it...blurring the use of the error bars leads to a significant risk of confusion for the viewer"[^12]
+:::
+
+[^10]: FDA Guidance for Industry: PopPK. 02/2022
+
+[^11]: Marier et al. 2022. CPT:PSP
+
+[^12]: Jonsson and Nyberg. 2024. CPT:PSP
+
+## `R` packages {.smaller}
+
+-   `coveffectsplot`[^12]
+    -   CPT:PSP tutorial: <https://ascpt.onlinelibrary.wiley.com/doi/full/10.1002/psp4.12829>
+    -   Github: <https://github.com/smouksassi/coveffectsplot>
+-   `pmforest`[^13]
+    -   Userguide: <https://metrumresearchgroup.github.io/pmforest>
+    -   Github: <https://github.com/metrumresearchgroup/pmforest>
+-   `PMXforest`[^14]
+    -   CPT:PSP tutorial: <https://ascpt.onlinelibrary.wiley.com/doi/10.1002/psp4.13116>
+    -   Github: <https://github.com/pharmetheus/PMXForest>
+
+[^12]: Marier et al. 2022. CPT:PSP
+
+[^13]: Barrett K, Green S, Nevison A (2023). pmforest: Create forest plots
+
+[^14]: Jonsson and Nyberg. 2024. CPT:PSP
+
+<!-- ::: columns -->
+
+<!-- ::: {.column width="50%"} -->
+
+<!-- ::: -->
+
+<!-- ::: {.column width="50%"} -->
+
+<!-- ::: -->
+
+<!-- ::: -->
