@@ -1,0 +1,131 @@
+SETUP__:
+  description: Example PopPK analysis data set
+  sponsor: example-project
+  projectnumber: examp101F
+  use_internal_db: true
+  character_last: true
+  comment_col: "C"
+  glue: 
+    super2: "$^2$"
+  flags:
+    covariate: [AGE, WT, EGFR, ALB]
+    diagContCov: [AGE, WT, ALB, EGFR]
+    diagCatCov: [STUDY, RF, CP, DOSE]
+C:
+  short: comment character
+  values: {comment: C, "non-comment": "."}
+NUM:
+ID:
+SUBJ:
+USUBJID:
+  short: unique subject identifier
+  type: character
+TIME:
+  short: time after first dose
+  unit: hour
+  unit.plot: h
+SEQ: 
+  short: data type
+  values: {dose: 0, observation: 1}
+CMT:
+EVID:
+AMT: !look
+  unit: mg
+DV:
+AGE: !look
+WT: 
+  short: weight
+  unit: kg
+HT:
+  short: height
+  unit: cm
+EGFR:
+  short: estimated GFR
+  label: estimated glomerular filtration rate
+  unit: mL/min/1.73m2
+  unit.tex: "mL/min/1.73m<<super2>>"
+ALB:
+  short: albumin
+  unit: g/dL
+BMI:
+  unit: kg/m2
+  unit.tex: "kg/m<<super2>>"
+SEX: 
+  short: sex
+  values: {male: 0, female: 1}
+AAG:
+  short: alpha-1-acid glycoprotein
+  unit: mg/dL
+SCR: 
+  short: serum creatinine
+  unit: mg/dL
+AST:
+  short: aspartate aminotransferase
+ALT: 
+  short: alanine aminotransferase
+CP:
+  short: Child-Pugh score
+  values: {normal: 0, score=1: 1,score=2: 2, score=3: 3}
+  decode.long: 
+    - "CP score: 0"
+    - "CP score: 1"
+    - "CP score: 2"
+    - "CP score: 3"
+TAFD:
+  short: time after first dose
+  unit: hour
+TAD:
+  short: time after dose
+  unit: hour
+  unit.plot: h
+LDOS:
+  short: last dose amount
+  unit: mg
+MDV:
+BLQ:
+  short: below limit of quantification
+  values: { above QL: 1, below QL: 0}
+PHASE: 
+  short: study phase indicator
+  values: 1
+STUDYN: 
+  short: study number
+  values: [1,2,3,4]
+  make_factor: true
+STUDY: 
+  short: study name
+  values:
+    - 101-DEMO-001
+    - 101-DEMO-002
+    - 201-DEMO-003
+    - 201-DEMO-004
+  make_factor: true
+DOSE: 
+  short: nominal dose amount
+  values: [5,10,25,50,75,100,150,200]
+  decode: ["5 mg","10 mg", "25 mg", "50 mg", "75 mg", "100 mg", "150 mg", "200 mg"]
+  make_factor: true
+ACTARM: 
+  short: treatment arm
+  type: character
+  values: 
+    - DEMO 5 mg
+    - DEMO 10 mg
+    - DEMO 10 mg qd x7
+    - DEMO 25 mg
+    - DEMO 25 mg qd x7
+    - DEMO 50 mg qd x7
+    - DEMO 75 mg qd x7
+    - DEMO 100 mg
+    - DEMO 100 mg qd x7
+    - DEMO 150 mg
+    - DEMO 200 mg
+  make_factor: true
+RF: 
+  short: renal function stage
+  values: {normal: norm, mild: mild, moderate: mod, severe: sev}
+  decode.long: 
+    - No impairment
+    - Mild impairment
+    - Moderate impairment
+    - Severe impairment
