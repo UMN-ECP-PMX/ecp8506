@@ -44,10 +44,10 @@ post <- mutate(post, iter = row_number())
 data <- nm_join("model/pk/106")
 covs <- distinct(data, ID, EGFR, ALB, AGE, WT) 
 
-
 getPercentile <- function(.x, .p = c(0.1, 0.9)){
   signif(unname(quantile(.x, .p)), digits = 3)
 }
+
 x <- list(
   WT = getPercentile(covs$WT),
   EGFR = getPercentile(covs$EGFR), 

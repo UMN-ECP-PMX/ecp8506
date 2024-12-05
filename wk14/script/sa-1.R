@@ -8,7 +8,11 @@ library(mrgsolve)
 library(here)
 library(ggplot2)
 library(mrgsim.sa)
+
 theme_set(theme_bw() + theme(legend.position = "top"))
+
+options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(name = "Dark2", n = 8))
+options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(name = "Dark2", n = 8))
 
 setwd(here("wk14")) # Don't set my computer on fire
 
@@ -17,20 +21,20 @@ data <- nm_join("model/pk/106")
 mod <- mread("model/pk/simmod/106.cpp", capture = "CL")
 mod <- zero_re(mod)
 outvars(mod)
+
 mod <- update(mod, delta = 0.1, outvars = "IPRED")
 outvars(mod)
 
-out <- 
+sensi <- 
   mod %>% 
   ev(amt = 100, ii = 24, addl = 1, ss = 1) %>% 
   parseq_manual(
-    WT = seq(50,90,10), 
-    ALB = c(4.5, seq(3,6,1)), 
-    EGFR = seq(60,110,10)
-  ) %>% 
-  sens_each(recsort = 3)
+    WT = seq(50,110,10), 
+    ALB = seq(2,7,1), 
+    EGFR = seq(50,110,10)
+  )
 
-out
+out <- sens_each(sensi, recsort = 3)
 
 sens_plot(out)
 
@@ -63,7 +67,6 @@ summarise(
   
 
 
-set.seed(12345)
 post <- fread("data/boot/boot-106.csv")
 post <- select(post, contains("THETA"))
 post <- mutate(post, iter = row_number())
