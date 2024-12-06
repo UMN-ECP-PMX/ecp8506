@@ -16,15 +16,18 @@ options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(name = "Dark2", n = 8))
 
 setwd(here("wk14")) # Don't set my computer on fire
 
-data <- nm_join("model/pk/106")
+#' Sensitivity analysis on a simple PK model 
 
+
+#' Now, open up our 106 PopPK example and set up 
 mod <- mread("model/pk/simmod/106.cpp", capture = "CL")
-mod <- zero_re(mod)
 outvars(mod)
 
+mod <- zero_re(mod)
 mod <- update(mod, delta = 0.1, outvars = "IPRED")
 outvars(mod)
 
+#' Dose: 100 mg qday at steady state
 sensi <- 
   mod %>% 
   ev(amt = 100, ii = 24, addl = 1, ss = 1) %>% 
@@ -64,26 +67,37 @@ summarise(
   Max = max(rel), 
   .by = p_name
 ) %>% mutate(range = Max - Min)
-  
 
 
+#' Load bootstrap parameter estimates; no IIV in 
+#' these simulations, so we only need THETA
 post <- fread("data/boot/boot-106.csv")
 post <- select(post, contains("THETA"))
-post <- mutate(post, iter = row_number())
+post <- mutate(post, irep = row_number())
+post <- mutate(post, THETA6 = runif(n(), 0.2, 1.2))
+range(post$THETA8)
 
-
+#' Create a function 
 sim <- function(i) {
+  
+  draw <- slice(post,i)
+  
+  dose <- ev(amt = 100, ii = 24, addl = 1, ss = 1)
+  
+  mod <- parseq_manual(
+    mod, 
+    WT = seq(50,90,10), 
+    ALB = seq(3,6,1), 
+    EGFR = seq(50,110,10)
+  )
+  
   out <- 
     mod %>% 
-    param(slice(post, i)) %>%
-    ev(amt = 100, ii = 24, addl = 1, ss = 1) %>% 
-    parseq_manual(
-      WT = seq(50,90,10), 
-      ALB = seq(3,6,1), 
-      EGFR = seq(50,110,10)
-    ) %>% 
+    param(draw) %>%
+    ev(dose) %>% 
     sens_each() %>% 
     mutate(irep = i)
+  
   out
 }
 
@@ -96,14 +110,16 @@ ref <-
 reff <- summarise(
   ref, 
   ref = max(IPRED), 
-  .by = c(ID)
+  .by = ID
 )
 rf <- rename(reff, irep = ID)
 
 out <- lapply(1:300, sim) %>% rbindlist()
 
-out <- left_join(out, rf)
+#' Join on reference simulation
+out <- left_join(out, rf, by = "irep")
 
+#' Summarize
 summ <- summarise(
   out, 
   Cmax = max(dv_value),

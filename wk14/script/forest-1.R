@@ -16,9 +16,9 @@ setwd(here("wk14"))
 #' Load data specification object and modify
 spec <- ys_load("data/derived/pk.yml")
 spec <- ys_extend(spec)
-#' Render Estimated GFR as eGFR and clearance as CL
 spec <- ys_namespace(spec, "abbreviated")
 
+#' Set up an object to store all the labels
 all_labels <- ys_get_short(spec)
 all_labels$CL <- ys_get_short_unit(spec)$CL
 all_labels$FORM <- "Formulation"
@@ -55,6 +55,8 @@ x <- list(
   AGE = getPercentile(covs$AGE), 
   FORM = c(Capsule = 2, "Oral solution" = 3)
 )
+
+x
 
 mod <- mread("model/pk/simmod/106.cpp", capture = "CL")
 mod <- zero_re(mod)

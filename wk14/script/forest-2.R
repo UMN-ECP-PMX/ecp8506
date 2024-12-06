@@ -6,17 +6,22 @@ library(mrgsolve)
 library(here)
 library(data.table)
 library(yspec)
-library(rlang)
 library(bbr)
 library(glue)
 library(ggplot2)
 
 setwd(here("wk14"))
 
-options(pillar.width = Inf)
+options(
+  pillar.width = Inf, 
+  mrgsolve.project = here("wk14/model/pk/simmod")
+)
 
 #' Load data specification object and modify
 spec <- ys_load("data/derived/pk.yml")
+
+#' Simulation model
+mod <- mread("106.cpp")
 
 set.seed(12345)
 post <- fread("data/boot/boot-106.csv")
@@ -27,6 +32,7 @@ post <- mutate(post, iter = row_number())
 #' Get observed covariates
 data <- nm_join("model/pk/106")
 data <- ys_factors(data, spec, RF) %>% mutate(RF = as.integer(RF))
+count(data,RF)
 covs <- distinct(data, ID, EGFR, ALB, AGE, WT, RF, SEX, CP) 
 covs <- mutate(covs, WTG = ntile(WT, 4), ALBG = ntile(ALB,4))
 
@@ -95,14 +101,11 @@ sim <- function(i, mod, data) {
   out
 }
 
-cmin <- lapply(1:10, sim, mod, data) %>% rbindlist()
-
 library(future.apply)
 library(future.callr)
 plan(callr, workers = 5)
 set.seed(12345)
 cmin <- future_lapply(1:100, sim, mod, data, future.seed = TRUE) %>% rbindlist()
-
 
 summ1 <- summarise(
   cmin, 
@@ -119,4 +122,30 @@ summ2 <- summarise(
   ub = quantile(Median, 0.975), 
   .by = c(name, level)
 ) %>% arrange(name, level)
+
+
+long <- pivot_longer(
+  summ1, 
+  cols = c(p5, Median, p95), 
+  names_to = "metric"
+)
+
+long
+
+summ3 <- summarise(
+  long, 
+  lb = quantile(value, 0.025), 
+  Median = median(value), 
+  ub = quantile(value, 0.975), 
+  .by = c(name, level, metric)
+) %>% arrange(name, level)
+
+summ3 <- mutate(
+  summ3, 
+  label = fct_inorder(paste(name,"=",level))
+)
+
+med <- filter(summ3, metric == "Median")
+ggplot(data = med, aes(x = Median, y = label, group = metric, color = name)) + 
+  geom_pointrange(aes(xmin = lb, xmax = ub))
 
