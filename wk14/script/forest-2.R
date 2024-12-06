@@ -9,12 +9,15 @@ library(yspec)
 library(bbr)
 library(ggplot2)
 
-setwd(here("wk14"))
-
+theme_set(theme_bw() + theme(legend.position = "top"))
 options(
+  ggplot2.discrete.colour = RColorBrewer::brewer.pal(name = "Dark2", n = 8), 
+  ggplot2.discrete.fill = RColorBrewer::brewer.pal(name = "Dark2", n = 8),
   pillar.width = Inf, 
   mrgsolve.project = here("wk14/model/pk/simmod")
 )
+
+setwd(here("wk14"))
 
 #' Load data specification object and modify
 spec <- ys_load("data/derived/pk.yml")
@@ -27,12 +30,11 @@ post <- fread("data/boot/boot-106.csv")
 post <- slice_sample(post, n = 100) 
 post <- mutate(post, iter = row_number())
 
-
 #' Get observed covariates
 data <- nm_join("model/pk/106")
 data <- ys_factors(data, spec, RF) %>% mutate(RF = as.integer(RF))
 count(data,RF)
-covs <- distinct(data, ID, EGFR, ALB, AGE, WT, RF, SEX, CP) 
+covs <- distinct(data, ID, EGFR, ALB, AGE, WT, RF, SEX) 
 
 #' Group continuous covariates into quartile bins
 covs <- mutate(covs, WTG = ntile(WT, 4), ALBG = ntile(ALB,4))
@@ -64,13 +66,7 @@ sex <- arrange(sex, SEX)
 sex <- mutate(sex, name = "SEX", level = SEX, label = c("Male", "Female")[SEX+1])
 count(sex, SEX, label)
 
-set.seed(12345)
-cp <- slice_sample(covs, n = 1000, by = CP, replace = TRUE)
-cp <- arrange(cp, CP)
-cp <- mutate(cp, name = "CP", level = CP, label = paste0("CP=", CP))
-count(cp, CP, label)
-
-data <- bind_rows(renal, weight, alb, sex, cp)
+data <- bind_rows(renal, weight, alb, sex)
 
 data <- mutate(data, ID = row_number())
 
@@ -89,12 +85,14 @@ data <- mutate(
 
 out <- mrgsim(mod, data, obsonly = TRUE, recover = "name,level,label" ) 
 
+# Important: get these in order right away!
 out <- mutate(out, label = fct_inorder(label))
+out <- select(out, label, everything())
 
-sims <- filter(out, near(time,24))
+cmin <- filter(out, near(time,24))
 
-sims %>% 
-  summarise(Median = median(IPRED), .by = label) %>% 
+cmin %>% 
+  summarise(Cmin = median(IPRED), .by = label) %>% 
   arrange(label)
 
 sim <- function(i, mod, data) {
@@ -124,15 +122,6 @@ summ1 <- summarise(
   p95 = quantile(IPRED, 0.95), 
   .by = c(name, level, irep)
 )
-
-summ2 <- summarise(
-  summ1, 
-  lb = quantile(Median, 0.025),
-  Med = median(Median), 
-  ub = quantile(Median, 0.975), 
-  .by = c(name, level)
-) %>% arrange(name, level)
-
 
 long <- pivot_longer(
   summ1, 

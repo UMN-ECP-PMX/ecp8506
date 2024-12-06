@@ -89,12 +89,15 @@ data <- mutate(
 
 out <- mrgsim(mod, data, obsonly = TRUE, recover = "name,level,label" ) 
 
+# Important: get these in order right away!
 out <- mutate(out, label = fct_inorder(label))
+out <- select(out, label, everything())
 
-sims <- filter(out, near(time,24))
+#' Get Cmin
+cmin <- filter(out, near(time,24))
 
-sims %>% 
-  summarise(Median = median(IPRED), .by = label) %>% 
+cmin %>% 
+  summarise(Cmin = median(IPRED), .by = label) %>% 
   arrange(label)
 
 sim <- function(i, mod, data) {
@@ -125,15 +128,16 @@ summ1 <- summarise(
   .by = c(name, level, irep)
 )
 
+# Don't go down this road
 summ2 <- summarise(
   summ1, 
-  lb = quantile(Median, 0.025),
-  Med = median(Median), 
-  ub = quantile(Median, 0.975), 
+  loMedian = quantile(Median, 0.025),
+  medMedian = median(Median), 
+  hiMedian = quantile(Median, 0.975), 
   .by = c(name, level)
-) %>% arrange(name, level)
+)
 
-
+# Do this instead
 long <- pivot_longer(
   summ1, 
   cols = c(p5, Median, p95), 
