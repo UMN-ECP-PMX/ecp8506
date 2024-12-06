@@ -1870,6 +1870,36 @@
       ],
       "Hash": "6b8177fd19982f0020743fadbfdbd933"
     },
+    "pmforest": {
+      "Package": "pmforest",
+      "Version": "0.2.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "metrumresearchgroup",
+      "RemoteRepo": "pmforest",
+      "RemoteRef": "main",
+      "RemoteSha": "71e8e912c4bfd8d8b1e86385c6283bc8f3b6b57a",
+      "Requirements": [
+        "R",
+        "RColorBrewer",
+        "assertthat",
+        "dplyr",
+        "ggplot2",
+        "glue",
+        "gridExtra",
+        "here",
+        "magrittr",
+        "patchwork",
+        "pmtables",
+        "purrr",
+        "readr",
+        "rlang",
+        "stringr",
+        "tibble"
+      ],
+      "Hash": "39f232f06cbd73801b95530eb4656c08"
+    },
     "pmplots": {
       "Package": "pmplots",
       "Version": "0.4.1",
@@ -2763,12 +2793,54 @@
       ],
       "Hash": "1d0336142f4cd25d8d23cd3ba7a8fb61"
     },
+    "xtable": {
+      "Package": "xtable",
+      "Version": "1.8-4",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "stats",
+        "utils"
+      ],
+      "Hash": "b8acdf8af494d9ec19ccb2481a9b11c2"
+    },
     "yaml": {
       "Package": "yaml",
       "Version": "2.3.8",
       "Source": "Repository",
       "Repository": "RSPM",
       "Hash": "29240487a071f535f5e5d5a323b7afbd"
+    },
+    "yspec": {
+      "Package": "yspec",
+      "Version": "0.6.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "metrumresearchgroup",
+      "RemoteRepo": "yspec",
+      "RemoteRef": "main",
+      "RemoteSha": "11c2ebc39bcc644660a0c1d8cfa54268e5f91921",
+      "Requirements": [
+        "R",
+        "assertthat",
+        "crayon",
+        "dplyr",
+        "fs",
+        "glue",
+        "knitr",
+        "purrr",
+        "rlang",
+        "rmarkdown",
+        "rstudioapi",
+        "stringr",
+        "tibble",
+        "tidyselect",
+        "xtable",
+        "yaml"
+      ],
+      "Hash": "e18170f227f755ba38be966b8cea41d7"
     },
     "zip": {
       "Package": "zip",
