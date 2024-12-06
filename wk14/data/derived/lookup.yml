@@ -1,0 +1,157 @@
+SETUP__:
+  description: yspec internal column database
+C:
+  short: Commented rows
+  values: [".","C"]
+  decode: ["Not a comment", "Comment for exclusion"]
+  type: character
+NUM:
+  short: Row number
+  type: numeric
+ID:
+  short: NONMEM ID number
+  type: numeric
+  comment: It must be unique per study and for the entire analysis dataset
+TIME:
+  short: Time after first dose
+  unit: hour
+  unit.plot: h
+SEQ: 
+  short: Data type
+  values: [0, 1]
+  decode: ["Dose", "Observation"]
+CMT:
+  short: Compartment
+  values: [1, 2]
+  decode: ["Dose", "Observation"]
+EVID:
+  short: Event identifier
+  type: numeric
+  values: [0, 1]
+  decode: ["Observation event", "Dosing event"]
+AMT:   
+  short: Dose amount
+  type: numeric
+  unit: mg
+DV:
+  short: Concentration 
+  unit: ng/mL
+AGE: 
+  short: Age
+  unit: years
+WT: 
+  short: Weight
+  unit: kg
+HT:
+  short: Height
+  unit: cm
+EGFR:
+  short: Estimated GFR
+  short.abbreviated: eGFR
+  label: Estimated glomerular filtration rate
+  unit: mL/min/1.73m2
+  unit.tex: "mL/min/1.73m$^2$"
+ALB:
+  short: Albumin
+  unit: g/dL
+BMI:
+  short: Body mass index
+  unit: kg/m2
+  unit.tex: "kg/m$^2$"
+SEX: 
+  short: Sex
+  values: [0, 1]
+  decode: ["Male", "Female"]
+AAG:
+  short: Alpha-1-acid glycoprotein
+  unit: mg/dL
+SCR: 
+  short: Serum creatinine
+  unit: mg/dL
+AST:
+  short: Aspartate aminotransferase
+  unit: U/L 
+ALT: 
+  short: Alanine aminotransferase
+  unit: U/L
+CP:
+  short: Child-Pugh score
+  values: [0, 1, 2, 3]
+  decode: [Normal, Score=1,Score=2, Score=3]
+  decode.long: ["CP score: 0",
+              "CP score: 1",
+              "CP score: 2",
+              "CP score: 3"]
+TAFD:
+  short: Time after first dose
+  unit: hour
+  unit.plot: h
+TAD:
+  short: Time since last dose
+  unit: hour
+  unit.plot: h
+LDOS:
+  short: Last dose amount
+  unit: mg
+MDV:
+  short: Missing dependent variable
+  values: [0, 1]
+  decode: ["No", "Yes"]
+BLQ:
+  short: Below limit of quantification
+  values: [1, 0]
+  decode: ["Above QL", "Below QL"]
+PHASE: 
+  short: Study phase indicator
+  values: 1
+STUDYN: 
+  short: Study number
+  values: [1,2,3,4]
+  make_factor: true
+DOSE: 
+  short: Dose
+  unit: mg
+  values: [5, 10, 25, 50, 75, 100, 150, 200]
+  decode: ["5 mg","10 mg", "25 mg", "50 mg", "75 mg", "100 mg", "150 mg", "200 mg"]
+  long: Nominal dose amount
+  make_factor: true
+SUBJ:
+  short: Subject identifer
+  type: character
+USUBJID:
+  short: Unique subject identifier
+  type: character
+STUDY: 
+  short: Study name
+  type: character
+  values:
+    - 101-DEMO-001
+    - 101-DEMO-002
+    - 201-DEMO-003
+    - 201-DEMO-004
+  make_factor: true
+ACTARM: 
+  short: Treatment arm
+  type: character
+  values: 
+    - DEMO 5 mg
+    - DEMO 10 mg
+    - DEMO 10 mg qd x7
+    - DEMO 25 mg
+    - DEMO 25 mg qd x7
+    - DEMO 50 mg qd x7
+    - DEMO 75 mg qd x7
+    - DEMO 100 mg
+    - DEMO 100 mg qd x7
+    - DEMO 150 mg
+    - DEMO 200 mg
+  make_factor: true
+RF: 
+  short: Renal function
+  type: character
+  values: [norm, mild, mod, sev]
+  decode: [Normal, Mild, Moderate, Severe]
+  decode.long: [No impairment,
+              Mild impairment,
+              Moderate impairment,
+              Severe impairment]

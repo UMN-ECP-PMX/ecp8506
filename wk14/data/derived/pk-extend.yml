@@ -1,0 +1,21 @@
+SETUP__:
+  max_nchar_label: 10000
+DVNORM:
+  short: Dose-normalized concentration
+  unit: ng/mL/mg
+AUCss: 
+  short: AUC,ss
+  label: steady-state area under the concentration-time curve
+  unit: mg*hr/L
+CMAXss: 
+  short: Cmax,ss
+  label: steady-state maximum concentration
+  unit: ng/mL
+CMINss: 
+  short: Cmin,ss
+  label: steady-state minimum concentration
+  unit: ng/mL
+CL: 
+  short: clearance
+  short.abbreviated: CL
+  unit: L/hr

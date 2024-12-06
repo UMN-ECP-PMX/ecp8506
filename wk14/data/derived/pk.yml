@@ -1,0 +1,48 @@
+SETUP__:
+  lookup_file: [lookup.yml]
+  description: Example PopPK analysis data set
+  sponsor: example-project
+  projectnumber: azn0702
+  extend_file: pk-extend.yml
+  use_internal_db: true
+  character_last: true
+  comment_col: "C"
+  flags:
+    contcov: [AGE, WT, ALB, EGFR]     #eda: Baseline continuous covariate
+    catcov: [SEX, CP, RF]             #eda: Baseline categorical covariate
+    diagContCov: [AGE, WT, ALB, EGFR] #diagnostics: Baseline continuous covariate
+    diagCatCov: [RF, CP]              #diagnostics: Baseline categorical covariate
+C:
+NUM:
+ID:
+TIME:
+SEQ:
+CMT:
+EVID:
+AMT:
+DV:
+AGE:
+WT:
+HT:
+EGFR:
+ALB:
+BMI:
+SEX:
+AAG:
+SCR:
+AST:
+ALT:
+CP:
+TAFD:
+TAD:
+LDOS:
+MDV:
+BLQ:
+PHASE:
+STUDYN:
+DOSE:
+SUBJ:
+USUBJID:
+STUDY:
+ACTARM:
+RF:
