@@ -17,7 +17,17 @@ options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(name = "Dark2", n = 8))
 setwd(here("wk14")) # Don't set my computer on fire
 
 #' Sensitivity analysis on a simple PK model 
+mod <- modlib("pk1")
+param(mod)
 
+mod %>% 
+  update(outvars = "CP", delta = 0.1) %>% 
+  ev(amt = 100) %>% 
+  parseq_cv(
+    CL, KA, V  
+  ) %>% 
+  sens_each()  %>%
+  sens_plot()
 
 #' Now, open up our 106 PopPK example and set up 
 mod <- mread("model/pk/simmod/106.cpp", capture = "CL")
@@ -30,6 +40,7 @@ outvars(mod)
 #' Dose: 100 mg qday at steady state
 sensi <- 
   mod %>% 
+  param(THETA8 = -0.41893) %>% 
   ev(amt = 100, ii = 24, addl = 1, ss = 1) %>% 
   parseq_manual(
     WT = seq(50,110,10), 
@@ -39,7 +50,7 @@ sensi <-
 
 out <- sens_each(sensi, recsort = 3)
 
-sens_plot(out)
+sens_plot(out, layout="facet_grid")
 
 summ <- summarise(
   out, 
@@ -74,8 +85,7 @@ summarise(
 post <- fread("data/boot/boot-106.csv")
 post <- select(post, contains("THETA"))
 post <- mutate(post, irep = row_number())
-post <- mutate(post, THETA6 = runif(n(), 0.2, 1.2))
-range(post$THETA8)
+
 
 #' Create a function 
 sim <- function(i) {

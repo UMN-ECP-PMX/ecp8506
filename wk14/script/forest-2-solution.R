@@ -34,6 +34,17 @@ data <- ys_factors(data, spec, RF) %>% mutate(RF = as.integer(RF))
 count(data,RF)
 covs <- distinct(data, ID, EGFR, ALB, AGE, WT, RF, SEX, CP) 
 
+covs %>% 
+  group_by(CP) %>% 
+  summarise(
+    n = n(),
+    WT = median(WT), 
+    EGFR = median(EGFR), 
+    AGE = median(AGE), 
+    ALB = median(ALB)
+  )
+
+
 #' Group continuous covariates into quartile bins
 covs <- mutate(covs, WTG = ntile(WT, 4), ALBG = ntile(ALB,4))
 count(covs, WTG)
